@@ -2,6 +2,7 @@
 const { Pool } = require("pg");
 
 let dbParams = {};
+
 if (process.env.DATABASE_URL) {
   dbParams.connectionString = process.env.DATABASE_URL;
 } else {
@@ -13,8 +14,10 @@ if (process.env.DATABASE_URL) {
     database: process.env.DB_NAME,
   };
 }
+
 const db = new Pool(dbParams);
 db.connect(() => {
   console.log(`connected to database`);
 });
+
 module.exports = db;

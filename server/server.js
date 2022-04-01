@@ -10,6 +10,9 @@ const PORT = process.env.PORT || 8080;
 app.use(morgan("dev"));
 app.use(express.json());
 
+
+app.use("/",(req,res) => res.send("Hello"))
+
 app.listen(PORT, () => {
   console.log(`app is listening on port ${PORT}`);
 });
