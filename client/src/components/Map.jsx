@@ -1,6 +1,8 @@
 import mapboxgl from "mapbox-gl";
 import { useRef, useState, useEffect } from "react";
 
+import "./Map.scss";
+
 mapboxgl.accessToken =
   "pk.eyJ1IjoicmpwMzAxIiwiYSI6ImNsMWdwdjF6YjFjN2EzZHBjeWl4MnUyeXUifQ.s-5QTZX7xeofw36iclsJZA";
 
@@ -8,9 +10,12 @@ export default function Map() {
   const mapContainer = useRef(null);
   const map = useRef(null);
 
-  const [lng, setLng] = useState(-70.9);
-  const [lat, setLat] = useState(42.35);
+  const [lng, setLng] = useState(-121.4417);
+  const [lat, setLat] = useState(49.3795);
   const [zoom, setZoom] = useState(9);
+
+  // const [mapStyle, setMapStyle] = useState(0);
+  // const mapStyles = [{name: "Street",}]
 
   useEffect(() => {
     if (map.current) return; // initialize map only once
@@ -36,7 +41,9 @@ export default function Map() {
       <div className="sidebar">
         Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
       </div>
-      <div ref={mapContainer} className="map-container"></div>
+      <div ref={mapContainer} className="map-container"/>
     </>
   );
 }
+
+
