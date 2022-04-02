@@ -14,9 +14,6 @@ export default function Map() {
   const [lat, setLat] = useState(49.3795);
   const [zoom, setZoom] = useState(9);
 
-  // const [mapStyle, setMapStyle] = useState(0);
-  // const mapStyles = [{name: "Street",}]
-
   useEffect(() => {
     if (map.current) return; // initialize map only once
     map.current = new mapboxgl.Map({
@@ -41,9 +38,7 @@ export default function Map() {
       <div className="sidebar">
         Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
       </div>
-      <div ref={mapContainer} className="map-container"/>
+      <div ref={mapContainer} className="map-container" />
     </>
   );
 }
-
-
