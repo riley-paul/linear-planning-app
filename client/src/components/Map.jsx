@@ -1,10 +1,11 @@
 import mapboxgl from "mapbox-gl";
 import { useRef, useState, useEffect } from "react";
 
+import { addLayer } from "../helpers/mapHelpers";
+
 import "./Map.scss";
 
-mapboxgl.accessToken =
-  "pk.eyJ1IjoicmpwMzAxIiwiYSI6ImNsMWdwdjF6YjFjN2EzZHBjeWl4MnUyeXUifQ.s-5QTZX7xeofw36iclsJZA";
+mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_PK;
 
 export default function Map() {
   const mapContainer = useRef(null);
@@ -31,6 +32,8 @@ export default function Map() {
       setLat(map.current.getCenter().lat.toFixed(4));
       setZoom(map.current.getZoom().toFixed(2));
     });
+
+
   });
 
   return (

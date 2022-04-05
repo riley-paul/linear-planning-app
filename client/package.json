@@ -10,7 +10,7 @@
     "mapbox-gl": "^2.7.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-scripts": "5.0.0",
+    "react-scripts": "^5.0.0",
     "sass": "^1.49.10",
     "shapefile": "^0.6.6",
     "web-vitals": "^2.1.4"
@@ -38,5 +38,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "webpack": "^5.71.0",
+    "webpack-cli": "^4.9.2"
   }
 }
