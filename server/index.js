@@ -24,6 +24,11 @@ app.get("/kps", (req, res) => {
   res.json(data);
 });
 
+app.get("/footprint", (req, res) => {
+  const data = JSON.parse(fs.readFileSync("db/data/FTPRINT.geojson"));
+  res.json(data);
+});
+
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
