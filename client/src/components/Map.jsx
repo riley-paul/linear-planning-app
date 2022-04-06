@@ -1,7 +1,10 @@
+import { useRef, useState, useEffect } from "react";
+
+import * as turf from "@turf/turf";
+
 import axios from "axios";
 import mapboxgl from "mapbox-gl";
-import { useRef, useState, useEffect } from "react";
-import * as turf from "@turf/turf";
+import { triangle } from "maki";
 
 import "./Map.scss";
 
@@ -34,25 +37,36 @@ export default function Map() {
     Promise.all([
       axios.get("http://localhost:8080/cl"),
       axios.get("http://localhost:8080/kps"),
+      axios.get("http://localhost:8080/footprint"),
     ]).then((all) => {
       const cl = all[0].data;
       const kps = all[1].data;
-
-      const styling = {
-        layout: {
-          "line-join": "round",
-          "line-cap": "round",
-        },
-        paint: {
-          "line-color": "#f54242",
-          "line-width": 4,
-          "circle-color": "#F84C4C", // red color
-        },
-      };
+      const fp = all[2].data;
 
       map.current.on("load", () => {
         map.current.addSource("CL", { type: "geojson", data: cl });
         map.current.addSource("KPs", { type: "geojson", data: kps });
+        map.current.addSource("FP", { type: "geojson", data: fp });
+
+        map.current.addLayer({
+          id: "FP",
+          type: "fill",
+          source: "FP",
+          paint: {
+            "fill-opacity": 0.5,
+            "fill-color": [
+              "match",
+              ["get", "FPType"],
+              "Extra Temporary Workspace",
+              "#AA66CD",
+              "Temporary Workspace",
+              "#E8BEFF",
+              "Log Deck",
+              "#A3FF73",
+              "#ccc",
+            ],
+          },
+        });
 
         map.current.addLayer({
           id: "CL",
@@ -74,7 +88,19 @@ export default function Map() {
           source: "KPs",
           layout: {
             "text-field": ["get", "Descrip"],
-            "text-anchor": "left"
+            "text-anchor": "left",
+            "text-offset": [1, 0],
+            "text-size": 12,
+          },
+        });
+
+        map.current.addLayer({
+          id: "KPs_markers",
+          type: "circle",
+          source: "KPs",
+          paint: {
+            "circle-stroke-width": 1,
+            "circle-stroke-color": "#ffffff",
           },
         });
 
