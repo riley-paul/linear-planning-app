@@ -31,20 +31,33 @@ export default function Map() {
   // Fetch data and add to map
   useEffect(() => {
     if (!map.current) return; // wait for map to initialize
-    axios.get("http://localhost:8080/test").then((response) => {
-      console.log(response);
-      setCL(response.data);
+    Promise.all([
+      axios.get("http://localhost:8080/cl"),
+      axios.get("http://localhost:8080/kps"),
+    ]).then((all) => {
+      const cl = all[0].data;
+      const kps = all[1].data;
+
+      const styling = {
+        layout: {
+          "line-join": "round",
+          "line-cap": "round",
+        },
+        paint: {
+          "line-color": "#f54242",
+          "line-width": 4,
+          "circle-color": "#F84C4C", // red color
+        },
+      };
 
       map.current.on("load", () => {
-        map.current.addSource("test-CL", {
-          type: "geojson",
-          data: response.data,
-        });
+        map.current.addSource("CL", { type: "geojson", data: cl });
+        map.current.addSource("KPs", { type: "geojson", data: kps });
 
         map.current.addLayer({
-          id: "test-CL",
+          id: "CL",
           type: "line",
-          source: "test-CL",
+          source: "CL",
           layout: {
             "line-join": "round",
             "line-cap": "round",
@@ -55,25 +68,33 @@ export default function Map() {
           },
         });
 
-        map.current.addSource("mousePos", {
-          type: "geojson",
-          data: {
-            type: "Feature",
-            geometry: {
-              type: "Point",
-              coordinates: [0, 0],
-            },
+        map.current.addLayer({
+          id: "KPs",
+          type: "symbol",
+          source: "KPs",
+          layout: {
+            "text-field": ["get", "Descrip"],
+            "text-anchor": "left"
           },
         });
-        map.current.addLayer({
-          id: "mousePos",
-          type: "circle",
-          source: "mousePos",
-          // paint: {
-          //   "circle-radius": 10,
-          //   "circle-color": "#F84C4C", // red color
-          // },
-        });
+
+        // map.current.addSource("mousePos", {
+        //   type: "geojson",
+        //   data: {
+        //     type: "Feature",
+        //     geometry: {
+        //       type: "Point",
+        //       coordinates: [0, 0],
+        //     },
+        //   },
+        // });
+
+        // map.current.addLayer({
+        //   id: "mousePos",
+        //   type: "circle",
+        //   source: "mousePos",
+        //   ...styling,
+        // });
       });
     });
   }, []);
@@ -90,7 +111,7 @@ export default function Map() {
     map.current.on("mousemove", (e) => {
       if (!CL) return;
       const mouse = turf.point([e.lngLat.lng, e.lngLat.lat]);
-      const snapped = turf.nearestPointOnLine(CL,mouse)
+      const snapped = turf.nearestPointOnLine(CL, mouse);
       map.current.getSource("mousePos").setData(turf.truncate(snapped));
     });
   });

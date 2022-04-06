@@ -14,8 +14,13 @@ app.get("/", (req, res) => {
   res.send("hello world");
 });
 
-app.get("/test", (req, res) => {
+app.get("/cl", (req, res) => {
   const data = JSON.parse(fs.readFileSync("db/data/CNTRLINE.geojson"));
+  res.json(data);
+});
+
+app.get("/kps", (req, res) => {
+  const data = JSON.parse(fs.readFileSync("db/data/MRKRS.geojson"));
   res.json(data);
 });
 
