@@ -1,7 +1,7 @@
+import axios from "axios";
 import mapboxgl from "mapbox-gl";
 import { useRef, useState, useEffect } from "react";
-
-import { addLayer } from "../helpers/mapHelpers";
+import * as turf from "@turf/turf";
 
 import "./Map.scss";
 
@@ -13,8 +13,11 @@ export default function Map() {
 
   const [lng, setLng] = useState(-121.4417);
   const [lat, setLat] = useState(49.3795);
-  const [zoom, setZoom] = useState(9);
+  const [zoom, setZoom] = useState(14);
 
+  const [CL, setCL] = useState(null);
+
+  // Initial map load
   useEffect(() => {
     if (map.current) return; // initialize map only once
     map.current = new mapboxgl.Map({
@@ -25,6 +28,57 @@ export default function Map() {
     });
   });
 
+  // Fetch data and add to map
+  useEffect(() => {
+    if (!map.current) return; // wait for map to initialize
+    axios.get("http://localhost:8080/test").then((response) => {
+      console.log(response);
+      setCL(response.data);
+
+      map.current.on("load", () => {
+        map.current.addSource("test-CL", {
+          type: "geojson",
+          data: response.data,
+        });
+
+        map.current.addLayer({
+          id: "test-CL",
+          type: "line",
+          source: "test-CL",
+          layout: {
+            "line-join": "round",
+            "line-cap": "round",
+          },
+          paint: {
+            "line-color": "#f54242",
+            "line-width": 4,
+          },
+        });
+
+        map.current.addSource("mousePos", {
+          type: "geojson",
+          data: {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [0, 0],
+            },
+          },
+        });
+        map.current.addLayer({
+          id: "mousePos",
+          type: "circle",
+          source: "mousePos",
+          // paint: {
+          //   "circle-radius": 10,
+          //   "circle-color": "#F84C4C", // red color
+          // },
+        });
+      });
+    });
+  }, []);
+
+  // Add event listeners
   useEffect(() => {
     if (!map.current) return; // wait for map to initialize
     map.current.on("move", () => {
@@ -33,7 +87,12 @@ export default function Map() {
       setZoom(map.current.getZoom().toFixed(2));
     });
 
-
+    map.current.on("mousemove", (e) => {
+      if (!CL) return;
+      const mouse = turf.point([e.lngLat.lng, e.lngLat.lat]);
+      const snapped = turf.nearestPointOnLine(CL,mouse)
+      map.current.getSource("mousePos").setData(turf.truncate(snapped));
+    });
   });
 
   return (
