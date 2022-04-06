@@ -4,9 +4,11 @@ const PORT = process.env.PORT || 8080;
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
+const cors = require("cors");
 const fs = require("fs");
 
 app.use(morgan("dev"));
+app.use(cors())
 
 app.get("/", (req, res) => {
   res.send("hello world");
