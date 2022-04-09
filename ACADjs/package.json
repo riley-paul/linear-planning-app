@@ -1,0 +1,27 @@
+{
+  "name": "acad",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rjp301/ACADjs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rjp301/ACADjs/issues"
+  },
+  "homepage": "https://github.com/rjp301/ACADjs#readme",
+  "dependencies": {
+    "@turf/turf": "^6.5.0",
+    "danfojs-node": "^1.1.0"
+  },
+  "devDependencies": {
+    "node-pre-gyp": "^0.17.0"
+  }
+}
