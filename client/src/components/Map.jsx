@@ -7,8 +7,10 @@ import mapboxgl from "mapbox-gl";
 
 import "./Map.scss";
 
-mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_PK;
-const API_URL = process.env.REACT_APP_API_URL;
+// mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_PK;
+// const API_URL = process.env.REACT_APP_API_URL;
+mapboxgl.accessToken = "pk.eyJ1IjoicmpwMzAxIiwiYSI6ImNsMWdwdjF6YjFjN2EzZHBjeWl4MnUyeXUifQ.s-5QTZX7xeofw36iclsJZA";
+const API_URL = "http://localhost:8080";
 
 export default function Map() {
   const mapContainer = useRef(null);
@@ -144,6 +146,7 @@ export default function Map() {
       const mouse = turf.point([e.lngLat.lng, e.lngLat.lat]);
       const snapped = turf.nearestPointOnLine(CL, mouse);
       map.current.getSource("mousePos").setData(turf.truncate(snapped));
+      return;
     });
   });
 

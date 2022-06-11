@@ -7,26 +7,12 @@ const morgan = require("morgan");
 const cors = require("cors");
 const fs = require("fs");
 
+app.use(express.static("public"))
 app.use(morgan("dev"));
 app.use(cors())
 
 app.get("/", (req, res) => {
-  res.send("hello world");
-});
-
-app.get("/cl", (req, res) => {
-  const data = JSON.parse(fs.readFileSync("db/data/CNTRLINE.geojson"));
-  res.json(data);
-});
-
-app.get("/kps", (req, res) => {
-  const data = JSON.parse(fs.readFileSync("db/data/MRKRS.geojson"));
-  res.json(data);
-});
-
-app.get("/footprint", (req, res) => {
-  const data = JSON.parse(fs.readFileSync("db/data/FTPRINT.geojson"));
-  res.json(data);
+  res.send("Welcome to the file server");
 });
 
 app.listen(PORT, () => {
