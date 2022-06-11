@@ -10,7 +10,7 @@ import "./Map.scss";
 // mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_PK;
 // const API_URL = process.env.REACT_APP_API_URL;
 mapboxgl.accessToken = "pk.eyJ1IjoicmpwMzAxIiwiYSI6ImNsMWdwdjF6YjFjN2EzZHBjeWl4MnUyeXUifQ.s-5QTZX7xeofw36iclsJZA";
-const API_URL = "http://localhost:8080";
+const API_URL = "http://localhost:8080/projects";
 
 export default function Map() {
   const mapContainer = useRef(null);
@@ -37,9 +37,9 @@ export default function Map() {
   useEffect(() => {
     if (!map.current) return; // wait for map to initialize
     Promise.all([
-      axios.get(`${API_URL}/cl`),
-      axios.get(`${API_URL}/kps`),
-      axios.get(`${API_URL}/footprint`),
+      axios.get(`${API_URL}/CNTRLINE.geojson`),
+      axios.get(`${API_URL}/MRKRS.geojson`),
+      axios.get(`${API_URL}/FTPRINT.geojson`),
     ])
       .then((all) => {
         const cl = all[0].data;
