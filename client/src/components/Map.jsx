@@ -107,23 +107,26 @@ export default function Map() {
             },
           });
 
-          // map.current.addSource("mousePos", {
-          //   type: "geojson",
-          //   data: {
-          //     type: "Feature",
-          //     geometry: {
-          //       type: "Point",
-          //       coordinates: [0, 0],
-          //     },
-          //   },
-          // });
+          map.current.addSource("mousePos", {
+            type: "geojson",
+            data: {
+              type: "Feature",
+              geometry: {
+                type: "Point",
+                coordinates: [0, 0],
+              },
+            },
+          });
 
-          // map.current.addLayer({
-          //   id: "mousePos",
-          //   type: "circle",
-          //   source: "mousePos",
-          //   ...styling,
-          // });
+          map.current.addLayer({
+            id: "mousePos",
+            type: "circle",
+            source: "mousePos",
+            paint: {
+              "circle-stroke-width": 3,
+              "circle-stroke-color": "#ffffff",
+            },
+          });
         });
       })
       .catch((err) => {
