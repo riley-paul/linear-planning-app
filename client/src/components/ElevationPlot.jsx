@@ -11,20 +11,20 @@ export default function ElevationPlot(props) {
     d3.csv("http://localhost:8080/projects/elevation_profile_reduced.csv").then(
       (dataset) => {
         setData(dataset);
-        console.log("dataset queried")
+        console.log("dataset queried");
       }
     );
   }, []);
 
-  const options = {
-    x: (d) => d.chainage * 1,
-    y: (d) => d.elevation * 1,
-    xType: d3.scaleLinear,
-    color: "red",
-    yLabel: "↑ Elevation (m)",
-    // width: bounds.width,
-    height: 200,
-  };
+  // const options = {
+  //   x: (d) => d.chainage * 1,
+  //   y: (d) => d.elevation * 1,
+  //   xType: d3.scaleLinear,
+  //   color: "red",
+  //   yLabel: "↑ Elevation (m)",
+  //   // width: bounds.width,
+  //   height: 200,
+  // };
 
   return (
     <LineChart
@@ -34,8 +34,10 @@ export default function ElevationPlot(props) {
         height: 400,
       }}
       axisProps={{
-        xLabel: "X Axis",
-        yLabel: "Y Axis",
+        x: (d) => d.chainage * 1,
+        y: (d) => d.elevation * 1,
+        xLabel: "Chainage",
+        yLabel: "Elevation",
       }}
       data={data}
       pointWidth={4}

@@ -21,8 +21,8 @@ function drawLineChart(props) {
 
   const line = d3
     .line()
-    .x((d) => xScale(d.label))
-    .y((d) => yScale(d.value))
+    .x((d) => xScale(d.chainage))
+    .y((d) => yScale(d.elevation))
     .curve(d3.curveMonotoneX);
 
   svg
