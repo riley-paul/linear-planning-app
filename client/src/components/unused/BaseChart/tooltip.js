@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import classnames from 'classnames';
-import { scaleBandInvert } from '../../utils/invertScale';
+import { scaleBandInvert } from '../../../utils/invertScale';
 
 function drawTooltip(config) {
   const {

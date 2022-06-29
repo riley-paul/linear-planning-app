@@ -16,31 +16,16 @@ export default function ElevationPlot(props) {
     );
   }, []);
 
-  // const options = {
-  //   x: (d) => d.chainage * 1,
-  //   y: (d) => d.elevation * 1,
-  //   xType: d3.scaleLinear,
-  //   color: "red",
-  //   yLabel: "↑ Elevation (m)",
-  //   // width: bounds.width,
-  //   height: 200,
-  // };
+  const options = {
+    x: (d) => d.chainage * 1,
+    y: (d) => d.elevation * 1,
+    xType: d3.scaleLinear,
+    color: "red",
+    yLabel: "↑ Elevation (m)",
+    // width: bounds.width,
+    height: 200,
+    curve: d3.curveMonotoneX,
+  };
 
-  return (
-    <LineChart
-      svgProps={{
-        margin: { top: 80, bottom: 80, left: 80, right: 80 },
-        width: 600,
-        height: 400,
-      }}
-      axisProps={{
-        x: (d) => d.chainage * 1,
-        y: (d) => d.elevation * 1,
-        xLabel: "Chainage",
-        yLabel: "Elevation",
-      }}
-      data={data}
-      pointWidth={4}
-    />
-  );
+  return <LineChart data={data} options={options} />;
 }

@@ -1,4 +1,4 @@
-import BaseChart from '../BaseChart';
+import BaseChart from '../../BaseChart';
 import classnames from 'classnames';
 import * as d3 from 'd3';
 

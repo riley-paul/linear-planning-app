@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
+import { useRect } from "../hooks/useRect";
 import * as d3 from "d3";
 
 export default function LineChart(props) {
   const data = props.data;
+  const svgRef = React.useRef(null);
+  const rect = useRect(svgRef)
+  console.log(rect)
+
+  // const ref = useRef(null)
+
   let {
-    x = ([x]) => x, // given d in data, returns the (temporal) x-value
-    y = ([, y]) => y, // given d in data, returns the (quantitative) y-value
+    x = (d) => d.x, // given d in data, returns the (temporal) x-value
+    y = (d) => d.y, // given d in data, returns the (quantitative) y-value
     xString = (i) =>
       i.toLocaleString("en-US", {
         minimumFractionDigits: 0,
@@ -21,8 +28,8 @@ export default function LineChart(props) {
     marginRight = 40, // right margin, in pixels
     marginBottom = 30, // bottom margin, in pixels
     marginLeft = 40, // left margin, in pixels
-    width = 640, // outer width, in pixels
-    height = 400, // outer height, in pixels
+    width = 600, // outer width, in pixels
+    height = 200, // outer height, in pixels
     xType = d3.scaleUtc, // the x-scale type
     xDomain, // [xmin, xmax]
     xRange = [marginLeft, width - marginRight], // [left, right]
@@ -38,9 +45,8 @@ export default function LineChart(props) {
     strokeOpacity = 1, // stroke opacity of line
   } = props.options;
 
-  const svgRef = React.useRef(null);
 
-  React.useEffect(() => {
+  const drawChart = () => {
     // Compute values.
     const X = data.map(x);
     const Y = data.map(y);
@@ -69,17 +75,19 @@ export default function LineChart(props) {
 
     const svg = d3.select(svgRef.current);
     svg.selectAll("*").remove();
+    // const rect.width = width || svgRef.current.getBoundingClientRect().width;
+    // const rect.height = height || svgRef.current.getBoundingClientRect().height;
 
     svg
-      .attr("width", width)
-      .attr("height", height)
-      .attr("viewBox", [0, 0, width, height])
+      .attr("width", rect.width)
+      .attr("height", rect.height)
+      .attr("viewBox", [0, 0, rect.width, rect.height])
       .attr("style", "max-width: 100%; height: auto; height: intrinsic;");
 
     // x-axis
     svg
       .append("g")
-      .attr("transform", `translate(0,${height - marginBottom})`)
+      .attr("transform", `translate(0,${rect.height - marginBottom})`)
       .call(xAxis);
 
     // left y-axis, y-label and grid-lines
@@ -157,7 +165,7 @@ export default function LineChart(props) {
       .style("fill", "none")
       .style("pointer-events", "all")
       .attr("width", width)
-      .attr("height", height)
+      .attr("height", rect.height)
       .on("mouseover", mouseover)
       .on("mousemove", mousemove)
       .on("mouseout", mouseout);
@@ -184,7 +192,9 @@ export default function LineChart(props) {
       focus.style("opacity", 0);
       focusText.style("opacity", 0);
     }
-  }, [data]);
+  };
 
-  return <svg ref={svgRef} width={width} height={height} />;
+  React.useEffect(drawChart, [data, rect]);
+
+  return <svg ref={svgRef} width={rect.width} height={rect.height} />;
 }
