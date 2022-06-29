@@ -1,6 +1,6 @@
 import React from "react";
 import * as d3 from "d3";
-import LineChart from "./LineChart";
+import LineChart from "./LineChart.js";
 import { useState } from "react";
 import { useEffect } from "react";
 
