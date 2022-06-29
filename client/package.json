@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@turf/turf": "^6.5.0",
     "axios": "^0.26.1",
+    "classnames": "^2.3.1",
     "d3": "^7.4.4",
     "maki": "^2.1.0",
     "mapbox-gl": "^2.7.1",

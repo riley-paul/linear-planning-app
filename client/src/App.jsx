@@ -4,8 +4,10 @@ import Map from "./components/Map";
 export default function App() {
   return (
     <div className="App">
-      <ElevationPlot />
-      <Map />
+      <ElevationPlot
+
+      />
+      {/* <Map /> */}
     </div>
   );
 }

@@ -159,7 +159,7 @@ export default function LineChart(props) {
       .attr("width", width)
       .attr("height", height)
       .on("mouseover", mouseover)
-      // .on("mousemove", mousemove)
+      .on("mousemove", mousemove)
       .on("mouseout", mouseout);
 
     function mouseover() {
@@ -169,16 +169,16 @@ export default function LineChart(props) {
 
     const bisect = d3.bisector(x).left;
 
-    // function mousemove() {
-    //   const x0 = xScale.invert(d3.mouse(this)[0]);
-    //   const i = bisect(data, x0);
-    //   const selectedData = data[i];
-    //   focus
-    //     .attr("cx", xScale(x(selectedData)))
-    //     .attr("cy", yScale(y(selectedData)));
-    //   focusTextX.text(xString(x(selectedData)));
-    //   focusTextY.text(yString(y(selectedData)));
-    // }
+    function mousemove() {
+      const x0 = xScale.invert(d3.pointer(this)[0]);
+      const i = bisect(data, x0);
+      const selectedData = data[i];
+      focus
+        .attr("cx", xScale(x(selectedData)))
+        .attr("cy", yScale(y(selectedData)));
+      focusTextX.text(xString(x(selectedData)));
+      focusTextY.text(yString(y(selectedData)));
+    }
 
     function mouseout() {
       focus.style("opacity", 0);
