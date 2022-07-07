@@ -3,12 +3,12 @@ import Axis from "./components/Plot/Axis";
 
 export default function App() {
   return (
-    <div className="App">
+    <div className="App" style={{margin: "10px"}}>
       <svg>
         <Axis
           range={[0, 200]}
           domain={[1000, 1500]}
-          options={{ side: "left" }}
+          options={{ side: "right" }}
         />
       </svg>
       {/* <Map />   */}
