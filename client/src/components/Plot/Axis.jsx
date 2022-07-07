@@ -15,6 +15,8 @@ export default function Axis(props) {
     pixelsPerTick = 30,
     side = "bottom",
     transform = "",
+    includeDomain = true,
+    gridLines,
   } = options;
 
   const sideParams = {
@@ -24,6 +26,7 @@ export default function Axis(props) {
       transformGroup: (offset) => `translate(${offset},0)`,
       textCoords: [0, 9],
       tickCoords: [0, 6],
+      gridCoords: [0, -gridLines],
       labelDy: "0.71em",
     },
     top: {
@@ -32,22 +35,25 @@ export default function Axis(props) {
       transformGroup: (offset) => `translate(${offset},0)`,
       textCoords: [0, 9],
       tickCoords: [0, -6],
+      gridCoords: [0, gridLines],
       labelDy: "0.71em",
     },
     right: {
-      textAnchor: "left",
+      textAnchor: "start",
       lineCoords: [0, range[0], 0, range[1]],
       transformGroup: (offset) => `translate(0,${offset})`,
       textCoords: [9, 0],
       tickCoords: [6, 0],
+      gridCoords: [-gridLines, 0],
       labelDy: "0.32em",
     },
     left: {
-      textAnchor: "left",
+      textAnchor: "end",
       lineCoords: [0, range[0], 0, range[1]],
       transformGroup: (offset) => `translate(0,${offset})`,
       textCoords: [-9, 0],
       tickCoords: [-6, 0],
+      gridCoords: [gridLines, 0],
       labelDy: "0.32em",
     },
   };
@@ -68,14 +74,16 @@ export default function Axis(props) {
 
   return (
     <g transform={transform}>
-      <line
-        stroke="currentColor"
-        className="domain"
-        x1={sideParam.lineCoords[0]}
-        y1={sideParam.lineCoords[1]}
-        x2={sideParam.lineCoords[2]}
-        y2={sideParam.lineCoords[3]}
-      ></line>
+      {includeDomain && (
+        <line
+          stroke="currentColor"
+          className="domain"
+          x1={sideParam.lineCoords[0]}
+          y1={sideParam.lineCoords[1]}
+          x2={sideParam.lineCoords[2]}
+          y2={sideParam.lineCoords[3]}
+        />
+      )}
       {ticks.map(({ value, offset }) => (
         <g
           key={value}
@@ -86,7 +94,15 @@ export default function Axis(props) {
             x2={sideParam.tickCoords[0]}
             y2={sideParam.tickCoords[1]}
             stroke="currentColor"
-          ></line>
+          />
+          {gridLines && (
+            <line
+              x2={sideParam.gridCoords[0]}
+              y2={sideParam.gridCoords[1]}
+              stroke="currentColor"
+              strokeOpacity={0.1}
+            />
+          )}
           <text
             key={value}
             x={sideParam.textCoords[0]}

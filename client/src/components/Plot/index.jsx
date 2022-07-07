@@ -55,6 +55,7 @@ export default function Plot(props) {
           side: "bottom",
           transform: `translate(0,${height - margin.bottom})`,
           pixelsPerTick: 80,
+          gridLines: height - margin.top - margin.bottom,
         }}
       ></Axis>
       <Axis
@@ -63,6 +64,8 @@ export default function Plot(props) {
         options={{
           side: "left",
           transform: `translate(${margin.left},0)`,
+          includeDomain: false,
+          gridLines: width - margin.right - margin.left,
         }}
       ></Axis>
       <Axis
@@ -71,6 +74,7 @@ export default function Plot(props) {
         options={{
           side: "right",
           transform: `translate(${width - margin.right},0)`,
+          includeDomain: false,
         }}
       ></Axis>
     </svg>
