@@ -2,12 +2,22 @@ import * as d3 from "d3";
 import { useMemo } from "react";
 
 export default function Axis(props) {
-  const { domain, range } = props;
+  const { domain, range, options = {} } = props;
+
+  const {
+    scaleType = d3.scaleLinear,
+    stringFunc = (i) =>
+      i.toLocaleString("en-US", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      }),
+    pixelsPerTick = 30,
+    side = "bottom",
+  } = options;
 
   const ticks = useMemo(() => {
-    const scale = d3.scaleLinear().domain(domain).range(range);
-    const width = Math.abs(range[1] - range[0]);
-    const pixelsPerTick = 30;
+    const scale = scaleType().domain(domain).range(range);
+    const width = range[1] - range[0];
     const numberOfTicksTarget = Math.max(1, Math.floor(width / pixelsPerTick));
     return scale
       .ticks(numberOfTicksTarget)
@@ -29,7 +39,7 @@ export default function Axis(props) {
               transform: "translateY(20px)",
             }}
           >
-            {value}
+            {stringFunc(value)}
           </text>
         </g>
       ))}

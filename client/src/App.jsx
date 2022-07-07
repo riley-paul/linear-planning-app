@@ -1,4 +1,4 @@
-import Axis from "./components/Axis";
+import Axis from "./components/Plot/Axis";
 import Map from "./components/Map";
 
 export default function App() {
