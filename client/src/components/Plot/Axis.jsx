@@ -14,6 +14,7 @@ export default function Axis(props) {
       }),
     pixelsPerTick = 30,
     side = "bottom",
+    transform = "",
   } = options;
 
   const sideParams = {
@@ -21,33 +22,33 @@ export default function Axis(props) {
       textAnchor: "middle",
       lineCoords: [range[0], 0, range[1], 0],
       transformGroup: (offset) => `translate(${offset},0)`,
-      transformLabel: "translateY(20px)",
+      textCoords: [0, 9],
       tickCoords: [0, 6],
-      labelDy: "0px",
+      labelDy: "0.71em",
     },
     top: {
       textAnchor: "middle",
       lineCoords: [range[0], 0, range[1], 0],
       transformGroup: (offset) => `translate(${offset},0)`,
-      transformLabel: "translateY(-20px)",
+      textCoords: [0, 9],
       tickCoords: [0, -6],
-      labelDy: "0px",
+      labelDy: "0.71em",
     },
     right: {
       textAnchor: "left",
       lineCoords: [0, range[0], 0, range[1]],
       transformGroup: (offset) => `translate(0,${offset})`,
-      transformLabel: "translateX(20px)",
+      textCoords: [9, 0],
       tickCoords: [6, 0],
-      labelDy: "5px",
+      labelDy: "0.32em",
     },
     left: {
-      textAnchor: "right",
+      textAnchor: "left",
       lineCoords: [0, range[0], 0, range[1]],
       transformGroup: (offset) => `translate(0,${offset})`,
-      transformLabel: "translateX(-20px)",
+      textCoords: [-9, 0],
       tickCoords: [-6, 0],
-      labelDy: "5px",
+      labelDy: "0.32em",
     },
   };
 
@@ -56,8 +57,9 @@ export default function Axis(props) {
   // create scale and determine ticks
   const ticks = useMemo(() => {
     const scale = scaleType().domain(domain).range(range);
-    const width = range[1] - range[0];
-    const numberOfTicksTarget = Math.max(1, Math.floor(width / pixelsPerTick));
+    const width = Math.abs(range[1] - range[0]);
+    // const numberOfTicksTarget = Math.max(1, Math.floor(width / pixelsPerTick));
+    const numberOfTicksTarget = width / pixelsPerTick;
     return scale
       .ticks(numberOfTicksTarget)
       .map((value) => ({ value, offset: scale(value) }));
@@ -65,7 +67,7 @@ export default function Axis(props) {
   }, [domain.join("-"), range.join("-")]);
 
   return (
-    <g transform="translate(5,5)">
+    <g transform={transform}>
       <line
         stroke="currentColor"
         className="domain"
@@ -87,10 +89,11 @@ export default function Axis(props) {
           ></line>
           <text
             key={value}
+            x={sideParam.textCoords[0]}
+            y={sideParam.textCoords[1]}
             style={{
               fontSize: "10px",
               textAnchor: sideParam.textAnchor,
-              transform: sideParam.transformLabel,
             }}
             dy={sideParam.labelDy}
           >
