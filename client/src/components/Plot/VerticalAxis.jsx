@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import { useMemo } from "react";
 
-export default function Axis(props) {
+export default function VerticalAxis(props) {
   const { domain, range, options = {} } = props;
 
   const {
@@ -12,7 +12,6 @@ export default function Axis(props) {
         maximumFractionDigits: 0,
       }),
     pixelsPerTick = 30,
-    side = "bottom",
   } = options;
 
   const ticks = useMemo(() => {
