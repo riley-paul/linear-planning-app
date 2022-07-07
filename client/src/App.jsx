@@ -1,13 +1,13 @@
-import ElevationPlot from "./components/ElevationPlot";
+import Axis from "./components/Axis";
 import Map from "./components/Map";
 
 export default function App() {
   return (
     <div className="App">
-      <ElevationPlot
-
-      />
-      {/* <Map /> */}
+      <svg>
+        <Axis range={[0, 200]} domain={[1000, 1500]} />
+      </svg>
+      {/* <Map />   */}
     </div>
   );
 }

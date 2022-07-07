@@ -5,7 +5,7 @@ import * as turf from "@turf/turf";
 import axios from "axios";
 import mapboxgl from "mapbox-gl";
 
-import "./Map.scss";
+import "./index.scss";
 
 // mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_PK;
 // const API_URL = process.env.REACT_APP_API_URL;
