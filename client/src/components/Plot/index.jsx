@@ -1,5 +1,4 @@
 import * as d3 from "d3";
-import Axis from "./Axis";
 
 export default function Plot(props) {
   const {
@@ -32,6 +31,5 @@ export default function Plot(props) {
   const I = d3.range(X.length);
 
   return <svg>
-    <Axis></Axis>
   </svg>;
 }
