@@ -1,6 +1,8 @@
 import * as d3 from "d3";
 import Axis from "./Axis";
 
+import formatKP from "../../helpers/formatKP";
+
 export default function Plot(props) {
   const {
     data = { elevation: [], ranges: [] },
@@ -53,7 +55,7 @@ export default function Plot(props) {
           side: "bottom",
           transform: `translate(0,${height - margin.bottom})`,
           pixelsPerTick: 80,
-          // gridLines: height - margin.top - margin.bottom,
+          stringFunc: formatKP,
         }}
       />
       <Axis

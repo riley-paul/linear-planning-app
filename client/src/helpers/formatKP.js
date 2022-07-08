@@ -1,3 +1,5 @@
+const numeral = require("numeral");
+
 export default function formatKP(number) {
   const num = number * 1;
   const postPlus = num % 1000;
