@@ -7,6 +7,7 @@ import formatElevation from "../../helpers/formatElevation";
 
 import { useState } from "react";
 import { useEffect } from "react";
+import PanZoom from "./PanZoom";
 
 export default function Plot(props) {
   const {
@@ -14,7 +15,6 @@ export default function Plot(props) {
     x = ([x]) => x, // given d in data, returns the (temporal) x-value
     y = ([, y]) => y, // given d in data, returns the (quantitative) y-value
     curve = d3.curveLinear, // method of interpolation between points
-    rangeHeight = 16,
     margin = { top: 30, right: 60, left: 40, bottom: 30 },
     width = 600, // outer width, in pixels
     height = 200, // outer height, in pixels
@@ -49,27 +49,8 @@ export default function Plot(props) {
     .x((i) => xScale(X[i]))
     .y((i) => yScale(Y[i]));
 
-  function zoom(event) {
-    const mouseX = event.nativeEvent.offsetX;
-    const valueX = xScale.invert(mouseX);
-    const factor = 1 - 1.3 / -event.nativeEvent.deltaY;
-
-    setXDomain((prev) => {
-      const w1 = Math.abs(valueX - prev[0]);
-      const w2 = Math.abs(valueX - prev[1]);
-
-      const newW1 = w1 * factor;
-      const newW2 = w2 * factor;
-
-      return [
-        Math.max(xExtent[0], valueX - newW1),
-        Math.min(xExtent[1], valueX + newW2),
-      ];
-    });
-  }
-
   return (
-    <div className="pan-zoom" onWheel={zoom}>
+    <PanZoom xScale={xScale} xExtent={xExtent} setXDomain={setXDomain}>
       <svg
         width={width}
         height={height}
@@ -139,6 +120,6 @@ export default function Plot(props) {
           yString={formatElevation}
         />
       </svg>
-    </div>
+    </PanZoom>
   );
 }
