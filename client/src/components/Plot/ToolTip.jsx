@@ -25,10 +25,11 @@ export default function ToolTip(props) {
         }}
       />
       {displayTip && (
-        <g transform={`translate(${mouseCoords.x + 10},${mouseCoords.y})`}>
-          <text fontSize="10px">
-            <tspan x="0">{xString(xScale.invert(mouseCoords.x))}</tspan>
-            <tspan x="0" dy="1.2em">
+        <g transform={`translate(${mouseCoords.x},0)`} pointerEvents="none">
+          <line stroke="currentcolor" y2={height - margin.bottom} strokeWidth={0.5} strokeOpacity={0.5}/>
+          <text fontSize="10px" transform="translate(0,10)">
+            <tspan x="5">{xString(xScale.invert(mouseCoords.x))}</tspan>
+            <tspan x="5" dy="1.2em">
               {yString(yScale.invert(mouseCoords.y))}
             </tspan>
           </text>

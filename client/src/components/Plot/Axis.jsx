@@ -101,6 +101,7 @@ export default function Axis(props) {
               y2={sideParam.gridCoords[1]}
               stroke="currentColor"
               strokeOpacity={0.1}
+              strokeDasharray="10,10"
             />
           )}
           <text

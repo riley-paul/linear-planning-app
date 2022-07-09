@@ -3,23 +3,20 @@ import Axis from "./Axis";
 import ToolTip from "./ToolTip";
 
 import formatKP from "../../helpers/formatKP";
+import formatElevation from "../../helpers/formatElevation";
 
 export default function Plot(props) {
   const {
     data = { elevation: [], ranges: [] },
     x = ([x]) => x, // given d in data, returns the (temporal) x-value
     y = ([, y]) => y, // given d in data, returns the (quantitative) y-value
-    xString,
-    yString,
     curve = d3.curveLinear, // method of interpolation between points
     rangeHeight = 16,
-    margin = { top: 20, right: 40, left: 40, bottom: 30 },
+    margin = { top: 30, right: 60, left: 40, bottom: 30 },
     width = 600, // outer width, in pixels
     height = 200, // outer height, in pixels
     xType = d3.scaleLinear, // the x-scale type
     yType = d3.scaleLinear, // the y-scale type
-    yFormat, // a format specifier string for the y-axis
-    yLabel, // a label for the y-axis
     color = "red", // stroke color of line
   } = props;
 
@@ -48,6 +45,8 @@ export default function Plot(props) {
       height={height}
       viewBox={[0, 0, width, height].join(",")}
       style={{ maxWidth: "100%", height: "auto intrinsic" }}
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
       <Axis
         domain={xDomain}
@@ -83,8 +82,6 @@ export default function Plot(props) {
         d={drawLine(I)}
         fill="none"
         stroke={color}
-        strokeLinecap="round"
-        strokeLinejoin="round"
         strokeWidth={1.5}
       />
       <ToolTip
@@ -94,7 +91,7 @@ export default function Plot(props) {
         xScale={xScale}
         yScale={yScale}
         xString={formatKP}
-        yString={yString}
+        yString={formatElevation}
       />
     </svg>
   );
