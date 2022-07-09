@@ -52,16 +52,20 @@ export default function Plot(props) {
   function zoom(event) {
     const mouseX = event.nativeEvent.offsetX;
     const valueX = xScale.invert(mouseX);
-    const deltaY = event.nativeEvent.deltaY * 10;
+    const factor = 1 - 1.3 / -event.nativeEvent.deltaY;
 
-    const midPoint = (xDomain[0] + xDomain[1]) / 2;
+    setXDomain((prev) => {
+      const w1 = Math.abs(valueX - prev[0]);
+      const w2 = Math.abs(valueX - prev[1]);
 
-    setXDomain((prev) => [
-      Math.max(xExtent[0], prev[0] - deltaY),
-      Math.min(xExtent[1], prev[1] + deltaY),
-    ]);
+      const newW1 = w1 * factor;
+      const newW2 = w2 * factor;
 
-    console.log(xDomain);
+      return [
+        Math.max(xExtent[0], valueX - newW1),
+        Math.min(xExtent[1], valueX + newW2),
+      ];
+    });
   }
 
   return (
