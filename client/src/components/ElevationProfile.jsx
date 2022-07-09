@@ -43,6 +43,7 @@ export default function ElevationProfile(props) {
       ref.current && setRectWidth(ref.current.offsetWidth);
     };
 
+    handleResize()
     window.addEventListener("resize", handleResize);
   },[]);
 

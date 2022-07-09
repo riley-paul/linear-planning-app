@@ -1,19 +1,15 @@
-require("dotenv").config();
-
-const PORT = process.env.PORT || 8080;
 const express = require("express");
 const app = express();
-const morgan = require("morgan");
-const cors = require("cors");
-const fs = require("fs");
+const cors = require('cors')
 
-app.use(cors())
-app.use(morgan("dev"));
-app.use(express.static("public"))
+const PORT = 3000;
 
 app.get("/", (req, res) => {
-  res.send("Welcome to the file server");
+  res.send("Hello World");
 });
+
+app.use(cors())
+app.use(express.static("data"));
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);

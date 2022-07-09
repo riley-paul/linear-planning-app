@@ -48,14 +48,15 @@ export default function Plot(props) {
     .y((i) => yScale(Y[i]));
 
   function zoom(event) {
-    const mouseX = event.nativeEvent.offsetX
-    const valueX = xScale.invert(mouseX)
+    const mouseX = event.nativeEvent.offsetX;
+    const valueX = xScale.invert(mouseX);
 
-    console.log(valueX);
+    // console.log(event);
+    console.log(valueX, event.nativeEvent.deltaY);
   }
 
   return (
-    <div onWheel={zoom}>
+    <div className="pan-zoom" onWheel={zoom}>
       <svg
         width={width}
         height={height}
