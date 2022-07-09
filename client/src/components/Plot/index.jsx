@@ -30,9 +30,11 @@ export default function Plot(props) {
   const xRange = [margin.left, width - margin.right];
   const yRange = [height - margin.bottom, margin.top];
 
+  const xExtent = d3.extent(X);
+
   const [xDomain, setXDomain] = useState([null, null]);
   useEffect(
-    () => setXDomain(d3.extent(X)),
+    () => setXDomain(xExtent),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [data.elevation]
   );
@@ -50,9 +52,16 @@ export default function Plot(props) {
   function zoom(event) {
     const mouseX = event.nativeEvent.offsetX;
     const valueX = xScale.invert(mouseX);
+    const deltaY = event.nativeEvent.deltaY * 10;
 
-    // console.log(event);
-    console.log(valueX, event.nativeEvent.deltaY);
+    const midPoint = (xDomain[0] + xDomain[1]) / 2;
+
+    setXDomain((prev) => [
+      Math.max(xExtent[0], prev[0] - deltaY),
+      Math.min(xExtent[1], prev[1] + deltaY),
+    ]);
+
+    console.log(xDomain);
   }
 
   return (
