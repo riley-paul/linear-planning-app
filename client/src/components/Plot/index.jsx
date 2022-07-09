@@ -5,6 +5,9 @@ import ToolTip from "./ToolTip";
 import formatKP from "../../helpers/formatKP";
 import formatElevation from "../../helpers/formatElevation";
 
+import { useState } from "react";
+import { useEffect } from "react";
+
 export default function Plot(props) {
   const {
     data = { elevation: [], ranges: [] },
@@ -27,7 +30,12 @@ export default function Plot(props) {
   const xRange = [margin.left, width - margin.right];
   const yRange = [height - margin.bottom, margin.top];
 
-  const xDomain = d3.extent(X);
+  const [xDomain, setXDomain] = useState([null, null]);
+  useEffect(
+    () => setXDomain(d3.extent(X)),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [data.elevation]
+  );
   const yDomain = [0, d3.max(Y)];
 
   const xScale = xType(xDomain, xRange);
@@ -39,63 +47,84 @@ export default function Plot(props) {
     .x((i) => xScale(X[i]))
     .y((i) => yScale(Y[i]));
 
+  function zoom(event) {
+    const mouseX = event.nativeEvent.offsetX
+    const valueX = xScale.invert(mouseX)
+
+    console.log(valueX);
+  }
+
   return (
-    <svg
-      width={width}
-      height={height}
-      viewBox={[0, 0, width, height].join(",")}
-      style={{ maxWidth: "100%", height: "auto intrinsic" }}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <Axis
-        domain={xDomain}
-        range={xRange}
-        options={{
-          side: "bottom",
-          transform: `translate(0,${height - margin.bottom})`,
-          pixelsPerTick: 80,
-          stringFunc: formatKP,
-        }}
-      />
-      <Axis
-        domain={yDomain}
-        range={yRange}
-        options={{
-          side: "left",
-          transform: `translate(${margin.left},0)`,
-          includeDomain: false,
-          gridLines: width - margin.right - margin.left,
-        }}
-      />
-      <Axis
-        domain={yDomain}
-        range={yRange}
-        options={{
-          side: "right",
-          transform: `translate(${width - margin.right},0)`,
-          includeDomain: false,
-        }}
-      />
-      <path
-        className="line"
-        d={drawLine(I)}
-        fill="none"
-        stroke={color}
-        strokeWidth={1.5}
-      />
-      <ToolTip
-        xFunc={x}
-        yFunc={y}
-        data={data.elevation}
+    <div onWheel={zoom}>
+      <svg
         width={width}
         height={height}
-        margin={margin}
-        xScale={xScale}
-        yScale={yScale}
-        xString={formatKP}
-        yString={formatElevation}
-      />
-    </svg>
+        viewBox={[0, 0, width, height].join(",")}
+        style={{ maxWidth: "100%", height: "auto intrinsic" }}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <defs>
+          <clipPath id="clip">
+            <rect
+              x={margin.left}
+              y={margin.top}
+              width={width - margin.left - margin.right}
+              height={height - margin.top - margin.bottom}
+            />
+          </clipPath>
+        </defs>
+        <Axis
+          domain={xDomain}
+          range={xRange}
+          options={{
+            side: "bottom",
+            transform: `translate(0,${height - margin.bottom})`,
+            pixelsPerTick: 80,
+            stringFunc: formatKP,
+          }}
+        />
+        <Axis
+          domain={yDomain}
+          range={yRange}
+          options={{
+            side: "left",
+            transform: `translate(${margin.left},0)`,
+            includeDomain: false,
+            gridLines: width - margin.right - margin.left,
+          }}
+        />
+        <Axis
+          domain={yDomain}
+          range={yRange}
+          options={{
+            side: "right",
+            transform: `translate(${width - margin.right},0)`,
+            includeDomain: false,
+          }}
+        />
+        <g clipPath="url(#clip)">
+          <path
+            className="line"
+            d={drawLine(I)}
+            fill="none"
+            stroke={color}
+            strokeWidth={1.5}
+          />
+        </g>
+        <ToolTip
+          xFunc={x}
+          yFunc={y}
+          data={data.elevation}
+          width={width}
+          height={height}
+          margin={margin}
+          xScale={xScale}
+          yScale={yScale}
+          xString={formatKP}
+          yString={formatElevation}
+        />
+      </svg>
+    </div>
   );
 }

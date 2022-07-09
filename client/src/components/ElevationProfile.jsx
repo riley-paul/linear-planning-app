@@ -41,11 +41,10 @@ export default function ElevationProfile(props) {
   useEffect(() => {
     const handleResize = () => {
       ref.current && setRectWidth(ref.current.offsetWidth);
-      console.log(rectWidth);
     };
 
     window.addEventListener("resize", handleResize);
-  });
+  },[]);
 
   return (
     <div className="plot-container" ref={ref}>
