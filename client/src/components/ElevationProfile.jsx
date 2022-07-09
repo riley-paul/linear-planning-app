@@ -2,36 +2,9 @@ import * as d3 from "d3";
 import { useEffect, useState, useRef } from "react";
 import Plot from "./Plot";
 
-function debounce(fn, ms) {
-  let timer;
-  return () => {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      timer = null;
-      fn.apply(this, arguments);
-    }, ms);
-  };
-}
-
 export default function ElevationProfile(props) {
   const [data, setData] = useState({ elevation: [], ranges: [] });
-  // const [dimensions, setDimensions] = useState({
-  //   height: window.innerHeight,
-  //   width: window.innerWidth,
-  // });
 
-  // useEffect(() => {
-  //   const debouncedHandleResize = debounce(function handleResize() {
-  //     setDimensions({ height: window.innerHeight, width: window.innerWidth });
-  //   }, 1000);
-
-  //   window.addEventListener("resize", debouncedHandleResize);
-  //   return () => {
-  //     window.removeEventListener("resize", debouncedHandleResize);
-  //   };
-  // });
-
-  // fetch data from server
   useEffect(() => {
     Promise.all([
       d3.csv("http://localhost:3000/elevation_profile_reduced.csv"),

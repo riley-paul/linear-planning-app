@@ -1,5 +1,6 @@
 import * as d3 from "d3";
 import Axis from "./Axis";
+import ToolTip from "./ToolTip";
 
 import formatKP from "../../helpers/formatKP";
 
@@ -85,6 +86,15 @@ export default function Plot(props) {
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={1.5}
+      />
+      <ToolTip
+        width={width}
+        height={height}
+        margin={margin}
+        xScale={xScale}
+        yScale={yScale}
+        xString={formatKP}
+        yString={yString}
       />
     </svg>
   );
