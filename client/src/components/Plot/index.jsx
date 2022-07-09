@@ -85,6 +85,9 @@ export default function Plot(props) {
         strokeWidth={1.5}
       />
       <ToolTip
+        xFunc={x}
+        yFunc={y}
+        data={data.elevation}
         width={width}
         height={height}
         margin={margin}
