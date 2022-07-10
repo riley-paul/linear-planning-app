@@ -58,6 +58,8 @@ export default function Plot(props) {
         style={{ maxWidth: "100%", height: "auto intrinsic" }}
         strokeLinecap="round"
         strokeLinejoin="round"
+        fontFamily="sans-serif"
+        fontSize={10}
       >
         <defs>
           <clipPath id="clip">
