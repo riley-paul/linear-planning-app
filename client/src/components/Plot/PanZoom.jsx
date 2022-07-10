@@ -5,11 +5,13 @@ export default function PanZoom(props) {
   const ref = useRef(null);
 
   function zoom(event) {
+    if (!event.nativeEvent.deltaY) return;
+
     const mouseX = event.nativeEvent.offsetX;
     const valueX = xScale.invert(mouseX);
     const factor = 1 - 1.3 / -event.nativeEvent.deltaY;
 
-    const minWidth = 1000;
+    const minWidth = 300;
 
     setXDomain((prev) => {
       const w1 = Math.abs(valueX - prev[0]);
@@ -46,6 +48,7 @@ export default function PanZoom(props) {
   }
 
   function mouseMove(event) {
+    event.preventDefault();
     if (!isPanning) return;
 
     const mouseX = event.nativeEvent.offsetX;
@@ -53,12 +56,13 @@ export default function PanZoom(props) {
     const initialValueX = xScale.invert(initialMousePos.x);
 
     const deltaX = -(valueX - initialValueX);
-    console.log(deltaX);
 
-    setXDomain((prev) => [
-      initalXDomain[0] + deltaX,
-      initalXDomain[1] + deltaX,
-    ]);
+    const newDomain = [initalXDomain[0] + deltaX, initalXDomain[1] + deltaX];
+
+    const validDomain =
+      newDomain[0] >= xExtent[0] && newDomain[1] <= xExtent[1];
+
+    setXDomain((prev) => (validDomain ? newDomain : prev));
   }
 
   function mouseUp(event) {
