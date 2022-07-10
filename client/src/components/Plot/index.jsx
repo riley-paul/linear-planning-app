@@ -1,13 +1,16 @@
 import * as d3 from "d3";
+
 import Axis from "./Axis";
 import ToolTip from "./ToolTip";
+import PanZoom from "./PanZoom";
+import RangeBar from "./RangeBar";
+import Loading from "./Loading";
 
 import formatKP from "../../helpers/formatKP";
 import formatElevation from "../../helpers/formatElevation";
 
 import { useState } from "react";
 import { useEffect } from "react";
-import PanZoom from "./PanZoom";
 
 export default function Plot(props) {
   const {
@@ -18,6 +21,7 @@ export default function Plot(props) {
     margin = { top: 30, right: 60, left: 40, bottom: 30 },
     width = 600, // outer width, in pixels
     height = 200, // outer height, in pixels
+    rangeHeight = 16,
     xType = d3.scaleLinear, // the x-scale type
     yType = d3.scaleLinear, // the y-scale type
     color = "red", // stroke color of line
@@ -28,7 +32,10 @@ export default function Plot(props) {
   const I = d3.range(X.length);
 
   const xRange = [margin.left, width - margin.right];
-  const yRange = [height - margin.bottom, margin.top];
+  const yRange = [
+    height - margin.bottom - data.ranges.length * rangeHeight,
+    margin.top,
+  ];
 
   const xExtent = d3.extent(X);
 
@@ -49,8 +56,15 @@ export default function Plot(props) {
     .x((i) => xScale(X[i]))
     .y((i) => yScale(Y[i]));
 
-  return (
-    <PanZoom xScale={xScale} xExtent={xExtent} xDomain={xDomain} setXDomain={setXDomain}>
+  return !data.elevation.length ? (
+    <Loading width={width} height={height} />
+  ) : (
+    <PanZoom
+      xScale={xScale}
+      xExtent={xExtent}
+      xDomain={xDomain}
+      setXDomain={setXDomain}
+    >
       <svg
         width={width}
         height={height}
@@ -71,6 +85,30 @@ export default function Plot(props) {
             />
           </clipPath>
         </defs>
+
+        <g clipPath="url(#clip)">
+          <path
+            className="line"
+            d={drawLine(I)}
+            fill="none"
+            stroke={color}
+            strokeWidth={1.5}
+          />
+          {data.ranges.map((range, index) => (
+            <RangeBar
+              key={index}
+              rangeHeight={rangeHeight}
+              data={range}
+              xScale={xScale}
+              width={width}
+              margin={margin}
+              transform={`translate(0,${
+                height - margin.bottom - (index + 1) * rangeHeight
+              })`}
+            />
+          ))}
+        </g>
+
         <Axis
           domain={xDomain}
           range={xRange}
@@ -87,6 +125,7 @@ export default function Plot(props) {
           options={{
             side: "left",
             transform: `translate(${margin.left},0)`,
+            pixelsPerTick: 10,
             includeDomain: false,
             gridLines: width - margin.right - margin.left,
           }}
@@ -97,18 +136,11 @@ export default function Plot(props) {
           options={{
             side: "right",
             transform: `translate(${width - margin.right},0)`,
+            pixelsPerTick: 10,
             includeDomain: false,
           }}
         />
-        <g clipPath="url(#clip)">
-          <path
-            className="line"
-            d={drawLine(I)}
-            fill="none"
-            stroke={color}
-            strokeWidth={1.5}
-          />
-        </g>
+
         <ToolTip
           xFunc={x}
           yFunc={y}
