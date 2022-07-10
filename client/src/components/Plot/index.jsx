@@ -50,7 +50,7 @@ export default function Plot(props) {
     .y((i) => yScale(Y[i]));
 
   return (
-    <PanZoom xScale={xScale} xExtent={xExtent} setXDomain={setXDomain}>
+    <PanZoom xScale={xScale} xExtent={xExtent} xDomain={xDomain} setXDomain={setXDomain}>
       <svg
         width={width}
         height={height}
