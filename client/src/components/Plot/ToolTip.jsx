@@ -21,12 +21,14 @@ export default function ToolTip(props) {
 
   function mouseMove(e) {
     const mouseX = e.nativeEvent.offsetX;
-    const valueX = xScale.invert(mouseX)
-    const i = bisect(data, valueX);
+    const valueX = xScale.invert(mouseX);
+    const selectedData = data[bisect(data, valueX)];
+
+    if (!selectedData) return;
 
     setPointerCoords({
       x: mouseX,
-      y: yScale(yFunc(data[i])),
+      y: yScale(yFunc(selectedData)),
     });
   }
 
