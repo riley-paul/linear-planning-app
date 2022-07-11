@@ -16,15 +16,15 @@ export default function ElevationProfile(props) {
         elevation: all[0],
         ranges: [
           {
-            name: "Pipe Segmentation",
+            name: "Pipe Type",
             entries: all[1],
           },
           {
-            name: "Topsoil Depth",
+            name: "Topsoil",
             entries: all[2],
           },
           {
-            name: "Depth of Cover",
+            name: "Depth Cover",
             entries: all[3],
           },
         ],

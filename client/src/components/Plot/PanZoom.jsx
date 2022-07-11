@@ -9,7 +9,7 @@ export default function PanZoom(props) {
 
     const mouseX = event.nativeEvent.offsetX;
     const valueX = xScale.invert(mouseX);
-    const factor = 1 - 1.3 / -event.nativeEvent.deltaY;
+    const factor = 1 + 1 / event.nativeEvent.deltaY;
 
     const minWidth = 300;
 

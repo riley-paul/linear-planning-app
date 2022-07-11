@@ -18,9 +18,9 @@ export default function Plot(props) {
     x = ([x]) => x, // given d in data, returns the (temporal) x-value
     y = ([, y]) => y, // given d in data, returns the (quantitative) y-value
     curve = d3.curveLinear, // method of interpolation between points
-    margin = { top: 30, right: 60, left: 40, bottom: 30 },
+    margin = { top: 30, right: 60, left: 60, bottom: 30 },
     width = 600, // outer width, in pixels
-    height = 200, // outer height, in pixels
+    height = 240, // outer height, in pixels
     rangeHeight = 16,
     xType = d3.scaleLinear, // the x-scale type
     yType = d3.scaleLinear, // the y-scale type
@@ -106,6 +106,23 @@ export default function Plot(props) {
                 height - margin.bottom - (index + 1) * rangeHeight
               })`}
             />
+          ))}
+        </g>
+
+        <g
+          className="range-labels"
+          transform={`translate(${margin.left - 9},${
+            height - margin.bottom - rangeHeight * data.ranges.length
+          })`}
+        >
+          {data.ranges.map((range, index) => (
+            <text
+              y={rangeHeight * index + rangeHeight / 2}
+              dy="0.32em"
+              textAnchor="end"
+            >
+              {range.name}
+            </text>
           ))}
         </g>
 
