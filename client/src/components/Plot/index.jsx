@@ -4,7 +4,6 @@ import Axis from "./Axis";
 import ToolTip from "./ToolTip";
 import PanZoom from "./PanZoom";
 import RangeBar from "./RangeBar";
-import Loading from "./Loading";
 
 import formatKP from "../../helpers/formatKP";
 import formatElevation from "../../helpers/formatElevation";
@@ -21,7 +20,7 @@ export default function Plot(props) {
     margin = { top: 30, right: 60, left: 60, bottom: 30 },
     width = 600, // outer width, in pixels
     height = 240, // outer height, in pixels
-    rangeHeight = 16,
+    rangeHeight = 18,
     xType = d3.scaleLinear, // the x-scale type
     yType = d3.scaleLinear, // the y-scale type
     color = "red", // stroke color of line
@@ -56,9 +55,7 @@ export default function Plot(props) {
     .x((i) => xScale(X[i]))
     .y((i) => yScale(Y[i]));
 
-  return !data.elevation.length ? (
-    <Loading width={width} height={height} />
-  ) : (
+  return (
     <PanZoom
       xScale={xScale}
       xExtent={xExtent}
@@ -111,12 +108,13 @@ export default function Plot(props) {
 
         <g
           className="range-labels"
-          transform={`translate(${margin.left - 9},${
+          transform={`translate(${margin.left - 4},${
             height - margin.bottom - rangeHeight * data.ranges.length
           })`}
         >
           {data.ranges.map((range, index) => (
             <text
+              key={index}
               y={rangeHeight * index + rangeHeight / 2}
               dy="0.32em"
               textAnchor="end"

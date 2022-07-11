@@ -1,6 +1,7 @@
 import * as d3 from "d3";
 import { useEffect, useState, useRef } from "react";
 import Plot from "./Plot";
+import Loading from "./Plot/Loading";
 
 export default function ElevationProfile(props) {
   const [data, setData] = useState({ elevation: [], ranges: [] });
@@ -43,18 +44,23 @@ export default function ElevationProfile(props) {
       ref.current && setRectWidth(ref.current.offsetWidth);
     };
 
-    handleResize()
+    handleResize();
     window.addEventListener("resize", handleResize);
-  },[]);
+  }, []);
 
   return (
     <div className="plot-container" ref={ref}>
-      <Plot
-        data={data}
-        x={(d) => d.chainage * 1}
-        y={(d) => d.elevation * 1}
-        width={rectWidth}
-      />
+      {!data.elevation.length ? (
+        <Loading width={rectWidth} height={250} />
+      ) : (
+        <Plot
+          data={data}
+          x={(d) => d.chainage * 1}
+          y={(d) => d.elevation * 1}
+          width={rectWidth}
+          height={250}
+        />
+      )}
     </div>
   );
 }

@@ -31,6 +31,11 @@ export default function PanZoom(props) {
     });
   }
 
+  function resetZoom(event) {
+    event.preventDefault();
+    setXDomain(xExtent);
+  }
+
   // PANNING
   const [isPanning, setIsPanning] = useState(false);
   const [initialMousePos, setInitialMousePos] = useState({ x: 0, y: 0 });
@@ -75,7 +80,7 @@ export default function PanZoom(props) {
       className="pan-zoom"
       ref={ref}
       onWheel={zoom}
-      onDoubleClick={() => setXDomain(xExtent)}
+      onDoubleClick={resetZoom}
       onMouseDown={mouseDown}
       onMouseMove={mouseMove}
     >
