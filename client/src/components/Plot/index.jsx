@@ -140,7 +140,6 @@ export default function Plot(props) {
           options={{
             side: "left",
             transform: `translate(${margin.left},0)`,
-            pixelsPerTick: 10,
             includeDomain: false,
             gridLines: width - margin.right - margin.left,
           }}
@@ -151,7 +150,6 @@ export default function Plot(props) {
           options={{
             side: "right",
             transform: `translate(${width - margin.right},0)`,
-            pixelsPerTick: 10,
             includeDomain: false,
           }}
         />

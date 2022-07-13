@@ -12,7 +12,7 @@ export default function Axis(props) {
         minimumFractionDigits: 0,
         maximumFractionDigits: 0,
       }),
-    pixelsPerTick = 30,
+    pixelsPerTick = 20,
     side = "bottom",
     transform = "",
     includeDomain = true,
