@@ -8,6 +8,8 @@ const app = express();
 const cors = require("cors");
 const morgan = require("morgan");
 
+const resetDb = require("./db/reset");
+
 app.use(cors());
 app.use(express.static("data"));
 app.use(morgan("dev"));
@@ -22,6 +24,13 @@ const db = require("./db");
 const centerlinesRoutes = require("./routes/centerlines");
 const projectsRoutes = require("./routes/projects");
 const takeoffsRoutes = require("./routes/takeoffs");
+
+app.use("/api/reset", (req, res) => {
+  resetDb(db).then(() => {
+    console.log("Database Reset");
+    res.status(200).send("Database Reset");
+  });
+});
 
 /**
  * api routes examples:
@@ -40,7 +49,6 @@ const takeoffsRoutes = require("./routes/takeoffs");
 // app.use("/pins", pinsRoutes);
 // app.use("/favourites", favouritesRoutes);
 // app.use("/map_editors", map_editorsRoutes);
-
 
 app.close = () => db.end();
 
