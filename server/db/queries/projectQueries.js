@@ -1,4 +1,4 @@
-const db = require("../index.js");
+const db = require("../.");
 
 // create a new project
 
