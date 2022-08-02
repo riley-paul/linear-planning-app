@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'polls.apps.PollsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -75,8 +76,12 @@ WSGI_APPLICATION = 'server.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'zsogwwnu',
+        'USER': 'zsogwwnu',
+        'PASSWORD': 'gEhWUl_COTqLHg2J0GPTEXUKOW0fWemj',
+        'HOST': 'heffalump.db.elephantsql.com',
+        # 'PORT': '5432',
     }
 }
 
