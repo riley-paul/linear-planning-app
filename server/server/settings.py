@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,8 +21,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-5h+zgys-g1vyw!f=l5s#9tfhyh4awzwyz2^cbhzji68++k&7$l'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -71,19 +70,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'server.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'zsogwwnu',
-        'USER': 'zsogwwnu',
-        'PASSWORD': 'gEhWUl_COTqLHg2J0GPTEXUKOW0fWemj',
-        'HOST': 'heffalump.db.elephantsql.com',
-        # 'PORT': '5432',
-    }
-}
 
 
 # Password validation
@@ -126,3 +112,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+DATABASES = {}
+
+try:
+    from .private_settings import *
+except ImportError:
+    pass
