@@ -3,21 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.16.3",
-    "@testing-library/react": "^12.1.4",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
     "@turf/turf": "^6.5.0",
-    "axios": "^0.26.1",
-    "classnames": "^2.3.1",
-    "d3": "^7.4.4",
-    "maki": "^2.1.0",
-    "mapbox-gl": "^2.7.1",
+    "axios": "^0.27.2",
+    "d3": "^7.6.1",
+    "mapbox-gl": "^2.9.2",
     "numeral": "^2.0.6",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-scripts": "^5.0.0",
-    "sass": "^1.49.10",
-    "shapefile": "^0.6.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "sass": "^1.54.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -43,10 +40,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "dotenv": "^10.0.0",
-    "webpack": "^5.71.0",
-    "webpack-cli": "^4.9.2"
   }
 }
