@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Project,Takeoff,Centerline
+from . import models
 
-admin.site.register([Project,Takeoff,Centerline])
+admin.site.register([models.Project])
 
 # Register your models here.

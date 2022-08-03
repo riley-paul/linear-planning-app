@@ -1,4 +1,3 @@
-from tokenize import blank_re
 from django.contrib.gis.db import models
 
 # Create your models here.
