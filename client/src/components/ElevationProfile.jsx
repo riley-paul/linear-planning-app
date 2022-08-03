@@ -8,10 +8,10 @@ export default function ElevationProfile(props) {
 
   useEffect(() => {
     Promise.all([
-      d3.csv("http://localhost:3000/elevation_profile_reduced.csv"),
-      d3.csv("http://localhost:3000/pipe_seg.csv"),
-      d3.csv("http://localhost:3000/topsoil.csv"),
-      d3.csv("http://localhost:3000/depth_cover.csv"),
+      d3.csv("http://localhost:8000/elevation_profile_reduced.csv"),
+      d3.csv("http://localhost:8000/pipe_seg.csv"),
+      d3.csv("http://localhost:8000/topsoil.csv"),
+      d3.csv("http://localhost:8000/depth_cover.csv"),
     ]).then((all) => {
       setData({
         elevation: all[0],
