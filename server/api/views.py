@@ -1,6 +1,9 @@
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from rest_framework import viewsets
+
 from .models import Project,Centerline,Takeoff
+from .helpers import convert_gis_to_json
+from .forms import JsonForm
 from . import serializers
 
 import geopandas as gpd
@@ -16,9 +19,3 @@ class CenterlineViewSet(viewsets.ModelViewSet):
 class TakeoffViewSet(viewsets.ModelViewSet):
   queryset = Takeoff.objects.all()
   serializer_class = serializers.TakeoffSerializer
-
-def to_json(request):
-  if request.method == "POST":
-    uploaded_file = request.FILES['file']
-    data = gpd.read_file(uploaded_file)
-  return JsonResponse(data.to_json())

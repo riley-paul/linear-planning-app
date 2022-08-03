@@ -9,6 +9,5 @@ router.register(r'takeoffs',views.TakeoffViewSet)
 
 urlpatterns = [
   path('',include(router.urls)),
-  path('to_json/',views.to_json),
   path('api-auth/',include('rest_framework.urls',namespace='rest_framework')),
 ]
