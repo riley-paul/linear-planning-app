@@ -1,12 +1,7 @@
-from django.http import HttpResponse, JsonResponse
 from rest_framework import viewsets
 
 from .models import Project,Centerline,Takeoff
-from .helpers import convert_gis_to_json
-from .forms import JsonForm
 from . import serializers
-
-import geopandas as gpd
 
 class ProjectViewSet(viewsets.ModelViewSet):
   queryset = Project.objects.all()

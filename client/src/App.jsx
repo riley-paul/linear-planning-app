@@ -1,9 +1,7 @@
-import Map from "./components/Map";
-import ElevationProfile from "./components/ElevationProfile";
-import FileUpload from "./components/File Upload";
+import Sidebar from "./components/Sidebar";
 
 export default function App() {
   return (
-    <FileUpload/>
+    <Sidebar/>
   );
 }
