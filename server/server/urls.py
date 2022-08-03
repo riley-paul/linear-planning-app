@@ -16,6 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+admin.site.site_header = "Virtual Grade Plan Admin"
+admin.site.site_title = "Virtual Grade Plan Admin Portal"
+admin.site.index_title = "Welcome to Virtual Grade Plan Portal"
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/",include("api.urls")),

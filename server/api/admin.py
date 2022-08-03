@@ -6,7 +6,7 @@ admin.site.register([
   models.Centerline,
   models.ElevationPoint,
   models.ChainagePoint,
-  models.FootprintAreas,
+  models.FootprintArea,
   models.FootprintType,
   models.TakeoffPoint,
   models.TakeoffCategory,
