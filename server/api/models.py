@@ -33,9 +33,9 @@ class ChainagePoint(models.Model):
   centerline = models.ForeignKey(Centerline, on_delete=models.CASCADE)
   geometry = models.PointField()
   measure = models.FloatField()
-  display = models.CharField(max_length=64, blank=True)
+  display = models.CharField(max_length=64, blank=True, null=True)
 
-  def __str__(self): return format_KP(self.measure)
+  def __str__(self): return f"{self.centerline.project} - {self.centerline} - {format_KP(self.measure)}"
 
 
 class FootprintType(models.Model):
@@ -74,10 +74,15 @@ class TakeoffRevision(models.Model):
   date_created = models.DateField()
   description = models.TextField(blank=True, null=True)
 
+  def __str__(self): return f"{self.category} - {self.date_created:%Y %m %d}"
+
 
 class TakeoffFamily(models.Model):
+  name = models.CharField(max_length=64)
   colour1 = models.JSONField()
-  colour2 = models.JSONField(blank=True)
+  colour2 = models.JSONField(blank=True, null=True)
+
+  def __str__(self): return f"{self.name}"
 
   class Meta:
     verbose_name_plural = "Takeoff Families"
@@ -88,12 +93,13 @@ class TakeoffPoint(models.Model):
   revision = models.ForeignKey(TakeoffRevision, on_delete=models.CASCADE)
   family = models.ForeignKey(TakeoffFamily, on_delete=models.CASCADE)
 
-  KP_beg = models.FloatField()
-  KP_end = models.FloatField(blank=True)
+  chainage_beg = models.FloatField()
+  chainage_end = models.FloatField(blank=True, null=True)
 
-  text_shrt = models.TextField()
-  text_long = models.TextField(blank=True)
+  text_shrt = models.CharField(max_length=128)
+  text_long = models.CharField(max_length=128, blank=True, null=True)
   description = models.TextField(blank=True, null=True)
+  symbol = models.CharField(max_length=64, blank=True, null=True)
   value = models.FloatField()
 
-  def __str__(self): return f"{format_KP(self.KP_beg)} - {self.text_shrt}"
+  def __str__(self): return f"{format_KP(self.chainage_beg)} - {self.text_shrt}"
