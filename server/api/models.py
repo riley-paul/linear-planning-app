@@ -1,5 +1,7 @@
 from django.contrib.gis.db import models
 from centerline import format_KP
+from mapping import colour_interp
+import json
 
 # Create your models here.
 
@@ -27,16 +29,17 @@ class ElevationPoint(models.Model):
   geometry = models.PointField(blank=True,null=True)
 
   def __str__(self): return f"{self.centerline} ({format_KP(self.chainage)} - {self.elevation:.2f})"
-
+  def project(self): return self.centerline.project
+  def chainage_formatted(self): return format_KP(self.chainage)
 
 class ChainagePoint(models.Model):
   centerline = models.ForeignKey(Centerline, on_delete=models.CASCADE)
   geometry = models.PointField()
   measure = models.FloatField()
-  display = models.CharField(max_length=64, blank=True, null=True)
 
   def __str__(self): return f"{self.centerline.project} - {self.centerline} - {format_KP(self.measure)}"
-
+  def project(self): return self.centerline.project
+  def chainage_formatted(self): return format_KP(self.measure)
 
 class FootprintType(models.Model):
   name = models.CharField(max_length=256)
@@ -103,3 +106,12 @@ class TakeoffPoint(models.Model):
   value = models.FloatField()
 
   def __str__(self): return f"{format_KP(self.chainage_beg)} - {self.text_shrt}"
+
+  def colour(self):
+    c1 = json.loads(self.family.colour1)
+    c2 = json.loads(self.family.colour2)
+    return
+
+  def chainage_beg_formatted(self): return format_KP(self.chainage_beg)
+  def chainage_end_formatted(self): return format_KP(self.chainage_end) if self.chainage_end else None
+  def category(self): return self.revision.category
