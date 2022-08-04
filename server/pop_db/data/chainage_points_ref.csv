@@ -1,0 +1,5 @@
+﻿centerline_id,geometry_fname,measure_column
+1,/Users/riley/Projects/linear-planning-app/server/pop_db/data/centerlines/SSEID005p24p5_SHP/MRKRS_SSEID005p24p5.shp,Measure
+2,/Users/riley/Projects/linear-planning-app/server/pop_db/data/centerlines/SSEID005p24p6_SHP/MRKRS_SSEID005p24p6.shp,Measure
+3,/Users/riley/Projects/linear-planning-app/server/pop_db/data/centerlines/SSEID005p24p7_SHP/MRKRS_SSEID005p24p7.shp,Measure
+4,/Users/riley/Projects/linear-planning-app/server/pop_db/data/centerlines/SSEID005p24p9_SHP/MRKRS_SSEID005p24p9.shp,Measure

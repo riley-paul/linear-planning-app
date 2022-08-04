@@ -6,7 +6,7 @@ from centerline import format_KP
 
 class Project(models.Model):
   name = models.CharField(max_length=256)
-  description = models.TextField(blank=True)
+  description = models.TextField(blank=True, null=True)
 
   def __str__(self): return self.name
 
@@ -14,18 +14,19 @@ class Project(models.Model):
 class Centerline(models.Model):
   project = models.ForeignKey(Project, on_delete=models.CASCADE)
   name = models.CharField(max_length=256)
-  description = models.TextField(blank=True)
-  line = models.MultiLineStringField()
+  description = models.TextField(blank=True, null=True)
+  geometry = models.MultiLineStringField()
 
   def __str__(self): return self.name
 
 
 class ElevationPoint(models.Model):
   centerline = models.ForeignKey(Centerline, on_delete=models.CASCADE)
-  KP = models.FloatField()
+  chainage = models.FloatField()
   elevation = models.FloatField()
+  geometry = models.PointField(blank=True,null=True)
 
-  def __str__(self): return f"{format_KP(self.KP)}, {self.elevation}"
+  def __str__(self): return f"{self.centerline} ({format_KP(self.chainage)} - {self.elevation:.2f})"
 
 
 class ChainagePoint(models.Model):
@@ -52,7 +53,7 @@ class FootprintArea(models.Model):
   footprint_type = models.ForeignKey(
       FootprintType, on_delete=models.CASCADE, blank=True)
   geometry = models.MultiPolygonField()
-  description = models.TextField(blank=True)
+  description = models.TextField(blank=True, null=True)
 
   class Meta:
     verbose_name_plural = "Footprint Areas"
@@ -60,7 +61,7 @@ class FootprintArea(models.Model):
 
 class TakeoffCategory(models.Model):
   name = models.CharField(max_length=256)
-  description = models.TextField(blank=True)
+  description = models.TextField(blank=True, null=True)
 
   def __str__(self): return self.name
 
@@ -71,7 +72,7 @@ class TakeoffCategory(models.Model):
 class TakeoffRevision(models.Model):
   category = models.ForeignKey(TakeoffCategory, on_delete=models.CASCADE)
   date_created = models.DateField()
-  description = models.TextField(blank=True)
+  description = models.TextField(blank=True, null=True)
 
 
 class TakeoffFamily(models.Model):
@@ -92,7 +93,7 @@ class TakeoffPoint(models.Model):
 
   text_shrt = models.TextField()
   text_long = models.TextField(blank=True)
-  description = models.TextField(blank=True)
+  description = models.TextField(blank=True, null=True)
   value = models.FloatField()
 
   def __str__(self): return f"{format_KP(self.KP_beg)} - {self.text_shrt}"
