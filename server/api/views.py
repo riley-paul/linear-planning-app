@@ -12,3 +12,13 @@ class CenterlineViewSet(viewsets.ModelViewSet):
   queryset = models.Centerline.objects.all()
   serializer_class = serializers.CenterlineSerializer
   http_method_names = ['get']
+
+class TakeoffViewSet(viewsets.ModelViewSet):
+  queryset = (models
+    .TakeoffRevision
+    .objects
+    .order_by("category","-date_created")
+    .distinct("category")
+  )
+  serializer_class = serializers.TakeoffSerializer
+  http_method_names = ['get']
