@@ -18,7 +18,7 @@ class CenterlineAdmin(admin.ModelAdmin):
 admin.site.register(models.Centerline,CenterlineAdmin)
 
 class TakeoffPointAdmin(admin.ModelAdmin):
-  list_display = ['text_shrt','chainage_beg_formatted','chainage_end_formatted','category','project']
+  list_display = ['text_shrt','chainage_beg_formatted','chainage_end_formatted','category']
 admin.site.register(models.TakeoffPoint,TakeoffPointAdmin)
 
 class FootprintAreaAdmin(admin.ModelAdmin):
@@ -30,7 +30,7 @@ class FootprintTypeAdmin(admin.ModelAdmin):
 admin.site.register(models.FootprintType,FootprintTypeAdmin)
 
 class TakeoffCategoryAdmin(admin.ModelAdmin):
-  list_display = ['name','description']
+  list_display = ['name','description','project']
 admin.site.register(models.TakeoffCategory,TakeoffCategoryAdmin)
 
 class TakeoffFamilyAdmin(admin.ModelAdmin):

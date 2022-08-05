@@ -83,6 +83,7 @@ def api_chainagepoint(name):
 
 def api_takeoffcategory(name):
   data = takeoff_file.parse("categories")[["name"]]
+  data["project_id"] = 1
   print(data)
   return table_to_script(data,name)
 
@@ -117,7 +118,6 @@ def api_takeoffpoint(name):
     .dropna(subset=["chainage_beg"])
   )
   takeoffs["value"] = takeoffs["value"].fillna(0)
-  takeoffs["project_id"] = 1
 
   print(takeoffs)
   return table_to_script(takeoffs,name)

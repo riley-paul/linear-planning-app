@@ -63,6 +63,7 @@ class FootprintArea(models.Model):
 
 
 class TakeoffCategory(models.Model):
+  project = models.ForeignKey(Project, on_delete=models.CASCADE)
   name = models.CharField(max_length=256)
   description = models.TextField(blank=True, null=True)
 
@@ -92,7 +93,6 @@ class TakeoffFamily(models.Model):
 
 
 class TakeoffPoint(models.Model):
-  project = models.ForeignKey(Project, on_delete=models.CASCADE)
   revision = models.ForeignKey(TakeoffRevision, on_delete=models.CASCADE)
   family = models.ForeignKey(TakeoffFamily, on_delete=models.CASCADE)
 
