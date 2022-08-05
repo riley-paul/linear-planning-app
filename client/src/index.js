@@ -15,17 +15,8 @@ root.render(
     <Routes>
       <Route path="/" element={<App />}>
         <Route path="projects" element={<Projects />}>
-          <Route
-            index
-            element={
-              <main style={{ padding: "1rem" }}>
-                <p>Select an invoice</p>
-              </main>
-            }
-          />
-          <Route path=":id" element={<Project />} />
+          <Route path=":id" element={<Project />}></Route>
         </Route>
-        <Route path="centerlines" element={<Centerlines />} />
         <Route
           path="*"
           element={
