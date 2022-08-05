@@ -14,6 +14,7 @@ class CenterlineViewSet(viewsets.ModelViewSet):
   http_method_names = ['get']
 
 class TakeoffViewSet(viewsets.ModelViewSet):
+  # only include the latest revisions of the takeoff
   queryset = (models
     .TakeoffRevision
     .objects
