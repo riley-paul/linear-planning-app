@@ -1,3 +1,4 @@
+from pyexpat import model
 from rest_framework import serializers
 from . import models
 
@@ -34,10 +35,6 @@ from . import models
 
 
 
-class TakeoffSerializer(serializers.ModelSerializer):
-  class Meta:
-    model = models.TakeoffPoint
-
 #
 # centerlines = [
 #   {
@@ -68,14 +65,6 @@ class TakeoffSerializer(serializers.ModelSerializer):
 # #
 
 
-class CenterlineSerializer(serializers.ModelSerializer):
-  footprint = []
-
-  class Meta:
-    model = models.Centerline
-    fields = ('id', 'name', 'description', 'line',
-              'footprint', 'elevation', '')
-
 
 #
 # projects = [
@@ -89,7 +78,7 @@ class CenterlineSerializer(serializers.ModelSerializer):
 #       {...},
 #     ],
 #     takeoffs: [
-#       { id: int, name: str, desciption: str },
+#       { id: int, name: str, desciption: str, revisions: [{date, notes}] },
 #       { id: int, name: str, desciption: str },
 #       {...},
 #     ]
@@ -99,9 +88,44 @@ class CenterlineSerializer(serializers.ModelSerializer):
 # 
 # #
 
+## Centerline detail
+
+
+class CenterlineSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = models.Centerline
+    fields = "__all__"
+
+
+## Project Summary
+
+class TakeoffRevisionSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = models.TakeoffRevision
+    fields = "__all__"
+
+class TakeoffSummarySerializer(serializers.ModelSerializer):
+  class Meta:
+    model = models.TakeoffPoint
+    fields = "__all__"
+
+class CenterlineSummarySerializer(serializers.ModelSerializer):
+  class Meta:
+    model = models.Centerline
+    fields = ('id','name','description')
+
 class ProjectSerializer(serializers.ModelSerializer):
-  centerlines = CenterlineSerializer(many=True, read_only=True)
-  takeoffs = TakeoffSerializer(many=True, read_only=True)
+  centerlines = CenterlineSummarySerializer(
+    many=True, 
+    read_only=True, 
+    source="centerline_set"
+  )
+
+  takeoffs = TakeoffSummarySerializer(
+    many=True, 
+    read_only=True, 
+    source="takeoffpoint_set"
+  )
 
   class Meta:
     model = models.Project

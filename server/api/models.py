@@ -110,6 +110,7 @@ class TakeoffPoint(models.Model):
   def colour(self):
     c1 = json.loads(self.family.colour1)
     c2 = json.loads(self.family.colour2)
+
     return
 
   def chainage_beg_formatted(self): return format_KP(self.chainage_beg)
