@@ -105,8 +105,14 @@ class TakeoffRevisionSerializer(serializers.ModelSerializer):
     fields = "__all__"
 
 class TakeoffSummarySerializer(serializers.ModelSerializer):
+  revisions = TakeoffRevisionSerializer(
+    many=True, 
+    read_only=True, 
+    source="takeoffrevision_set"
+  )
+  
   class Meta:
-    model = models.TakeoffPoint
+    model = models.TakeoffCategory
     fields = "__all__"
 
 class CenterlineSummarySerializer(serializers.ModelSerializer):
@@ -124,7 +130,7 @@ class ProjectSerializer(serializers.ModelSerializer):
   takeoffs = TakeoffSummarySerializer(
     many=True, 
     read_only=True, 
-    source="takeoffpoint_set"
+    source="takeoffcategory_set"
   )
 
   class Meta:
