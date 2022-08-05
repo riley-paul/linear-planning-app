@@ -90,8 +90,31 @@ from . import models
 
 ## Centerline detail
 
+class ElevationSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = models.ElevationPoint
+    fields = "__all__"
+
+
+class ChainageSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = models.ChainagePoint
+    fields = "__all__"
+
 
 class CenterlineSerializer(serializers.ModelSerializer):
+  elevation = ElevationSerializer(
+    many=True, 
+    read_only=True, 
+    source="elevationpoint_set"
+  )
+  chainages = ChainageSerializer(
+    many=True, 
+    read_only=True, 
+    source="chainagepoint_set"
+  )
+  footprint = None
+  
   class Meta:
     model = models.Centerline
     fields = "__all__"
