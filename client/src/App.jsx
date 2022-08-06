@@ -1,15 +1,24 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, Outlet } from "react-router-dom";
-import Project from "./routes/project";
+import { Outlet } from "react-router-dom";
 import NavBar from "./components/Navbar";
-
-const API_URL = process.env.REACT_APP_API_URL;
+import http from "./helpers/http";
 
 export default function App() {
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    http
+      .get("/projects")
+      .then((res) => {
+        setProjects(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => console.error(err.stack));
+  }, []);
+
   return (
     <div>
-      <NavBar/>
+      <NavBar projects={projects} />
       <Outlet />
     </div>
   );
