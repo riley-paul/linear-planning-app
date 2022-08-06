@@ -1,15 +1,28 @@
 import * as m from "@mui/material";
 import * as mi from "@mui/icons-material";
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 import "./index.scss";
 import { useState } from "react";
+import { useEffect } from "react";
 
 const drawerWidth = 240;
 
 export default function NavBar(props) {
   const { projects } = props;
+  const { projectId } = useParams();
+
+  const [project, setProject] = useState({});
+
+  useEffect(() => {
+    const proj = projects.find((proj) => proj.id == projectId)
+    setProject(proj);
+  }, [projectId, projects]);
+
+  useEffect(() => {
+    console.log(`Project changed to ${project?.name}`)
+  },[project])
 
   const [anchorElProject, setAnchorElProject] = useState(null);
 
@@ -38,7 +51,7 @@ export default function NavBar(props) {
             </NavLink>
             <m.Box sx={{ flexGrow: 1 }}>
               <m.Button color="inherit" onClick={handleOpenProjectMenu}>
-                select a project
+                {project?.name || "select a project"}
               </m.Button>
               <m.Menu
                 id="menu-appbar"
@@ -55,16 +68,16 @@ export default function NavBar(props) {
                 open={Boolean(anchorElProject)}
                 onClose={handleCloseProjectMenu}
               >
-                {projects.map((project) => (
-                  <m.MenuItem key={project.id} onClick={handleCloseProjectMenu}>
+                {projects.map((proj) => (
+                  <m.MenuItem key={proj.id} onClick={handleCloseProjectMenu}>
                     <NavLink
-                      to={`/projects/${project.id}`}
+                      to={`/projects/${proj.id}`}
                       style={{
                         textDecoration: "none",
                         color: "inherit",
                       }}
                     >
-                      {project.name}
+                      {proj.name}
                     </NavLink>
                   </m.MenuItem>
                 ))}
@@ -76,25 +89,6 @@ export default function NavBar(props) {
           </m.Button>
         </m.Toolbar>
       </m.AppBar>
-
-      <m.Drawer
-        variant="permanent"
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          [`& .MuiDrawer-paper`]: {
-            width: drawerWidth,
-            boxSizing: "border-box",
-          },
-        }}
-      >
-        <m.Toolbar />
-        <m.Box sx={{ overflow: "auto" }}>
-          <m.List>
-            <m.ListItem>hello</m.ListItem>
-          </m.List>
-        </m.Box>
-      </m.Drawer>
     </m.Box>
   );
 }

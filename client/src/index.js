@@ -5,27 +5,8 @@ import "./index.css";
 
 import App from "./App";
 import Project from "./routes/project";
-import Projects from "./routes/projects";
 
 const root = ReactDOM.createRoot(document.getElementById("app"));
-
-/**
- * 
- * / => App
- *  - Navbar with projects drop down
- * 
- * /projects:projectId => Project
- *  - Map and profile view
- * 
- * 
- * /projects:projectId/takeoffs:takeoffId
- *  - 
- * 
- * 
- * 
- * 
- */
-
 
 root.render(
   <BrowserRouter>
