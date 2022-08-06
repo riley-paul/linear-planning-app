@@ -1,8 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
-
-const API_URL = process.env.REACT_APP_API_URL;
+import http from "../helpers/http";
 
 export default function Projects(props) {
   const [projects, setProjects] = useState([]);
@@ -10,8 +9,8 @@ export default function Projects(props) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(API_URL + "/projects")
+    http
+      .get("/projects")
       .then((res) => res.data)
       .then(
         (result) => {
