@@ -5,7 +5,6 @@ import "./index.css";
 
 import App from "./App";
 import Projects from "./routes/projects";
-import Centerlines from "./routes/centerlines";
 import Project from "./routes/project";
 
 const root = ReactDOM.createRoot(document.getElementById("app"));
