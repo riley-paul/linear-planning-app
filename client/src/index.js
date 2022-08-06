@@ -4,7 +4,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 
 import App from "./App";
-import Projects from "./routes/projects";
 import Project from "./routes/project";
 
 const root = ReactDOM.createRoot(document.getElementById("app"));
@@ -31,8 +30,7 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />}> 
-        <Route path="projects" element={<Projects />}>
-          <Route path=":id" element={<Project />}></Route>
+        <Route path="projects/:projectId" element={<Project />}>
         </Route>
         <Route
           path="*"

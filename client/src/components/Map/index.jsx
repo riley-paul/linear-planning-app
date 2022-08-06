@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import getTilesets from "./getTilesets";
-import TileSwitcher from "./tileSwitcher";
+
+import "./index.scss";
 
 export default function Map(props) {
   const tilesets = getTilesets();
@@ -9,11 +10,6 @@ export default function Map(props) {
 
   return (
     <MapContainer center={[49.207665, -121.741593]} zoom={12}>
-      <TileSwitcher
-        options={tilesets}
-        tilesetIndex={tilesetIndex}
-        setTilesetIndex={setTilesetIndex}
-      />
       <TileLayer
         url={tilesets[tilesetIndex].url}
         attribution={tilesets[tilesetIndex].attribution}

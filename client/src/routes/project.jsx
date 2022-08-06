@@ -3,5 +3,9 @@ import Map from "../components/Map";
 
 export default function Project(props) {
   let params = useParams();
-  return <Map />;
+  return (
+    <div>
+      {/* <Map /> */}
+    </div>
+  );
 }
