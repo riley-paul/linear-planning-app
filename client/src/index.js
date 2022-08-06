@@ -9,10 +9,28 @@ import Project from "./routes/project";
 
 const root = ReactDOM.createRoot(document.getElementById("app"));
 
+/**
+ * 
+ * / => App
+ *  - Navbar with projects drop down
+ * 
+ * /projects:projectId => Project
+ *  - Map and profile view
+ * 
+ * 
+ * /projects:projectId/takeoffs:takeoffId
+ *  - 
+ * 
+ * 
+ * 
+ * 
+ */
+
+
 root.render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<App />}>
+      <Route path="/" element={<App />}> 
         <Route path="projects" element={<Projects />}>
           <Route path=":id" element={<Project />}></Route>
         </Route>
