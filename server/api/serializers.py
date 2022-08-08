@@ -48,7 +48,7 @@ class CenterlineSummarySerializer(serializers.ModelSerializer):
     model = models.Centerline
     fields = ('id','name','description')
 
-class ProjectSerializer(serializers.ModelSerializer):
+class ProjectSummarySerializer(serializers.ModelSerializer):
   centerlines = CenterlineSummarySerializer(
     many=True, 
     read_only=True, 
@@ -106,17 +106,29 @@ class TakeoffPointSerializer(serializers.ModelSerializer):
     fields = "__all__"
 
 
-class TakeoffSerializer(serializers.ModelSerializer):
+class TakeoffRevisionSerializer(serializers.ModelSerializer):
   dataset = TakeoffPointSerializer(
     many=True, 
     read_only=True, 
     source="takeoffpoint_set"
   )
-  category = TakeoffSummarySerializer()
 
   class Meta:
     model = models.TakeoffRevision
     fields = "__all__"
+
+class TakeoffSerializer(serializers.ModelSerializer):
+  revisions = TakeoffRevisionSerializer(
+    many=True, 
+    read_only=True, 
+    source="takeoffrevision_set"
+  )
+
+
+  class Meta:
+    model = models.TakeoffCategory
+    fields = "__all__"
+
 
 #
 # centerlines = [
@@ -178,3 +190,21 @@ class CenterlineSerializer(serializers.ModelSerializer):
   class Meta:
     model = models.Centerline
     fields = "__all__"
+
+
+class ProjectSerializer(serializers.ModelSerializer):
+  centerlines = CenterlineSerializer(
+    many=True, 
+    read_only=True, 
+    source="centerline_set"
+  )
+
+  takeoffs = TakeoffSerializer(
+    many=True, 
+    read_only=True, 
+    source="takeoffcategory_set"
+  )
+
+  class Meta:
+    model = models.Project
+    fields = ('id', 'name', 'description', 'centerlines', 'takeoffs')

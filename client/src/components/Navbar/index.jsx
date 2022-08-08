@@ -1,13 +1,10 @@
 import * as m from "@mui/material";
-import * as mi from "@mui/icons-material";
 
 import { NavLink, useParams } from "react-router-dom";
 
 import "./index.scss";
 import { useState } from "react";
 import { useEffect } from "react";
-
-const drawerWidth = 240;
 
 export default function NavBar(props) {
   const { projects } = props;
@@ -16,13 +13,14 @@ export default function NavBar(props) {
   const [project, setProject] = useState({});
 
   useEffect(() => {
-    const proj = projects.find((proj) => proj.id == projectId)
+    // eslint-disable-next-line eqeqeq
+    const proj = projects.find((proj) => proj.id == projectId);
     setProject(proj);
   }, [projectId, projects]);
 
   useEffect(() => {
-    console.log(`Project changed to ${project?.name}`)
-  },[project])
+    console.log(`Project changed to ${project?.name}`);
+  }, [project]);
 
   const [anchorElProject, setAnchorElProject] = useState(null);
 
@@ -84,7 +82,7 @@ export default function NavBar(props) {
               </m.Menu>
             </m.Box>
           </m.Box>
-          <m.Button variant="outlined" color="inherit">
+          <m.Button disabled variant="outlined" color="inherit">
             login
           </m.Button>
         </m.Toolbar>
