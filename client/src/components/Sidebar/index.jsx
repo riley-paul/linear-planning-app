@@ -7,7 +7,7 @@ import { useEffect } from "react";
 const drawerWidth = 240;
 
 export default function Sidebar(props) {
-  const { project, projectDisplay } = props;
+  const { project, projectDisplay, setProjectDisplay } = props;
 
   const [centerlineOpen, setCenterlineOpen] = useState(true);
   const [takeoffOpen, setTakeoffOpen] = useState(true);
@@ -41,16 +41,32 @@ export default function Sidebar(props) {
           </m.ListItemButton>
 
           <m.Collapse in={centerlineOpen} timeout="auto" unmountOnExit>
-            <m.List component="div" disablePadding dense>
+            <m.List disablePadding dense>
               {project.centerlines ? (
-                project.centerlines.map((centerline) => (
-                  <m.ListItemButton sx={{ pl: 4 }} key={centerline.id}>
-                    <m.ListItemText
-                      primary={centerline.name}
-                      secondary={centerline.description}
-                    />
-                  </m.ListItemButton>
-                ))
+                project.centerlines
+                  .sort((a, b) =>
+                    a.name < b.name ? 1 : b.name < a.name ? -1 : 0
+                  )
+                  .map((centerline) => (
+                    <m.ListItemButton
+                      sx={{ pl: 4 }}
+                      key={centerline.id}
+                      selected={
+                        projectDisplay.selectedCenterline === centerline.id
+                      }
+                      onClick={() =>
+                        setProjectDisplay((prev) => ({
+                          ...prev,
+                          selectedCenterline: centerline.id,
+                        }))
+                      }
+                    >
+                      <m.ListItemText
+                        primary={centerline.name}
+                        secondary={centerline.description}
+                      />
+                    </m.ListItemButton>
+                  ))
               ) : (
                 <m.ListItem>
                   <Loading />

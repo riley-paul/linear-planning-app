@@ -28,7 +28,11 @@ export default function Project(props) {
   return (
     <div>
       <m.Toolbar />
-      <Sidebar project={project} projectDisplay={projectDisplay} />
+      <Sidebar
+        project={project}
+        projectDisplay={projectDisplay}
+        setProjectDisplay={setProjectDisplay}
+      />
       {/* <Map /> */}
     </div>
   );
