@@ -2,14 +2,17 @@ import * as m from "@mui/material";
 import * as mi from "@mui/icons-material";
 import { useState } from "react";
 import Loading from "../Loading";
+import { useEffect } from "react";
 
 const drawerWidth = 240;
 
 export default function Sidebar(props) {
-  const { project } = props;
+  const { project, projectDisplay } = props;
 
   const [centerlineOpen, setCenterlineOpen] = useState(true);
   const [takeoffOpen, setTakeoffOpen] = useState(true);
+
+  useEffect(() => console.log(projectDisplay), [projectDisplay]);
 
   return (
     <m.Drawer
@@ -26,7 +29,6 @@ export default function Sidebar(props) {
       <m.Toolbar />
       <m.Box sx={{ overflow: "auto" }}>
         <m.List>
-          
           <m.ListItemButton onClick={() => setCenterlineOpen((prev) => !prev)}>
             <m.ListItemText
               primary={
@@ -75,19 +77,18 @@ export default function Sidebar(props) {
               {project.takeoffs ? (
                 project.takeoffs.map((takeoff) => (
                   <>
-                    <m.ListItemButton key={takeoff.id}>
+                    <m.ListItemButton>
                       <m.ListItemText
                         primary={takeoff.name}
                         secondary={takeoff.description}
                       />
                     </m.ListItemButton>
-
-                    <m.Collapse in={takeoffOpen} >
+                    <m.Collapse in={takeoffOpen}>
                       <m.List dense disablePadding>
                         <m.RadioGroup>
-                          {takeoff.revisions.map(revision => (
-                            <m.ListItemButton>
-                              <m.Radio size="small"/>
+                          {takeoff.revisions.map((revision) => (
+                            <m.ListItemButton key={revision.id}>
+                              <m.Radio size="small" />
                               <m.ListItemText
                                 primary={revision.date_created}
                                 secondary={revision.description}
