@@ -12,17 +12,17 @@ export default function Project(props) {
   const [project, setProject] = useState({});
   const [projectDisplay, setProjectDisplay] = useState({});
 
-  useEffect(() => setProjectDisplay(initialProjectDisplay(project)), [project]);
-
+  
   let { projectId } = useParams();
-
+  
   useEffect(() => {
     http
-      .get(`/projects/${projectId}`)
-      .then((res) => setProject(res.data))
-      .catch((err) => console.error(err.stack));
+    .get(`/projects/${projectId}`)
+    .then((res) => setProject(res.data))
+    .catch((err) => console.error(err.stack));
   }, [projectId]);
-
+  
+  useEffect(() => setProjectDisplay(initialProjectDisplay(project)), [project]);
   useEffect(() => console.log("project",project), [project]);
 
   return (

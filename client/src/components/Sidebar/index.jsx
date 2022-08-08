@@ -1,7 +1,5 @@
 import * as m from "@mui/material";
 import * as mi from "@mui/icons-material";
-import { useState } from "react";
-import Loading from "../Loading";
 import CollapsingList from "./CollapsingList";
 import { useEffect } from "react";
 
@@ -10,10 +8,10 @@ const drawerWidth = 240;
 export default function Sidebar(props) {
   const { project, projectDisplay, setProjectDisplay } = props;
 
-  useEffect(
-    () => console.log("projectDisplay", projectDisplay),
-    [projectDisplay]
-  );
+  // useEffect(
+  //   () => console.log("projectDisplay", projectDisplay),
+  //   [projectDisplay]
+  // );
 
   function takeoffMap() {
     return project.takeoffs.map((takeoff) => {
@@ -59,7 +57,6 @@ export default function Sidebar(props) {
       .sort((a, b) => (a.name < b.name ? 1 : b.name < a.name ? -1 : 0))
       .map((centerline) => (
         <m.ListItemButton
-          // sx={{ pl: 4 }}
           key={centerline.id}
           selected={projectDisplay.selectedCenterline === centerline.id}
           onClick={() =>
@@ -100,7 +97,11 @@ export default function Sidebar(props) {
 
           <CollapsingList
             heading="takeoffs"
-            loading={!project.hasOwnProperty("takeoffs")}
+            loading={
+              !project.hasOwnProperty("takeoffs") ||
+              !projectDisplay.hasOwnProperty("takeoffs") ||
+              projectDisplay.takeoffs.length !== project.takeoffs.length
+            }
             contentFunction={takeoffMap}
           />
         </m.List>
