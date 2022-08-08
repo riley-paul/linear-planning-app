@@ -29,7 +29,6 @@ export default function NavBar(props) {
 
   return (
     <m.Box sx={{ display: "flex" }}>
-      <m.CssBaseline />
       <m.AppBar
         position="fixed"
         sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
