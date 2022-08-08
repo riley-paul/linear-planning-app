@@ -98,14 +98,31 @@ export default function Sidebar(props) {
                   );
 
                   return (
-                    <m.ListItemButton selected={takeoffDisplay.selected}>
+                    <m.ListItemButton
+                      selected={takeoffDisplay.selected}
+                      key={takeoff.id}
+                      onClick={() =>
+                        setProjectDisplay((prev) => ({
+                          ...prev,
+                          takeoffs: [
+                            ...prev.takeoffs.filter((i) => i.id != takeoff.id),
+                            {
+                              ...takeoffDisplay,
+                              selected: !takeoffDisplay.selected,
+                            },
+                          ],
+                        }))
+                      }
+                    >
                       <m.ListItemText
                         primary={takeoff.name}
                         secondary={takeoff.description}
                       />
-                      {takeoff.revisions.length > 1 && <m.IconButton>
-                        <mi.History/>
-                      </m.IconButton>}
+                      {takeoff.revisions.length > 1 && (
+                        <m.IconButton>
+                          <mi.History />
+                        </m.IconButton>
+                      )}
                     </m.ListItemButton>
                   );
                 })
