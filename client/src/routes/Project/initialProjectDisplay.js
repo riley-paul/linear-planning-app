@@ -1,5 +1,5 @@
 const latest_in_array = (array, key) =>
-  array.reduce((acc, val) => (acc[key] > val[key] ? acc : val)).id;
+  array.reduce((acc, val) => (acc[key] > val[key] ? acc : val), {}).id;
 
 export default function initialProjectDisplay(project) {
   return project.centerlines

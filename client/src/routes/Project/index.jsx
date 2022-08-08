@@ -10,7 +10,7 @@ import initialProjectDisplay from "./initialProjectDisplay";
 
 export default function Project(props) {
   const [project, setProject] = useState({});
-  const [projectDisplay, setProjectDisplay] = useState(null);
+  const [projectDisplay, setProjectDisplay] = useState({});
 
   useEffect(() => setProjectDisplay(initialProjectDisplay(project)), [project]);
 
@@ -23,7 +23,7 @@ export default function Project(props) {
       .catch((err) => console.error(err.stack));
   }, [projectId]);
 
-  useEffect(() => console.log(project), [project]);
+  useEffect(() => console.log("project",project), [project]);
 
   return (
     <div>

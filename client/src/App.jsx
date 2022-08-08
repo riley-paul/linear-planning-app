@@ -14,7 +14,7 @@ export default function App() {
       .catch((err) => console.error(err.stack));
   }, []);
 
-  useEffect(() => console.log(projects), [projects]);
+  useEffect(() => console.log("projects",projects), [projects]);
 
   return (
     <div>
