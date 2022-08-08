@@ -7,7 +7,8 @@ export default function initialProjectDisplay(project) {
         selectedCenterline: latest_in_array(project.centerlines, "name"),
         takeoffs: project.takeoffs.map((takeoff) => ({
           id: takeoff.id,
-          shown: true,
+          open: false,
+          selected: false,
           selectedRevision: latest_in_array(takeoff.revisions, "date_created"),
         })),
       }

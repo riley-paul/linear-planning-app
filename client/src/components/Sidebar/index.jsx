@@ -28,7 +28,7 @@ export default function Sidebar(props) {
     >
       <m.Toolbar />
       <m.Box sx={{ overflow: "auto" }}>
-        <m.List>
+        <m.List disablePadding>
           <m.ListItemButton onClick={() => setCenterlineOpen((prev) => !prev)}>
             <m.ListItemText
               primary={
@@ -49,7 +49,7 @@ export default function Sidebar(props) {
                   )
                   .map((centerline) => (
                     <m.ListItemButton
-                      sx={{ pl: 4 }}
+                      // sx={{ pl: 4 }}
                       key={centerline.id}
                       selected={
                         projectDisplay.selectedCenterline === centerline.id
@@ -90,32 +90,25 @@ export default function Sidebar(props) {
 
           <m.Collapse in={takeoffOpen} timeout="auto" unmountOnExit>
             <m.List disablePadding dense>
-              {project.takeoffs ? (
-                project.takeoffs.map((takeoff) => (
-                  <>
-                    <m.ListItemButton>
+              {project.takeoffs && projectDisplay.takeoffs ? (
+                project.takeoffs.map((takeoff) => {
+                  const takeoffDisplay = projectDisplay.takeoffs.find(
+                    // eslint-disable-next-line eqeqeq
+                    (i) => i.id == takeoff.id
+                  );
+
+                  return (
+                    <m.ListItemButton selected={takeoffDisplay.selected}>
                       <m.ListItemText
                         primary={takeoff.name}
                         secondary={takeoff.description}
                       />
+                      {takeoff.revisions.length > 1 && <m.IconButton>
+                        <mi.History/>
+                      </m.IconButton>}
                     </m.ListItemButton>
-                    <m.Collapse in={takeoffOpen}>
-                      <m.List dense disablePadding>
-                        <m.RadioGroup>
-                          {takeoff.revisions.map((revision) => (
-                            <m.ListItemButton key={revision.id}>
-                              <m.Radio size="small" />
-                              <m.ListItemText
-                                primary={revision.date_created}
-                                secondary={revision.description}
-                              />
-                            </m.ListItemButton>
-                          ))}
-                        </m.RadioGroup>
-                      </m.List>
-                    </m.Collapse>
-                  </>
-                ))
+                  );
+                })
               ) : (
                 <m.ListItem>
                   <Loading />
