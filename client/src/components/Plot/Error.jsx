@@ -1,5 +1,5 @@
-export default function Loading(props) {
-  const { width, height } = props;
+export default function Error(props) {
+  const { width, height, message } = props;
 
   return (
     <svg
@@ -13,7 +13,7 @@ export default function Loading(props) {
       fontSize={20}
     >
       <text x={width / 2} y={height / 2} textAnchor="middle" fill="lightgray">
-        Loading Data...
+        {message}
       </text>
     </svg>
   );

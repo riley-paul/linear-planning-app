@@ -7,33 +7,37 @@ import { useEffect, useState } from "react";
 import Map from "../../components/Map";
 import Sidebar from "../../components/Sidebar";
 import initialProjectDisplay from "./initialProjectDisplay";
+import ElevationProfile from "../../components/ElevationProfile";
 
 export default function Project(props) {
   const [project, setProject] = useState({});
   const [projectDisplay, setProjectDisplay] = useState({});
 
-  
   let { projectId } = useParams();
-  
+
   useEffect(() => {
     http
-    .get(`/projects/${projectId}`)
-    .then((res) => setProject(res.data))
-    .catch((err) => console.error(err.stack));
+      .get(`/projects/${projectId}`)
+      .then((res) => setProject(res.data))
+      .catch((err) => console.error(err.stack));
   }, [projectId]);
-  
+
   useEffect(() => setProjectDisplay(initialProjectDisplay(project)), [project]);
-  useEffect(() => console.log("project",project), [project]);
+  useEffect(() => console.log("project", project), [project]);
 
   return (
-    <div>
-      <m.Toolbar />
+    <m.Box sx={{ display: "flex" }}>
       <Sidebar
         project={project}
         projectDisplay={projectDisplay}
         setProjectDisplay={setProjectDisplay}
       />
-      {/* <Map /> */}
-    </div>
+      <m.Box component="main" sx={{ flexGrow: 1}}>
+        <m.Toolbar/>
+        <ElevationProfile project={project} projectDisplay={projectDisplay} />
+        <m.Divider />
+        {/* <Map/> */}
+      </m.Box>
+    </m.Box>
   );
 }

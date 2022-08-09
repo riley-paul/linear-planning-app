@@ -13,7 +13,8 @@ import { useEffect } from "react";
 
 export default function Plot(props) {
   const {
-    data = { elevation: [], ranges: [] },
+    elevation = [],
+    ranges = [],
     x = ([x]) => x, // given d in data, returns the (temporal) x-value
     y = ([, y]) => y, // given d in data, returns the (quantitative) y-value
     curve = d3.curveLinear, // method of interpolation between points
@@ -26,13 +27,13 @@ export default function Plot(props) {
     color = "red", // stroke color of line
   } = props;
 
-  const X = data.elevation.map(x);
-  const Y = data.elevation.map(y);
+  const X = elevation.map(x);
+  const Y = elevation.map(y);
   const I = d3.range(X.length);
 
   const xRange = [margin.left, width - margin.right];
   const yRange = [
-    height - margin.bottom - data.ranges.length * rangeHeight,
+    height - margin.bottom - ranges.length * rangeHeight,
     margin.top,
   ];
 
@@ -42,7 +43,7 @@ export default function Plot(props) {
   useEffect(
     () => setXDomain(xExtent),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [data.elevation]
+    [elevation]
   );
   const yDomain = [0, d3.max(Y)];
 
@@ -91,7 +92,7 @@ export default function Plot(props) {
             stroke={color}
             strokeWidth={1.5}
           />
-          {data.ranges.map((range, index) => (
+          {ranges.map((range, index) => (
             <RangeBar
               key={index}
               rangeHeight={rangeHeight}
@@ -109,10 +110,10 @@ export default function Plot(props) {
         <g
           className="range-labels"
           transform={`translate(${margin.left - 4},${
-            height - margin.bottom - rangeHeight * data.ranges.length
+            height - margin.bottom - rangeHeight * ranges.length
           })`}
         >
-          {data.ranges.map((range, index) => (
+          {ranges.map((range, index) => (
             <text
               key={index}
               y={rangeHeight * index + rangeHeight / 2}
@@ -157,7 +158,7 @@ export default function Plot(props) {
         <ToolTip
           xFunc={x}
           yFunc={y}
-          data={data.elevation}
+          data={elevation}
           width={width}
           height={height}
           margin={margin}

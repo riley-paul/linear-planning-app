@@ -1,7 +1,7 @@
 import * as m from "@mui/material";
 import * as mi from "@mui/icons-material";
 import { useState } from "react";
-import Loading from "../Loading";
+import Loading from "./Loading";
 
 export default function CollapsingList(props) {
   const { heading = "heading", loading = true, contentFunction } = props;
