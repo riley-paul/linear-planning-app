@@ -8,10 +8,10 @@ const drawerWidth = 240;
 export default function Sidebar(props) {
   const { project, projectDisplay, setProjectDisplay } = props;
 
-  useEffect(
-    () => console.log("projectDisplay", projectDisplay),
-    [projectDisplay]
-  );
+  // useEffect(
+  //   () => console.log("projectDisplay", projectDisplay),
+  //   [projectDisplay]
+  // );
 
   function takeoffMap() {
     return project.takeoffs.map((takeoff) => {

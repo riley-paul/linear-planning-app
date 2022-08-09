@@ -28,7 +28,7 @@ export default function ElevationProfile(props) {
       ) : (
         <Plot
           elevation={data.elevation}
-          takeoffs={data.takeoffs}
+          ranges={data.takeoffs}
           x={(d) => d.chainage * 1}
           y={(d) => d.elevation * 1}
           width={rectWidth}

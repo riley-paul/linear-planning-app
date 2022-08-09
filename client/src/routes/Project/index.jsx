@@ -32,11 +32,11 @@ export default function Project(props) {
         projectDisplay={projectDisplay}
         setProjectDisplay={setProjectDisplay}
       />
-      <m.Box component="main" sx={{ flexGrow: 1}}>
-        <m.Toolbar/>
+      <m.Box component="main" sx={{ flexGrow: 1 }}>
+        <m.Toolbar />
         <ElevationProfile project={project} projectDisplay={projectDisplay} />
         <m.Divider />
-        {/* <Map/> */}
+        {/* <Map /> */}
       </m.Box>
     </m.Box>
   );
