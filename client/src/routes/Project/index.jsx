@@ -30,7 +30,7 @@ export default function Project(props) {
         <m.Toolbar />
         <ElevationProfile project={project} />
         <m.Divider />
-        {/* <Map /> */}
+        <Map />
       </m.Box>
     </m.Box>
   );

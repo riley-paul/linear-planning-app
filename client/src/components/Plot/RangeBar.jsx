@@ -1,6 +1,6 @@
 export default function RangeBar(props) {
   const {
-    data = { name: "", dataset: [] },
+    data = { name: "", revision: {dataset: []} },
     xScale,
     width,
     margin,
@@ -10,7 +10,7 @@ export default function RangeBar(props) {
 
   return (
     <g className="range-bar" transform={transform}>
-      {data.dataset.map((item, index) => {
+      {data.revision.dataset.map((item, index) => {
         const width = Math.abs(xScale(item.chainage_end) - xScale(item.chainage_beg));
         const mid = width / 2;
 
