@@ -4,7 +4,7 @@ import Error from "../Plot/Error";
 import getData from "./getData";
 
 export default function ElevationProfile(props) {
-  const { project, projectDisplay } = props;
+  const { project } = props;
 
   // determine width of parent element
   const ref = useRef(null);
@@ -19,16 +19,16 @@ export default function ElevationProfile(props) {
     window.addEventListener("resize", handleResize);
   }, []);
 
-  const data = getData(project, projectDisplay);
-
   return (
     <div className="plot-container" ref={ref}>
-      {data.error ? (
-        <Error width={rectWidth} height={250} message={data.error} />
+      {!project.centerline?.elevation ? (
+        <Error width={rectWidth} height={250} message={"Loading Data..."} />
+      ) : project.centerline.elevation.length === 0 ? (
+        <Error width={rectWidth} height={250} message={"No Elevation Data"} />
       ) : (
         <Plot
-          elevation={data.elevation}
-          ranges={data.takeoffs}
+          elevation={project.centerline.elevation}
+          ranges={project.takeoffs.filter((i) => i.selected)}
           x={(d) => d.chainage * 1}
           y={(d) => d.elevation * 1}
           width={rectWidth}
