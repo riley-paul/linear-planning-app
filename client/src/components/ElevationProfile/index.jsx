@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import Plot from "../Plot";
 import Error from "../Plot/Error";
-import getData from "./getData";
 
 export default function ElevationProfile(props) {
   const { project } = props;
