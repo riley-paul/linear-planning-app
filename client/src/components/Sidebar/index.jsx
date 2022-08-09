@@ -1,55 +1,42 @@
 import * as m from "@mui/material";
 import * as mi from "@mui/icons-material";
 import CollapsingList from "./CollapsingList";
-import { useEffect } from "react";
 
 const drawerWidth = 240;
 
 export default function Sidebar(props) {
-  const { project, projectDisplay, setProjectDisplay } = props;
-
-  // useEffect(
-  //   () => console.log("projectDisplay", projectDisplay),
-  //   [projectDisplay]
-  // );
+  const { project, setProject } = props;
 
   function takeoffMap() {
-    return project.takeoffs.map((takeoff) => {
-      const takeoffDisplay = projectDisplay.takeoffs.find(
-        // eslint-disable-next-line eqeqeq
-        (i) => i.id == takeoff.id
-      );
-
-      const onclick = () =>
-        setProjectDisplay((prev) => ({
-          ...prev,
-          takeoffs: [
-            ...prev.takeoffs.filter((i) => i.id != takeoff.id),
-            {
-              ...takeoffDisplay,
-              selected: !takeoffDisplay.selected,
-            },
-          ],
-        }));
-
-      return (
-        <m.ListItemButton
-          selected={takeoffDisplay.selected}
-          key={takeoff.id}
-          onClick={onclick}
-        >
-          <m.ListItemText
-            primary={takeoff.name}
-            secondary={takeoff.description}
-          />
-          {takeoff.revisions.length > 1 && (
-            <m.IconButton>
-              <mi.History />
-            </m.IconButton>
-          )}
-        </m.ListItemButton>
-      );
-    });
+    return project.takeoffs
+      .sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0))
+      .map((takeoff) => {
+        return (
+          <m.ListItemButton
+            selected={takeoff.selected}
+            key={takeoff.id}
+            onClick={() =>
+              setProject((prev) => ({
+                ...prev,
+                takeoffs: [
+                  ...prev.takeoffs.filter((i) => i.id !== takeoff.id),
+                  { ...takeoff, selected: !takeoff.selected },
+                ],
+              }))
+            }
+          >
+            <m.ListItemText
+              primary={takeoff.name}
+              secondary={takeoff.description}
+            />
+            {takeoff.revisions.length > 1 && (
+              <m.IconButton>
+                <mi.History />
+              </m.IconButton>
+            )}
+          </m.ListItemButton>
+        );
+      });
   }
 
   function centerlineMap() {
@@ -58,13 +45,8 @@ export default function Sidebar(props) {
       .map((centerline) => (
         <m.ListItemButton
           key={centerline.id}
-          selected={projectDisplay.selectedCenterline === centerline.id}
-          onClick={() =>
-            setProjectDisplay((prev) => ({
-              ...prev,
-              selectedCenterline: centerline.id,
-            }))
-          }
+          selected={project.centerline.id === centerline.id}
+          onClick={() => setProject((prev) => ({ ...prev, centerline }))}
         >
           <m.ListItemText
             primary={centerline.name}
@@ -97,11 +79,7 @@ export default function Sidebar(props) {
 
           <CollapsingList
             heading="takeoffs"
-            loading={
-              !project.hasOwnProperty("takeoffs") ||
-              !projectDisplay.hasOwnProperty("takeoffs") ||
-              projectDisplay.takeoffs.length !== project.takeoffs.length
-            }
+            loading={!project.hasOwnProperty("takeoffs")}
             contentFunction={takeoffMap}
           />
         </m.List>

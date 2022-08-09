@@ -11,30 +11,24 @@ import ElevationProfile from "../../components/ElevationProfile";
 
 export default function Project(props) {
   const [project, setProject] = useState({});
-  const [projectDisplay, setProjectDisplay] = useState({});
 
   let { projectId } = useParams();
 
   useEffect(() => {
     http
       .get(`/projects/${projectId}`)
-      .then((res) => setProject(res.data))
+      .then((res) => setProject(initialProjectDisplay(res.data)))
       .catch((err) => console.error(err.stack));
   }, [projectId]);
 
-  useEffect(() => setProjectDisplay(initialProjectDisplay(project)), [project]);
   useEffect(() => console.log("project", project), [project]);
 
   return (
     <m.Box sx={{ display: "flex" }}>
-      <Sidebar
-        project={project}
-        projectDisplay={projectDisplay}
-        setProjectDisplay={setProjectDisplay}
-      />
+      <Sidebar project={project} setProject={setProject} />
       <m.Box component="main" sx={{ flexGrow: 1 }}>
         <m.Toolbar />
-        <ElevationProfile project={project} projectDisplay={projectDisplay} />
+        <ElevationProfile project={project} />
         <m.Divider />
         {/* <Map /> */}
       </m.Box>
