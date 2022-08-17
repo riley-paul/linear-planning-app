@@ -1,63 +1,43 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 const UserSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      require: true,
-      min: 3,
-      max: 3,
+      lowercase: true,
+      required: [true, "can't be blank"],
+      match: [/^[a-zA-Z0-9]+$/, "is invalid"],
+      index: true,
       unique: true,
     },
     email: {
       type: String,
-      required: true,
-      max: 50,
+      lowercase: true,
+      required: [true, "can't be blank"],
+      match: [/\S+@\S+\.\S+/, "is invalid"],
+      index: true,
       unique: true,
     },
-    password: {
-      type: String,
-      required: true,
-      min: 6,
-    },
-    profilePicture: {
-      type: String,
-      default: "",
-    },
-    coverPicture: {
-      type: String,
-      default: "",
-    },
-    followers: {
-      type: Array,
-      default: [],
-    },
-    following: {
-      type: Array,
-      default: [],
-    },
-    isAdmin: {
-      type: Boolean,
-      default: false,
-    },
-    desc: {
-      type: String,
-      max: 50,
-    },
-    city: {
-      type: String,
-      max: 50,
-    },
-    from: {
-      type: String,
-      max: 50,
-    },
-    relationship: {
-      type: Number,
-      enum: [1, 2, 3],
-    },
+    image: String,
+    hash: String,
+    salt: String,
   },
   { timestamps: true }
 );
+
+UserSchema.methods.setPassword = async function (password) {
+  try {
+    this.salt = await bcrypt.genSalt(saltRounds);
+    this.hash = await bcrypt.hashSync(password, salt);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+UserSchema.methods.validPassword = async function (password) {
+  return await bcrypt.compare(password, this.hash);
+};
 
 module.exports = mongoose.model("User", UserSchema);
