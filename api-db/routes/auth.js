@@ -1,10 +1,9 @@
 import express from "express";
-import User from "../models/User.js";
-import bcrypt from "bcrypt";
-const router = express.Router()
+import { signup } from "../controllers/auth.js";
+const router = express.Router();
 
 // REGISTER
-router.post("/signup");
+router.post("/signup", signup);
 
 // LOGIN
 router.post("/signin");
