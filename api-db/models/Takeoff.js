@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const TakeoffSchema = new mongoose.Schema(
   {
@@ -23,4 +23,4 @@ const TakeoffSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Takeoff", TakeoffSchema);
+export default mongoose.model("Takeoff", TakeoffSchema);

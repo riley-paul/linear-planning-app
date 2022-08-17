@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+import mongoose from "mongoose";
+import bcrypt from "bcrypt"
 const saltRounds = 10;
 
 const UserSchema = new mongoose.Schema(
@@ -40,4 +40,4 @@ UserSchema.methods.validPassword = async function (password) {
   return await bcrypt.compare(password, this.hash);
 };
 
-module.exports = mongoose.model("User", UserSchema);
+export default mongoose.model("User", UserSchema);

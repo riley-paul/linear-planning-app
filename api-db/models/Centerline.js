@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const FeatureCollectionSchema = mongoose.Schema({
   features: {
@@ -26,4 +26,4 @@ const CenterlineSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Centerline", CenterlineSchema);
+export default mongoose.model("Centerline", CenterlineSchema);

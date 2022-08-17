@@ -1,11 +1,5 @@
-const router = require("express").Router();
-const Project = require("../models/Project");
+import express from "express";
+import {} from "../controllers/project.js";
+const router = express.Router()
 
-// new project
-
-// get project
-
-// list projects
-
-
-module.exports = router;
+export default router;

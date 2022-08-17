@@ -1,7 +1,8 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const ProjectSchema = new mongoose.Schema(
   {
+    userId: String,
     name: { type: String, required: true },
     description: { type: String, default: "" },
     centerlines: { type: Array, default: [] },
@@ -10,4 +11,4 @@ const ProjectSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Project", ProjectSchema);
+export default mongoose.model("Project", ProjectSchema);
