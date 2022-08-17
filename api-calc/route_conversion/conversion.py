@@ -20,7 +20,7 @@ def unzip(fname):
 
 def find_shp(fname):
   dirname = os.path.splitext(fname)[0]
-  filename = next((i for i in os.listdir(dirname) if ".shp" in i), False)
+  filename = next((i for i in os.listdir(dirname) if i[-4:] == ".shp"), False)
   return os.path.join(dirname,filename) if filename else filename
 
 @conversion.route("/json",methods=["GET","POST"])
