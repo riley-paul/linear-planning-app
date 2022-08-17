@@ -10,6 +10,7 @@ import userRouter from "./routes/users.js";
 import projectRouter from "./routes/projects.js";
 import centerlineRouter from "./routes/centerlines.js";
 import takeoffRouter from "./routes/takeoffs.js";
+import { verfiyToken } from "./verifyToken.js";
 
 const app = express();
 
@@ -31,6 +32,7 @@ app.use(express.json());
 app.use(morgan("common"));
 app.use(helmet());
 app.use(cookieParser());
+app.use(verfiyToken)
 
 // routes
 
