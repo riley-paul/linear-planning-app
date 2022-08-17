@@ -13,20 +13,19 @@ const UserSchema = new mongoose.Schema(
       lowercase: true,
       required: [true, "can't be blank"],
       match: [/\S+@\S+\.\S+/, "is invalid"],
-      index: true,
-      unique: true,
+      // index: true,
+      // unique: true,
     },
     image: String,
     hash: String,
-    salt: String,
   },
   { timestamps: true }
 );
 
 UserSchema.methods.setPassword = async function (password) {
   try {
-    this.salt = await bcrypt.genSalt(saltRounds);
-    this.hash = await bcrypt.hashSync(password, salt);
+    const salt = await bcrypt.genSalt(saltRounds);
+    this.hash = await bcrypt.hash(password, salt);
   } catch (err) {
     console.error(err);
   }
