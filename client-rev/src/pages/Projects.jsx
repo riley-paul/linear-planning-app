@@ -12,16 +12,17 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
   padding: 5px 20px;
-`;
+  `;
 
 const Title = styled.h3`
   padding-bottom: 20px;
-`;
+  `;
 
 const ProjectGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
+  align-items: center;
 `;
 
 export default function Projects(props) {
@@ -39,7 +40,7 @@ export default function Projects(props) {
     <Container>
       <Wrapper>
         <Title>Projects</Title>
-        <ProjectGrid>
+        <ProjectGrid style={{placeSelf: "center"}}>
           {projects.map((project, index) => (
             <ProjectCard key={index} project={project} />
           ))}

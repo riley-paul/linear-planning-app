@@ -57,13 +57,13 @@ export default function Navbar(props) {
             component={Link}
             to="projects"
             startIcon={<AccountTreeIcon />}
-            sx={buttonSx}
             children="Projects"
+            color="inherit"
           />
 
           <Button
             onClick={() => setDarkMode((prev) => !prev)}
-            sx={buttonSx}
+            color="inherit"
             children={darkMode ? "Light Mode" : "Dark Mode"}
           />
 
@@ -71,7 +71,7 @@ export default function Navbar(props) {
             component={Link}
             to={"signin"}
             variant="outlined"
-            sx={buttonSx}
+            color="inherit"
             children="Login"
           />
 
@@ -79,7 +79,7 @@ export default function Navbar(props) {
             to={"signup"}
             component={Link}
             variant="outlined"
-            sx={buttonSx}
+            color="inherit"
             children="Register"
           />
         </ButtonGroup>
