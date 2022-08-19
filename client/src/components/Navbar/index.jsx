@@ -2,7 +2,6 @@ import * as m from "@mui/material";
 
 import { NavLink, useParams } from "react-router-dom";
 
-import "./index.scss";
 import { useState } from "react";
 import { useEffect } from "react";
 
@@ -81,7 +80,7 @@ export default function NavBar(props) {
               </m.Menu>
             </m.Box>
           </m.Box>
-          <m.Button disabled variant="outlined" color="inherit">
+          <m.Button variant="outlined" color="inherit">
             login
           </m.Button>
         </m.Toolbar>

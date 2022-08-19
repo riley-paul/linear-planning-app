@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import NavBar from "./components/Navbar";
-import http from "./helpers/http";
 import * as m from "@mui/material";
+import http from "./helpers/http";
+import axios from "axios";
 
 export default function App() {
   const [projects, setProjects] = useState([]);
@@ -10,11 +11,14 @@ export default function App() {
   useEffect(() => {
     http
       .get("/projects")
-      .then((res) => setProjects(res.data))
-      .catch((err) => console.error(err.stack));
+      .then((res) => {
+        console.log(res);
+        setProjects(res.data);
+      })
+      .catch((err) => console.error("could not get projects", err));
   }, []);
 
-  useEffect(() => console.log("projects",projects), [projects]);
+  useEffect(() => console.log("projects", projects), [projects]);
 
   return (
     <div>

@@ -4,6 +4,9 @@ import dotenv from "dotenv";
 import helmet from "helmet";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
+import cors from "cors"
+
+import expressListRoutes from "express-list-routes"
 
 import authRouter from "./routes/auth.js";
 import userRouter from "./routes/users.js";
@@ -27,15 +30,22 @@ mongoose
   .then(console.log("connected to MongoDB"))
   .catch((err) => console.error(err));
 
+// CORS
+const corsOptions = {
+  origin: "http://localhost:3000",
+  optionsSuccessStatus: 200,
+}
+
+app.use(cors(corsOptions))
+
 // middleware
 app.use(express.json());
 app.use(morgan("common"));
 app.use(helmet());
 app.use(cookieParser());
-app.use(verfiyToken)
+// app.use(verfiyToken)
 
 // routes
-
 app.use("/api/users", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/projects", projectRouter);
@@ -52,6 +62,8 @@ app.use((err, req, res, next) => {
   });
 });
 
+
 app.listen(PORT, () => {
   console.log(`server listing on port ${PORT}`);
+  expressListRoutes(app)
 });

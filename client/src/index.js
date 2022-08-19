@@ -1,11 +1,9 @@
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import "./index.css";
-
 import App from "./App";
-import Project from "./routes/Project";
-import Upload from "./routes/Upload";
+import Project from "./pages/Project";
+import Projects from "./pages/Projects";
 
 const root = ReactDOM.createRoot(document.getElementById("app"));
 
@@ -13,8 +11,10 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />}>
-        <Route path="projects/:projectId" element={<Project />} />
-        <Route path="upload" element={<Upload />} />
+        <Route index element={<Projects />} />
+        <Route path="projects">
+          <Route path=":id" element={<Project />} />
+        </Route>
       </Route>
       <Route
         path="*"

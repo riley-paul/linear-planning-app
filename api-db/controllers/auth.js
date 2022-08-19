@@ -18,7 +18,7 @@ export const signin = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
-    if (!user) return next(createError(404, "User not found"));
+    if (!user) return next(createError(401, "User not found"));
 
     const validPassword = await user.validPassword(password);
     if (!validPassword) return next(createError(400, "Incorrect credentials"));

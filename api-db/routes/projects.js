@@ -6,21 +6,22 @@ import {
   deleteProject,
   updateProject,
 } from "../controllers/project.js";
+import { verfiyToken } from "../verifyToken.js";
 const router = express.Router();
 
 // get all projects for user
-router.get("/", allProjects);
+router.get("/", verfiyToken, allProjects);
 
 // get specific project
-router.get("/:id", getProjects);
+router.get("/:id", verfiyToken, getProjects);
 
 // new project
-router.post("/", addProject);
+router.post("/", verfiyToken, addProject);
 
 // delete project
-router.delete("/:id", deleteProject);
+router.delete("/:id", verfiyToken, deleteProject);
 
 // update project
-router.patch("/:id", updateProject);
+router.patch("/:id", verfiyToken, updateProject);
 
 export default router;
