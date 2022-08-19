@@ -10,7 +10,7 @@ export const allProjects = async (req, res, next) => {
   }
 };
 
-export const getProjects = async (req, res, next) => {
+export const getProject = async (req, res, next) => {
   try {
     const project = await Project.findById(req.params.id);
     if (project.userId !== req.user.id)
