@@ -13,7 +13,6 @@ import userRouter from "./routes/users.js";
 import projectRouter from "./routes/projects.js";
 import centerlineRouter from "./routes/centerlines.js";
 import takeoffRouter from "./routes/takeoffs.js";
-import { verfiyToken } from "./verifyToken.js";
 
 const app = express();
 
@@ -31,16 +30,19 @@ mongoose
   .catch((err) => console.error(err));
 
 // CORS
-// const corsOptions = {
-//   origin: "http://localhost:3000",
-//   optionsSuccessStatus: 200,
-// }
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true,
+  optionsSuccessStatus: 200,
+}
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+app.use(cors(corsOptions))
+
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "localhost:3000"); // update to match the domain you will make the request from
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
 
 // middleware
 app.use(express.json());
