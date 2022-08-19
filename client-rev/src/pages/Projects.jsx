@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import ProjectCard from "../components/ProjectCard";
 import http from "../helpers/http";
-import { linkStyle } from "../utils/StyleOverrides";
 
 const Container = styled.div`
   display: flex;

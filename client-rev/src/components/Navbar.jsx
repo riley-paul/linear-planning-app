@@ -6,7 +6,7 @@ import { Button } from "@mui/material";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import LinearScaleIcon from "@mui/icons-material/LinearScale";
 
-import { buttonSx, linkStyle } from "../utils/StyleOverrides";
+import { linkStyle } from "../utils/StyleOverrides";
 
 const Container = styled.div`
   width: 100%;

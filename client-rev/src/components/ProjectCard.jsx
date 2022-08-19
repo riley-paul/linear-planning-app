@@ -11,6 +11,9 @@ import styled from "styled-components";
 
 const Container = styled.div`
   background-color: ${({ theme }) => theme.bg};
+  min-width: 250px;
+  max-width: 345px;
+  justify-self: center;
 `;
 
 const Title = styled.h4`
@@ -35,7 +38,12 @@ export default function ProjectCard(props) {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button color="inherit" children="view" />
+          <Button
+            component={Link}
+            to={project._id}
+            color="inherit"
+            children="view"
+          />
           <Button color="inherit" children="edit" />
         </CardActions>
       </Card>
