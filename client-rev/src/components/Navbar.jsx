@@ -53,27 +53,35 @@ export default function Navbar(props) {
         </div>
 
         <ButtonGroup className="right">
-          <Link to="projects" style={linkStyle}>
-            <Button startIcon={<AccountTreeIcon />} sx={buttonSx}>
-              Projects
-            </Button>
-          </Link>
+          <Button
+            component={Link}
+            to="projects"
+            startIcon={<AccountTreeIcon />}
+            sx={buttonSx}
+            children="Projects"
+          />
 
-          <Button onClick={() => setDarkMode((prev) => !prev)} sx={buttonSx}>
-            {darkMode ? "Light Mode" : "Dark Mode"}
-          </Button>
+          <Button
+            onClick={() => setDarkMode((prev) => !prev)}
+            sx={buttonSx}
+            children={darkMode ? "Light Mode" : "Dark Mode"}
+          />
 
-          <Link to={"signin"} style={linkStyle}>
-            <Button variant="outlined" sx={buttonSx}>
-              Login
-            </Button>
-          </Link>
+          <Button
+            component={Link}
+            to={"signin"}
+            variant="outlined"
+            sx={buttonSx}
+            children="Login"
+          />
 
-          <Link to={"signup"} style={linkStyle}>
-            <Button variant="outlined" sx={buttonSx}>
-              Register
-            </Button>
-          </Link>
+          <Button
+            to={"signup"}
+            component={Link}
+            variant="outlined"
+            sx={buttonSx}
+            children="Register"
+          />
         </ButtonGroup>
       </Wrapper>
     </Container>

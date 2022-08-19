@@ -90,9 +90,8 @@ export default function UserForm(props) {
           variant="outlined"
           onClick={register ? handleRegister : handleLogin}
           sx={{ ...buttonSx }}
-        >
-          {register ? "Register" : "Login"}
-        </Button>
+          children={register ? "Register" : "Login"}
+        />
       </Wrapper>
     </Container>
   );
