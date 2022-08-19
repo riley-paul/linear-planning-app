@@ -1,7 +1,25 @@
-
 import { useEffect, useState, useRef } from "react";
+import styled from "styled-components";
 import Plot from "./Plot";
 import Error from "./Plot/Error";
+
+import { CircularProgress } from "@mui/material";
+
+const Container = styled.div`
+  width: 100%;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-bottom: 1px solid ${({ theme }) => theme.soft};
+`;
+
+const ErrorText = styled.div`
+  padding-top: 10px;
+  color: ${({ theme }) => theme.textSoft};
+  font-size: smaller;
+`;
 
 export default function ElevationProfile(props) {
   const { elevation, takeoffs } = props;
@@ -20,11 +38,14 @@ export default function ElevationProfile(props) {
   }, []);
 
   return (
-    <div className="plot-container" ref={ref}>
+    <Container className="plot-container" ref={ref}>
       {!elevation ? (
-        <Error width={rectWidth} height={250} message={"Loading Data..."} />
+        <>
+          <CircularProgress />
+          <ErrorText>Loading Elevation Data</ErrorText>
+        </>
       ) : elevation.length === 0 ? (
-        <Error width={rectWidth} height={250} message={"No Elevation Data"} />
+        <ErrorText>No Elevation Data for Centerline</ErrorText>
       ) : (
         <Plot
           elevation={elevation}
@@ -35,6 +56,6 @@ export default function ElevationProfile(props) {
           height={250}
         />
       )}
-    </div>
+    </Container>
   );
 }
