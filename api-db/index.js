@@ -43,7 +43,7 @@ app.use(express.json());
 app.use(morgan("common"));
 app.use(helmet());
 app.use(cookieParser());
-// app.use(verfiyToken)
+app.use(verfiyToken)
 
 // routes
 app.use("/api/users", userRouter);

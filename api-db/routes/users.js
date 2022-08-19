@@ -4,12 +4,12 @@ import { verfiyToken } from "../verifyToken.js";
 const router = express.Router();
 
 // update user
-router.put("/:id", verfiyToken, updateUser);
+router.put("/:id", updateUser);
 
 // delete user
-router.delete("/:id", verfiyToken, deleteUser);
+router.delete("/:id", deleteUser);
 
 // get a user
-router.get("/:id", verfiyToken, getUser);
+router.get("/:id", getUser);
 
 export default router;
