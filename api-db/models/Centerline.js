@@ -16,6 +16,7 @@ const FeatureCollectionSchema = mongoose.Schema({
 
 const CenterlineSchema = new mongoose.Schema(
   {
+    projectId: { type: String, required: true },
     name: { type: String, required: true },
     description: String,
     line: { type: FeatureCollectionSchema, required: true },

@@ -17,10 +17,9 @@ const Title = styled.h3`
   `;
 
 const ProjectGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 `;
 
 export default function Projects(props) {

@@ -8,7 +8,16 @@ export const register = async (req, res, next) => {
     const newUser = new User({ name, email });
     await newUser.setPassword(password);
     await newUser.save();
-    res.status(200).json(newUser);
+
+    const token = jwt.sign({ id: newUser._id }, process.env.JWT);
+    const { hash, ...others } = newUser._doc;
+
+    res
+      .cookie("access_token", token, {
+        httpOnly: true,
+      })
+      .status(200)
+      .json(others);
   } catch (err) {
     next(err);
   }

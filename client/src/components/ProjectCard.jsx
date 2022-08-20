@@ -11,9 +11,21 @@ import styled from "styled-components";
 
 const Container = styled.div`
   background-color: ${({ theme }) => theme.bg};
-  min-width: 250px;
-  max-width: 345px;
+  color: ${({ theme }) => theme.textSoft};
   justify-self: center;
+  width: calc(50% - 20px * 1 / 2);
+  
+  @media (min-width: 640px) {
+    width: calc(33% - 20px * 2 / 3);
+  }
+
+  @media (min-width: 940px) {
+    width: calc(25% - 20px * 3 / 4);
+  }
+
+  @media (min-width: 1200px) {
+    width: calc(20% - 20px * 4 / 5);
+  }
 `;
 
 const Title = styled.h4`
@@ -21,7 +33,6 @@ const Title = styled.h4`
   padding-bottom: 5px;
 `;
 const Desc = styled.p`
-  color: ${({ theme }) => theme.textSoft};
   font-size: smaller;
 `;
 
