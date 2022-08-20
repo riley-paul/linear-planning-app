@@ -1,11 +1,11 @@
 export const darkTheme = {
-  bg: "#181818",
-  bgLighter: "#252525",
-  bgDarker: "#111111",
+  bg: "#202020",
+  bgLighter: "#303030",
+  bgDarker: "#060606",
   text: "white",
   textSoft: "#aaaaaa",
   soft: "#373737",
-  boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+  boxShadow: "rgba(0,0,0, 0.2) 0px 2px 8px 0px",
 };
 
 export const lightTheme = {
