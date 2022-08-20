@@ -17,6 +17,8 @@ const Container = styled.div`
   background-color: ${({ theme }) => theme.bgDarker};
   color: ${({ theme }) => theme.text};
   height: 56px;
+  z-index: 12;
+  box-shadow: ${({ theme }) => theme.boxShadow};
 `;
 
 const Wrapper = styled.div`

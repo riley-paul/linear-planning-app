@@ -37,7 +37,7 @@ const Desc = styled.p`
 `;
 
 export default function ProjectCard(props) {
-  const { project } = props;
+  const { project, handleDelete } = props;
 
   return (
     <Container>
@@ -50,7 +50,12 @@ export default function ProjectCard(props) {
         </CardActionArea>
         <CardActions>
           <Button color="inherit" size="small" children="edit" />
-          <Button color="inherit" size="small" children="delete" />
+          <Button
+            color="inherit"
+            size="small"
+            children="delete"
+            onClick={handleDelete}
+          />
         </CardActions>
       </Card>
     </Container>

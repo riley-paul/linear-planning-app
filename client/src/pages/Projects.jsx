@@ -1,8 +1,10 @@
 import { Button } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { deleteProjectHandler, loadProjectsHandler } from "../api/projects";
 import ProjectCard from "../components/ProjectCard";
-import http from "../utils/http";
 
 const Container = styled.div`
   display: flex;
@@ -21,6 +23,8 @@ const TitleBar = styled.div`
   /* justify-content: space-between; */
   height: 48px;
   gap: 20px;
+  z-index: 10;
+  box-shadow: ${({ theme }) => theme.boxShadow};
 `;
 
 const Title = styled.h3`
@@ -35,25 +39,34 @@ const ProjectGrid = styled.div`
 `;
 
 export default function Projects(props) {
-  const [projects, setProjects] = useState([]);
+  const dispatch = useDispatch();
+  const projects = useSelector((state) => state.projects.currentProjects);
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      const res = await http.get("/projects");
-      setProjects(res.data);
-    };
-    fetchProjects();
-  }, []);
+  const handleLoadProjects = loadProjectsHandler(dispatch);
+  const handleDeleteProject = deleteProjectHandler(dispatch);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useMemo(() => handleLoadProjects(), []);
 
   return (
     <Container>
       <TitleBar>
         <Title>PROJECTS</Title>
-        <Button size="small" color="inherit" children="Add project" />
+        <Button
+          size="small"
+          color="inherit"
+          children="Add project"
+          component={Link}
+          to="add"
+        />
       </TitleBar>
-      <ProjectGrid style={{ placeSelf: "center" }}>
+      <ProjectGrid>
         {projects.map((project, index) => (
-          <ProjectCard key={index} project={project} />
+          <ProjectCard
+            key={index}
+            project={project}
+            handleDelete={() => handleDeleteProject(project._id)}
+          />
         ))}
       </ProjectGrid>
     </Container>

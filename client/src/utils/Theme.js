@@ -5,6 +5,7 @@ export const darkTheme = {
   text: "white",
   textSoft: "#aaaaaa",
   soft: "#373737",
+  boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
 };
 
 export const lightTheme = {
@@ -14,4 +15,5 @@ export const lightTheme = {
   text: "black",
   textSoft: "#606060",
   soft: "#e8e8e8",
+  boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
 };
