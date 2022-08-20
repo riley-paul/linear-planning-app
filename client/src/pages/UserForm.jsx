@@ -39,6 +39,11 @@ const Input = styled.input`
   width: 100%;
 `;
 
+const Message = styled.div`
+  color: ${({ failure }) => (failure ? "crimson" : "inherit")};
+  font-size: small;
+`;
+
 export default function UserForm(props) {
   const { register } = props;
 
@@ -49,7 +54,7 @@ export default function UserForm(props) {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/auth/signin", { email, password });
+      const res = await axios.post("/auth/login", { email, password });
       console.log(res.data);
     } catch (err) {
       console.log(err.response.data.message);
@@ -86,12 +91,16 @@ export default function UserForm(props) {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+
         <Button
           variant="outlined"
           onClick={register ? handleRegister : handleLogin}
           sx={{ ...buttonSx }}
           children={register ? "Register" : "Login"}
         />
+
+        <Message>Login Successful</Message>
+
       </Wrapper>
     </Container>
   );
