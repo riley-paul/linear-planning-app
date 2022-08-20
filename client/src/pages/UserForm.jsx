@@ -20,6 +20,7 @@ const Wrapper = styled.div`
   justify-content: center;
   flex-direction: column;
 
+  box-shadow: ${({ theme }) => theme.boxShadow};
   background-color: ${({ theme }) => theme.bg};
   border: 1px solid ${({ theme }) => theme.soft};
   color: ${({ theme }) => theme.textSoft};

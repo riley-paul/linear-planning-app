@@ -15,5 +15,5 @@ export const lightTheme = {
   text: "black",
   textSoft: "#606060",
   soft: "#e8e8e8",
-  boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+  boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
 };

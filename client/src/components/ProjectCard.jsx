@@ -1,5 +1,4 @@
 import {
-  Card,
   CardContent,
   CardActions,
   Button,
@@ -26,6 +25,10 @@ const Container = styled.div`
   @media (min-width: 1200px) {
     width: calc(20% - 20px * 4 / 5);
   }
+
+  box-shadow: ${({ theme }) => theme.boxShadow};
+  border: 1px solid ${({ theme }) => theme.soft};
+  border-radius: 5px;
 `;
 
 const Title = styled.h4`
@@ -41,23 +44,21 @@ export default function ProjectCard(props) {
 
   return (
     <Container>
-      <Card sx={{ backgroundColor: "inherit", color: "inherit" }}>
-        <CardActionArea component={Link} to={project._id}>
-          <CardContent>
-            <Title>{project.name}</Title>
-            <Desc>{project.description}</Desc>
-          </CardContent>
-        </CardActionArea>
-        <CardActions>
-          <Button color="inherit" size="small" children="edit" />
-          <Button
-            color="inherit"
-            size="small"
-            children="delete"
-            onClick={handleDelete}
-          />
-        </CardActions>
-      </Card>
+      <CardActionArea component={Link} to={project._id}>
+        <CardContent>
+          <Title>{project.name}</Title>
+          <Desc>{project.description}</Desc>
+        </CardContent>
+      </CardActionArea>
+      <CardActions>
+        <Button color="inherit" size="small" children="edit" />
+        <Button
+          color="inherit"
+          size="small"
+          children="delete"
+          onClick={handleDelete}
+        />
+      </CardActions>
     </Container>
   );
 }
