@@ -20,7 +20,6 @@ const TitleBar = styled.div`
   padding: 0 35px;
   display: flex;
   align-items: center;
-  /* justify-content: space-between; */
   height: 48px;
   gap: 20px;
   z-index: 10;

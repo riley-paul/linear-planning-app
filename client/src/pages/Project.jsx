@@ -1,10 +1,12 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useMemo } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import http from "../utils/http";
+
+import { useDispatch, useSelector } from "react-redux";
+import { loadProjectHandler } from "../api/project";
+
 import ElevationProfile from "../components/ElevationProfile";
-import Map from "../components/Map"
+import Map from "../components/Map";
 
 const Container = styled.div`
   display: flex;
@@ -19,7 +21,7 @@ const Menu = styled.div`
   background-color: ${({ theme }) => theme.bg};
   position: sticky;
   top: 56px;
-overflow: auto;
+  overflow: auto;
 `;
 
 const MenuWrapper = styled.div`
@@ -45,15 +47,14 @@ const Hr = styled.hr`
 export default function Project(props) {
   const { projectId } = useParams();
 
-  const [project, setProject] = useState({});
+  const dispatch = useDispatch();
+  const project = useSelector((state) => state.project.currentProject);
 
-  useEffect(() => {
-    http
-      .get(`/projects/${projectId}`)
-      .then((res) => setProject(res.data))
-      .catch((err) => console.error(err));
-  }, [projectId]);
+  const handleLoadProject = loadProjectHandler(dispatch);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useMemo(() => handleLoadProject(projectId), [projectId]);
+  
   return (
     <Container>
       <Menu>

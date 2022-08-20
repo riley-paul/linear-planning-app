@@ -1,50 +1,37 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  currentUser: null,
+  currentProject: null,
   loading: false,
   error: false,
 };
 
 export const projectSlice = createSlice({
-  name: "user",
+  name: "project",
   initialState,
   reducers: {
-    loginStart: (state) => {
+    fetchStart: (state) => {
       state.loading = true;
     },
-    loginSuccess: (state, action) => {
-      state.loading = false;
-      state.currentUser = action.payload;
-      state.error = false;
-    },
-    loginFailure: (state) => {
-      state.loading = false;
-      state.error = true;
-    },
-    logoutStart: (state) => {
-      state.loading = true;
-    },
-    logoutSuccess: (state, action) => {
-      state.currentUser = null;
+    fetchSuccess: (state) => {
       state.loading = false;
       state.error = false;
     },
-    logoutFailure: (state) => {
+    fetchFailure: (state) => {
       state.loading = false;
       state.error = true;
+    },
+    fetchProject: (state, action) => {
+      state.currentProject = action.payload;
     },
   },
 });
 
 export const {
-  loginStart,
-  loginSuccess,
-  loginFailure,
-  logoutStart,
-  logoutSuccess,
-  logoutFailure,
-  logout,
+  fetchStart,
+  fetchSuccess,
+  fetchFailure,
+  fetchProject,
 } = projectSlice.actions;
 
 export default projectSlice.reducer;
