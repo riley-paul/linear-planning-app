@@ -43,8 +43,8 @@ export default function App() {
               <Routes>
                 <Route path="/">
                   <Route index element={<Home />} />
-                  <Route path="signin" element={<UserForm />} />
-                  <Route path="signup" element={<UserForm register />} />
+                  <Route path="login" element={<UserForm />} />
+                  <Route path="register" element={<UserForm register />} />
                   <Route path="projects">
                     <Route index element={<Projects />} />
                     <Route path=":projectId" element={<Project />} />

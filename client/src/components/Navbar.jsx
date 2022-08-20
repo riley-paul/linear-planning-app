@@ -69,14 +69,14 @@ export default function Navbar(props) {
 
           <Button
             component={Link}
-            to={"signin"}
+            to={"login"}
             variant="outlined"
             color="inherit"
             children="Login"
           />
 
           <Button
-            to={"signup"}
+            to={"register"}
             component={Link}
             variant="outlined"
             color="inherit"

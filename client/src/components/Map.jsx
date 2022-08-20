@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import styled from "styled-components";
-import getTilesets from "./Map/getTilesets";
 import Helmet from "react-helmet";
 
 const tilesets = [
@@ -24,7 +23,6 @@ const tilesets = [
 ];
 
 export default function Map(props) {
-  const tilesets = getTilesets();
   const [tilesetIndex, setTilesetIndex] = useState(0);
 
   return (

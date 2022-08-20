@@ -2,7 +2,7 @@ import { createError } from "../error.js";
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 
-export const signup = async (req, res, next) => {
+export const register = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
     const newUser = new User({ name, email });
@@ -14,7 +14,7 @@ export const signup = async (req, res, next) => {
   }
 };
 
-export const signin = async (req, res, next) => {
+export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
@@ -35,4 +35,12 @@ export const signin = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+};
+
+export const logout = async (req, res, next) => {
+  res
+    .clearCookie("access_token")
+    .status(200)
+    .json("Logout successful")
+    .catch((err) => next(err));
 };
