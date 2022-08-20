@@ -10,7 +10,6 @@ import http from "../utils/http";
 
 export const logoutHandler = (dispatch) => {
   const handleLogout = async (e) => {
-    e.preventDefault();
     dispatch(logoutStart());
     try {
       const res = await http.post("/auth/logout");
@@ -24,7 +23,6 @@ export const logoutHandler = (dispatch) => {
 
 export const loginHandler = (dispatch, userCred) => {
   const handleLogin = async (e) => {
-    e.preventDefault();
     dispatch(loginStart());
     try {
       const res = await http.post("/auth/login", userCred);
@@ -38,7 +36,6 @@ export const loginHandler = (dispatch, userCred) => {
 
 export const registerHandler = (dispatch, userCred) => {
   const handleRegister = async (e) => {
-    e.preventDefault();
     dispatch(loginStart());
     try {
       const res = await http.post("/auth/register", userCred);
