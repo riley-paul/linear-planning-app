@@ -1,11 +1,12 @@
 import { useState } from "react";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import http from "../helpers/http";
 import styled from "styled-components";
 
-import { Button } from "@mui/material";
-import { buttonSx } from "../utils/StyleOverrides";
+import { Button, CircularProgress } from "@mui/material";
 
 import LinearScaleIcon from "@mui/icons-material/LinearScale";
+import { loginFailure, loginStart, loginSuccess } from "../redux/userSlice";
 
 const Container = styled.div`
   display: flex;
@@ -44,6 +45,46 @@ const Message = styled.div`
   font-size: small;
 `;
 
+function LoginButton({ userState, onClick }) {
+  return (
+    <>
+      {userState.loading ? (
+        <CircularProgress />
+      ) : !userState.currentUser ? (
+        <Button
+          variant="outlined"
+          onClick={onClick}
+          color="inherit"
+          children="Login"
+        />
+      ) : (
+        <Message children={`Logged in as ${userState.currentUser.name}`} />
+      )}
+      {userState.error && <Message children="Login Failed" />}
+    </>
+  );
+}
+
+function RegisterButton({ userState, onClick }) {
+  return (
+    <>
+      {userState.loading ? (
+        <CircularProgress />
+      ) : !userState.currentUser ? (
+        <Button
+          variant="outlined"
+          onClick={onClick}
+          color="inherit"
+          children="Register"
+        />
+      ) : (
+        <Message children={`Logged in as ${userState.currentUser.name}`} />
+      )}
+      {userState.error && <Message children="Login Failed" />}
+    </>
+  );
+}
+
 export default function UserForm(props) {
   const { register } = props;
 
@@ -51,25 +92,35 @@ export default function UserForm(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const dispatch = useDispatch();
+  const userState = useSelector((state) => state.user);
+
   const handleLogin = async (e) => {
     e.preventDefault();
+    dispatch(loginStart());
     try {
-      const res = await axios.post("/auth/login", { email, password });
-      console.log(res.data);
+      const res = await http.post("/auth/login", { email, password });
+      dispatch(loginSuccess(res.data));
     } catch (err) {
-      console.log(err.response.data.message);
+      dispatch(loginFailure());
     }
   };
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    dispatch(loginStart());
+    try {
+      const res = await http.post("/auth/register", { email, password, name });
+      dispatch(loginSuccess(res.data));
+    } catch (err) {
+      dispatch(loginFailure());
+    }
   };
 
   return (
     <Container>
       <Wrapper>
         <LinearScaleIcon fontSize="large" sx={{ color: "crimson" }} />
-
         {register && (
           <Input
             placeholder="Name"
@@ -78,7 +129,6 @@ export default function UserForm(props) {
             onChange={(e) => setName(e.target.value)}
           />
         )}
-
         <Input
           placeholder="Email"
           type="email"
@@ -91,16 +141,11 @@ export default function UserForm(props) {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-
-        <Button
-          variant="outlined"
-          onClick={register ? handleRegister : handleLogin}
-          sx={{ ...buttonSx }}
-          children={register ? "Register" : "Login"}
-        />
-
-        <Message>Login Successful</Message>
-
+        {register ? (
+          <RegisterButton userState={userState} onClick={handleRegister} />
+        ) : (
+          <LoginButton userState={userState} onClick={handleLogin} />
+        )}
       </Wrapper>
     </Container>
   );

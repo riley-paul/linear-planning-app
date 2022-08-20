@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Button } from "@mui/material";
 
@@ -7,6 +8,7 @@ import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import LinearScaleIcon from "@mui/icons-material/LinearScale";
 
 import { linkStyle } from "../utils/StyleOverrides";
+import { logout } from "../redux/userSlice";
 
 const Container = styled.div`
   width: 100%;
@@ -40,6 +42,13 @@ const Title = styled.h3`
 export default function Navbar(props) {
   const { setDarkMode, darkMode } = props;
 
+  const dispatch = useDispatch();
+  const currentUser = useSelector((state) => state.user.currentUser);
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   return (
     <Container>
       <Wrapper>
@@ -67,21 +76,32 @@ export default function Navbar(props) {
             children={darkMode ? "Light Mode" : "Dark Mode"}
           />
 
-          <Button
-            component={Link}
-            to={"login"}
-            variant="outlined"
-            color="inherit"
-            children="Login"
-          />
+          {currentUser ? (
+            <Button
+              onClick={handleLogout}
+              variant="outlined"
+              color="inherit"
+              children="Logout"
+            />
+          ) : (
+            <>
+              <Button
+                component={Link}
+                to={"login"}
+                variant="outlined"
+                color="inherit"
+                children="Login"
+              />
 
-          <Button
-            to={"register"}
-            component={Link}
-            variant="outlined"
-            color="inherit"
-            children="Register"
-          />
+              <Button
+                to={"register"}
+                component={Link}
+                variant="outlined"
+                color="inherit"
+                children="Register"
+              />
+            </>
+          )}
         </ButtonGroup>
       </Wrapper>
     </Container>
