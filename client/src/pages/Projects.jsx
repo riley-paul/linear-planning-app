@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import ProjectCard from "../components/ProjectCard";
-import http from "../helpers/http";
+import http from "../utils/http";
 
 const Container = styled.div`
   display: flex;

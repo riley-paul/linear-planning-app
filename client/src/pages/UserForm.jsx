@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import http from "../helpers/http";
 import styled from "styled-components";
 
 import { Button, CircularProgress } from "@mui/material";
 
 import LinearScaleIcon from "@mui/icons-material/LinearScale";
-import { loginFailure, loginStart, loginSuccess } from "../redux/userSlice";
+import { loginHandler, registerHandler } from "../api/auth";
 
 const Container = styled.div`
   display: flex;
@@ -95,27 +94,8 @@ export default function UserForm(props) {
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.user);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    dispatch(loginStart());
-    try {
-      const res = await http.post("/auth/login", { email, password });
-      dispatch(loginSuccess(res.data));
-    } catch (err) {
-      dispatch(loginFailure());
-    }
-  };
-
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    dispatch(loginStart());
-    try {
-      const res = await http.post("/auth/register", { email, password, name });
-      dispatch(loginSuccess(res.data));
-    } catch (err) {
-      dispatch(loginFailure());
-    }
-  };
+  const handleLogin = loginHandler(dispatch, { email, password });
+  const handleRegister = registerHandler(dispatch, { name, email, password });
 
   return (
     <Container>

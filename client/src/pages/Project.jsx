@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import http from "../helpers/http";
+import http from "../utils/http";
 import ElevationProfile from "../components/ElevationProfile";
 import Map from "../components/Map"
 

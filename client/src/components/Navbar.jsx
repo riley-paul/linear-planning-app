@@ -8,7 +8,7 @@ import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import LinearScaleIcon from "@mui/icons-material/LinearScale";
 
 import { linkStyle } from "../utils/StyleOverrides";
-import { logout } from "../redux/userSlice";
+import { logoutHandler } from "../api/auth";
 
 const Container = styled.div`
   width: 100%;
@@ -45,9 +45,7 @@ export default function Navbar(props) {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);
 
-  const handleLogout = () => {
-    dispatch(logout());
-  };
+  const handleLogout = logoutHandler(dispatch);
 
   return (
     <Container>
@@ -62,13 +60,15 @@ export default function Navbar(props) {
         </div>
 
         <ButtonGroup className="right">
-          <Button
-            component={Link}
-            to="projects"
-            startIcon={<AccountTreeIcon />}
-            children="Projects"
-            color="inherit"
-          />
+          {currentUser && (
+            <Button
+              component={Link}
+              to="projects"
+              startIcon={<AccountTreeIcon />}
+              children="Projects"
+              color="inherit"
+            />
+          )}
 
           <Button
             onClick={() => setDarkMode((prev) => !prev)}
@@ -78,6 +78,8 @@ export default function Navbar(props) {
 
           {currentUser ? (
             <Button
+              component={Link}
+              to={""}
               onClick={handleLogout}
               variant="outlined"
               color="inherit"

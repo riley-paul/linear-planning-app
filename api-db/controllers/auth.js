@@ -38,9 +38,9 @@ export const login = async (req, res, next) => {
 };
 
 export const logout = async (req, res, next) => {
-  res
-    .clearCookie("access_token")
-    .status(200)
-    .json("Logout successful")
-    .catch((err) => next(err));
+  try {
+    res.clearCookie("access_token").status(200).json("Logout successful");
+  } catch (err) {
+    next(err);
+  }
 };
