@@ -14,12 +14,12 @@ const Container = styled.div`
   color: ${({ theme }) => theme.textSoft};
   justify-self: center;
   width: calc(50% - 20px * 1 / 2);
-  
-  @media (min-width: 640px) {
+
+  @media (min-width: 600px) {
     width: calc(33% - 20px * 2 / 3);
   }
 
-  @media (min-width: 940px) {
+  @media (min-width: 900px) {
     width: calc(25% - 20px * 3 / 4);
   }
 
@@ -49,13 +49,8 @@ export default function ProjectCard(props) {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button
-            component={Link}
-            to={project._id}
-            color="inherit"
-            children="view"
-          />
-          <Button color="inherit" children="edit" />
+          <Button color="inherit" size="small" children="edit" />
+          <Button color="inherit" size="small" children="delete" />
         </CardActions>
       </Card>
     </Container>
