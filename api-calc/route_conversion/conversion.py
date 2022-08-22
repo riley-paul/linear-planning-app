@@ -72,7 +72,7 @@ def convert_json():
 
       result = {
         "rows": data.to_dict("records"),
-        "columns": [{"field": i} for i in data.columns],
+        "columns": [{"field": i, "flex": 1} for i in data.columns],
         }
       return jsonify(result)
   

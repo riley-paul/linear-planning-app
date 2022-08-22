@@ -1,8 +1,12 @@
-export default function Home(props) {
+import styled from "styled-components";
 
-  return (
-    <div>
-      home
-    </div>
-  )
+const Container = styled.div`
+  height: calc(100vh - 56px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export default function Home(props) {
+  return <Container>Welcome</Container>;
 }
