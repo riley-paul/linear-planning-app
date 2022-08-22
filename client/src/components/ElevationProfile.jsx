@@ -4,6 +4,7 @@ import Plot from "./Plot";
 import Error from "./Plot/Error";
 
 import { CircularProgress } from "@mui/material";
+import { useSelector } from "react-redux";
 
 const Container = styled.div`
   width: 100%;
@@ -24,6 +25,10 @@ const ErrorText = styled.div`
 export default function ElevationProfile(props) {
   const { elevation, takeoffs } = props;
 
+  const centerline = useSelector((state) => state.centerline.currentCenterline);
+  const loading = useSelector((state) => state.centerline.loading);
+  const error = useSelector((state) => state.centerline.error);
+
   // determine width of parent element
   const ref = useRef(null);
   const [rectWidth, setRectWidth] = useState(500);
@@ -39,7 +44,7 @@ export default function ElevationProfile(props) {
 
   return (
     <Container className="plot-container" ref={ref}>
-      {!elevation ? (
+      {!loading ? (
         <>
           <CircularProgress />
           <ErrorText>Loading Elevation Data</ErrorText>

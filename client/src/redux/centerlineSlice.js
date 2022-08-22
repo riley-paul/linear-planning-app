@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  currentProject: null,
+  currentCenterline: null,
   loading: false,
   error: false,
 };
 
-export const projectSlice = createSlice({
-  name: "project",
+export const centerlineSlice = createSlice({
+  name: "centerline",
   initialState,
   reducers: {
     fetchStart: (state) => {
@@ -21,8 +21,8 @@ export const projectSlice = createSlice({
       state.loading = false;
       state.error = true;
     },
-    setProject: (state, action) => {
-      state.currentProject = action.payload;
+    setCenterline: (state, action) => {
+      state.currentCenterline = action.payload;
     },
   },
 });
@@ -31,7 +31,7 @@ export const {
   fetchStart,
   fetchSuccess,
   fetchFailure,
-  setProject,
-} = projectSlice.actions;
+  fetchCenterline,
+} = centerlineSlice.actions;
 
-export default projectSlice.reducer;
+export default centerlineSlice.reducer;

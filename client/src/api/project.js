@@ -2,7 +2,7 @@ import {
   fetchStart,
   fetchSuccess,
   fetchFailure,
-  fetchProject,
+  setProject,
 } from "../redux/projectSlice";
 import http from "../utils/http";
 
@@ -12,7 +12,7 @@ export const loadProjectHandler = (dispatch) => {
     try {
       const res = await http.get(`/projects/${id}`);
       dispatch(fetchSuccess());
-      dispatch(fetchProject(res.data));
+      dispatch(setProject(res.data));
     } catch (err) {
       dispatch(fetchFailure());
     }
