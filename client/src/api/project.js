@@ -7,7 +7,7 @@ import {
 import http from "../utils/http";
 
 export const loadProjectHandler = (dispatch) => {
-  const handleLoadProjects = async (id) => {
+  const handleLoadProject = async (id) => {
     dispatch(fetchStart());
     try {
       const res = await http.get(`/projects/${id}`);
@@ -17,5 +17,5 @@ export const loadProjectHandler = (dispatch) => {
       dispatch(fetchFailure());
     }
   };
-  return handleLoadProjects;
+  return handleLoadProject;
 };

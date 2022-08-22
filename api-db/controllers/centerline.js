@@ -15,6 +15,7 @@ export const addCenterline = async (req, res, next) => {
     await newCL.save();
     res.status(200).json(newCL);
   } catch (err) {
+    console.error(err)
     next(err);
   }
 };

@@ -31,7 +31,7 @@ export const {
   fetchStart,
   fetchSuccess,
   fetchFailure,
-  fetchCenterline,
+  setCenterline,
 } = centerlineSlice.actions;
 
 export default centerlineSlice.reducer;

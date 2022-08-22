@@ -1,13 +1,7 @@
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
-import {
-  IconButton,
-  List,
-  ListItem,
-  ListItemButton,
-  ListSubheader,
-} from "@mui/material";
+import { IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { Link } from "react-router-dom";
 
@@ -62,9 +56,9 @@ export default function ProjectContainer(props) {
             to="add-centerline"
           />
         </Title>
-        {project.centerlines.map((centerline) => {
-          <div>{centerline.name}</div>;
-        })}
+        {project.centerlines.map((centerline) => (
+          <div>{centerline.name}</div>
+        ))}
 
         <Hr />
         <Title>
@@ -77,9 +71,9 @@ export default function ProjectContainer(props) {
             to="add-takeoff"
           />
         </Title>
-        {project.takeoffs.map((takeoff) => {
-          <div>{takeoff.name}</div>;
-        })}
+        {project.takeoffs.map((takeoff) => (
+          <div>{takeoff.name}</div>
+        ))}
       </Wrapper>
     </Container>
   );

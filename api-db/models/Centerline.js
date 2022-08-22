@@ -22,7 +22,7 @@ const CenterlineSchema = new mongoose.Schema(
     line: { type: FeatureCollectionSchema, required: true },
     markers: { type: FeatureCollectionSchema, required: true },
     footprint: FeatureCollectionSchema,
-    elevation: [{ x: Number, y: Number }],
+    elevation: { rows: [], columns: [] },
   },
   { timestamps: true }
 );

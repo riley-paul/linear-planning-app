@@ -1,11 +1,15 @@
 import { Button } from "@mui/material";
 import styled from "styled-components";
-import filesize from "filesize";
 
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 
+import LoadingButton from "@mui/lab/LoadingButton";
+
 import { useState } from "react";
+import http from "../utils/http";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const Container = styled.div`
   display: flex;
@@ -65,63 +69,103 @@ const Input = styled.input`
 `;
 
 function FormFileBlock(props) {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
   const {
-    setFiles,
-    files,
-    fileKey,
-    ftype = "application/zip, application/json",
+    setState,
+    state,
+    name,
+    selectFtype = "application/zip, application/json",
+    outputFtype = "geojson",
   } = props;
+
+  const handleFileChange = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const formData = new FormData();
+      formData.append("file", e.target.files[0]);
+
+      const url = `http://localhost:5000/conversion/${outputFtype}`;
+      const res = await axios.post(url, formData);
+
+      setState(res.data);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      setError(true);
+      console.error(err);
+    }
+  };
+
+  const getFileInfo = () =>
+    outputFtype === "geojson"
+      ? `${state.features.length} feature(s)`
+      : `${state.rows?.length} rows`;
 
   return (
     <FormContainer>
-      <Button
+      <LoadingButton
+        loading={loading}
         component="label"
         color="inherit"
         variant="outlined"
         startIcon={<AttachFileIcon />}
       >
-        {fileKey}
+        {name}
         <input
           type="file"
-          id={fileKey}
-          name={fileKey}
-          accept={ftype}
-          onChange={(e) =>
-            setFiles((prev) => ({ ...prev, [fileKey]: e.target.files[0] }))
-          }
+          id={name}
+          name={name}
+          accept={selectFtype}
+          onChange={handleFileChange}
           hidden
         />
-      </Button>
+      </LoadingButton>
       <FormFileName>
-        {files[fileKey]
-          ? `${files[fileKey].name} • ${filesize(files[fileKey].size)}`
-          : "Select a file"}
+        {error ? (
+          <div style={{ color: "red" }}>Could not convert to JSON</div>
+        ) : state ? (
+          getFileInfo()
+        ) : (
+          "Select a file"
+        )}
       </FormFileName>
     </FormContainer>
   );
 }
 
 export default function AddCenterline(props) {
-  const [files, setFiles] = useState({
-    line: null,
-    markers: null,
-    footprint: null,
-    elevation: null,
-  });
+  const project = useSelector((state) => state.project.currentProject);
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [line, setLine] = useState(null);
+  const [markers, setMarkers] = useState(null);
+  const [footprint, setFootprint] = useState(null);
+  const [elevation, setElevation] = useState(null);
 
-  const handleSubmission = (e) => {
-    e.preventDefault()
+  const handleSubmission = async (e) => {
+    e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("description", description);
-    formData.append("line", files.line);
-    formData.append("markers", files.markers);
-    formData.append("footprint", files.footprint);
-    formData.append("elevation", files.elevation);
-    console.log(formData);
+    const centerline = {
+      projectId: project._id,
+      name,
+      description,
+      line,
+      markers,
+      footprint,
+      elevation,
+    };
+
+    try {
+      const res = await http.post("/centerlines", centerline);
+      console.log(res.data);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -143,18 +187,19 @@ export default function AddCenterline(props) {
               onChange={(e) => setDescription(e.target.value)}
             />
           </FormContainer>
-          <FormFileBlock files={files} setFiles={setFiles} fileKey="line" />
-          <FormFileBlock files={files} setFiles={setFiles} fileKey="markers" />
+          <FormFileBlock state={line} setState={setLine} name="line" />
+          <FormFileBlock state={markers} setState={setMarkers} name="markers" />
           <FormFileBlock
-            files={files}
-            setFiles={setFiles}
-            fileKey="footprint"
+            state={footprint}
+            setState={setFootprint}
+            name="footprint"
           />
           <FormFileBlock
-            files={files}
-            setFiles={setFiles}
-            fileKey="elevation"
-            ftype="text/csv"
+            state={elevation}
+            setState={setElevation}
+            name="elevation"
+            selectFtype="text/csv"
+            outputFtype="json"
           />
 
           <FormSubmitBlock>
