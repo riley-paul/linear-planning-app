@@ -24,7 +24,7 @@ export const addCenterlineHandler = (dispatch) => {
   const handleAddCenterline = async (data) => {
     dispatch(fetchStart());
     try {
-      const res = await http.post(`/centerlines`);
+      const res = await http.post(`/centerlines`, data);
       dispatch(fetchSuccess());
       dispatch(setCenterline(res.data));
     } catch (err) {

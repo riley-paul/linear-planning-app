@@ -2,7 +2,7 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import userReducer from "./userSlice";
 import projectReducer from "./projectSlice";
 import projectsReducer from "./projectsSlice";
-import centerlineReducer from "./projectsSlice";
+import centerlineReducer from "./centerlineSlice";
 
 import {
   persistStore,

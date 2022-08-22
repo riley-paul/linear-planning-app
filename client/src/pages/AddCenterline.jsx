@@ -1,4 +1,3 @@
-import { Button } from "@mui/material";
 import styled from "styled-components";
 
 import AttachFileIcon from "@mui/icons-material/AttachFile";
@@ -7,9 +6,9 @@ import AddCircleOutlinedIcon from "@mui/icons-material/AddCircleOutlined";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 import { useState } from "react";
-import http from "../utils/http";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addCenterlineHandler } from "../api/centerline";
 
 const Container = styled.div`
   display: flex;
@@ -139,6 +138,11 @@ function FormFileBlock(props) {
 
 export default function AddCenterline(props) {
   const project = useSelector((state) => state.project.currentProject);
+  const dispatch = useDispatch();
+  const handleAddCenterline = addCenterlineHandler(dispatch);
+
+  const error = useSelector((state) => state.centerline.error);
+  const loading = useSelector((state) => state.centerline.loading);
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -160,12 +164,7 @@ export default function AddCenterline(props) {
       elevation,
     };
 
-    try {
-      const res = await http.post("/centerlines", centerline);
-      console.log(res.data);
-    } catch (err) {
-      console.error(err);
-    }
+    handleAddCenterline(centerline);
   };
 
   return (
@@ -202,8 +201,22 @@ export default function AddCenterline(props) {
             outputFtype="json"
           />
 
+          {error && (
+            <div
+              style={{
+                color: "red",
+                display: "flex",
+                justifyContent: "center",
+                fontSize: "0.8em",
+              }}
+            >
+              Could not create centerline
+            </div>
+          )}
+
           <FormSubmitBlock>
-            <Button
+            <LoadingButton
+              loading={loading}
               component="label"
               variant="contained"
               endIcon={<AddCircleOutlinedIcon />}
@@ -211,7 +224,7 @@ export default function AddCenterline(props) {
             >
               create
               <input hidden type="submit" />
-            </Button>
+            </LoadingButton>
           </FormSubmitBlock>
         </Form>
       </Wrapper>
