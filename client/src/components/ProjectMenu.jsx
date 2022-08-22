@@ -1,7 +1,15 @@
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { List, ListItem, ListItemButton, ListSubheader } from "@mui/material";
+import {
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListSubheader,
+} from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   height: calc(100vh - 56px);
@@ -19,6 +27,9 @@ const Wrapper = styled.div`
 const Title = styled.h4`
   color: ${({ theme }) => theme.text};
   padding-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const Desc = styled.p`
@@ -41,16 +52,34 @@ export default function ProjectContainer(props) {
         <Title>{project.name}</Title>
         <Desc>{project.description}</Desc>
         <Hr />
-        <List dense>
-          <ListSubheader>header</ListSubheader>
-          <ListItem children="hello" />
-          <ListItem children="hello" />
-          <ListItem children="hello" />
-          <ListItem children="hello" />
-          <ListItem children="hello" />
-          <ListItem children="hello" />
-          <ListItem children="hello" />
-        </List>
+        <Title>
+          CENTERLINES
+          <IconButton
+            size="small"
+            color="inherit"
+            children={<AddIcon />}
+            component={Link}
+            to="add-centerline"
+          />
+        </Title>
+        {project.centerlines.map((centerline) => {
+          <div>{centerline.name}</div>;
+        })}
+
+        <Hr />
+        <Title>
+          TAKEOFFS
+          <IconButton
+            size="small"
+            color="inherit"
+            children={<AddIcon />}
+            component={Link}
+            to="add-takeoff"
+          />
+        </Title>
+        {project.takeoffs.map((takeoff) => {
+          <div>{takeoff.name}</div>;
+        })}
       </Wrapper>
     </Container>
   );

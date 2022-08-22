@@ -14,6 +14,8 @@ import Home from "./pages/Home";
 import NoMatch from "./pages/NoMatch";
 import UserForm from "./pages/UserForm";
 import AddProject from "./pages/AddProject";
+import AddCenterline from "./pages/AddCenterline";
+import AddTakeoff from "./pages/AddTakeoff";
 
 const Container = styled.div`
   display: flex;
@@ -49,7 +51,11 @@ export default function App() {
                   <Route path="projects">
                     <Route index element={<Projects />} />
                     <Route path="add" element={<AddProject />} />
-                    <Route path=":projectId" element={<Project />} />
+                    <Route path=":projectId">
+                      <Route index element={<Project />} />
+                      <Route path="add-centerline" element={<AddCenterline />} />
+                      <Route path="add-takeoff" element={<AddTakeoff />} />
+                    </Route>
                     <Route path="*" element={<NoMatch />} />
                   </Route>
                   <Route path="*" element={<NoMatch />} />
