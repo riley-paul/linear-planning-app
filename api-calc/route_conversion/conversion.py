@@ -23,7 +23,7 @@ def find_shp(fname):
   filename = next((i for i in os.listdir(dirname) if i[-4:] == ".shp"), False)
   return os.path.join(dirname,filename) if filename else filename
 
-@conversion.route("/json",methods=["GET","POST"])
+@conversion.route("/json",methods=["POST"])
 def convert_json():
   ftypes = ["zip","csv"]
 
@@ -69,16 +69,6 @@ def convert_json():
         )
 
       return jsonify(data.to_dict())
-
-  return '''
-    <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
-    <form method=post enctype=multipart/form-data>
-      <input type=file name=file>
-      <input type=submit value=Upload>
-    </form>
-    '''
   
 @conversion.route("/geojson",methods=["GET","POST"])
 def convert_geojson():
