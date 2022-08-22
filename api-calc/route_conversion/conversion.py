@@ -68,7 +68,13 @@ def convert_json():
           .reset_index(drop=True)
         )
 
-      return jsonify(data.to_dict())
+      data["id"] = data.index
+
+      result = {
+        "rows": data.to_dict("records"),
+        "columns": [{"field": i} for i in data.columns],
+        }
+      return jsonify(result)
   
 @conversion.route("/geojson",methods=["GET","POST"])
 def convert_geojson():
