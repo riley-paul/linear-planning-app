@@ -11,8 +11,12 @@ export async function getById(req, res) {
 }
 
 export async function create(req, res) {
-  const result = await models.centerline.create(req.body);
-  res.status(201).json(result);
+  try {
+    const result = await models.centerline.create(req.body);
+    res.status(201).json(result);
+  } catch (err) {
+    res.status(500).send(err);
+  }
 }
 
 export async function remove(req, res) {
