@@ -64,7 +64,7 @@ export default function Projects(props) {
           <ProjectCard
             key={index}
             project={project}
-            handleDelete={() => handleDeleteProject(project._id)}
+            handleDelete={() => handleDeleteProject(project.id)}
           />
         ))}
       </ProjectGrid>

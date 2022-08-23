@@ -23,7 +23,7 @@ export const projectsSlice = createSlice({
     },
     deleteProject: (state, action) => {
       state.currentProjects = state.currentProjects.filter(
-        (project) => project._id !== action.payload
+        (project) => project.id !== action.payload
       );
     },
     setProjects: (state, action) => {

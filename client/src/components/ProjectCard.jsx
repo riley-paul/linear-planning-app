@@ -44,7 +44,7 @@ export default function ProjectCard(props) {
 
   return (
     <Container>
-      <CardActionArea component={Link} to={project.id}>
+      <CardActionArea component={Link} to={project.id.toString()}>
         <CardContent>
           <Title>{project.name}</Title>
           <Desc>{project.description}</Desc>

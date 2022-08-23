@@ -57,7 +57,7 @@ export default function ProjectContainer(props) {
           />
         </Title>
         {project.centerlines.map((centerline) => (
-          <div key={centerline._id}>{centerline.name}</div>
+          <div key={centerline.id}>{centerline.name}</div>
         ))}
 
         <Hr />

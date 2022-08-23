@@ -155,7 +155,7 @@ export default function AddCenterline(props) {
     e.preventDefault();
 
     const centerline = {
-      projectId: project._id,
+      projectId: project.id,
       name,
       description,
       line,
