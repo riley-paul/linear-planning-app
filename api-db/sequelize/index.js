@@ -6,7 +6,7 @@ import projectModel from "./models/project.model.js";
 import centerlineModel from "./models/centerline.model.js";
 import takeoffModel from "./models/takeoff.model.js";
 
-const sequelize = new Sequelize({
+const sequelize = new Sequelize("linear_planning", "riley", null, {
   dialect: "postgres",
   url: process.env.PSQL_URL,
 });
