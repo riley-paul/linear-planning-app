@@ -1,4 +1,5 @@
 import Centerline from "../models/Centerline.js";
+import Project from "../models/Project.js";
 
 export const getCenterline = async (req, res, next) => {
   try {
@@ -12,10 +13,15 @@ export const getCenterline = async (req, res, next) => {
 export const addCenterline = async (req, res, next) => {
   try {
     const newCL = new Centerline(req.body);
+    await Project.updateOne(
+      { _id: newCL.projectId },
+      { $push: { centerlines: { id: newCL._id, name: newCL.name } } },
+    );
+
     await newCL.save();
     res.status(200).json(newCL);
   } catch (err) {
-    console.error(err)
+    console.error(err);
     next(err);
   }
 };
