@@ -49,7 +49,7 @@ export default function Form(props) {
           >
             <LoadingButton
               loading={loading}
-              onClick={() => onSubmission(state)}
+              onClick={(e) => onSubmission(e, state)}
               children={actionName}
               variant="contained"
               sx={{ width: "100%" }}
