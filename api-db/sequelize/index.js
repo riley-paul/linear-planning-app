@@ -1,22 +1,19 @@
 import { Sequelize } from "sequelize";
-import applyExtraSetup from "./extraSetup";
+import applyExtraSetup from "./extraSetup.js";
 
-import userModel from "./models/user.model";
-import projectModel from "./models/project.model";
-import centerlineModel from "./models/centerline.model";
-import takeoffModel from "./models/takeoff.model";
+import userModel from "./models/user.model.js";
+import projectModel from "./models/project.model.js";
+import centerlineModel from "./models/centerline.model.js";
+import takeoffModel from "./models/takeoff.model.js";
 
-const sequelize = new Sequelize(process.env.PSQL_URL);
-
-try {
-  sequelize.authenticate();
-  console.log("Database connection established");
-} catch (err) {
-  console.error("Unable to connect to database:", err);
-}
+const sequelize = new Sequelize({
+  dialect: "postgres",
+  url: process.env.PSQL_URL,
+});
 
 const modelDefiners = [userModel, projectModel, centerlineModel, takeoffModel];
 modelDefiners.forEach((f) => f(sequelize));
 applyExtraSetup(sequelize);
 
+export const { models } = sequelize;
 export default sequelize;

@@ -6,7 +6,7 @@ import {
   deleteProject,
   updateProject,
 } from "../controllers/project.js";
-import { verfiyToken } from "../verifyToken.js";
+import { verfiyToken } from "../helpers/verifyToken.js";
 const router = express.Router();
 
 router.use(verfiyToken);
