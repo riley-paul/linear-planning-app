@@ -12,10 +12,11 @@ import { Helmet } from "react-helmet";
 
 import Home from "./pages/Home";
 import NoMatch from "./pages/NoMatch";
-import UserForm from "./pages/UserForm";
 import AddProject from "./pages/AddProject";
 import AddCenterline from "./pages/AddCenterline";
 import AddTakeoff from "./pages/AddTakeoff";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 const Container = styled.div`
   display: flex;
@@ -46,8 +47,8 @@ export default function App() {
               <Routes>
                 <Route path="/">
                   <Route index element={<Home />} />
-                  <Route path="login" element={<UserForm />} />
-                  <Route path="register" element={<UserForm register />} />
+                  <Route path="login" element={<Login />} />
+                  <Route path="register" element={<Register />} />
                   <Route path="projects">
                     <Route index element={<Projects />} />
                     <Route path="add" element={<AddProject />} />

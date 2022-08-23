@@ -9,7 +9,7 @@ import {
 import http from "../utils/http";
 
 export const logoutHandler = (dispatch) => {
-  const handleLogout = async (e) => {
+  const handleLogout = async () => {
     dispatch(logoutStart());
     try {
       const res = await http.post("/auth/logout");
@@ -21,8 +21,8 @@ export const logoutHandler = (dispatch) => {
   return handleLogout;
 };
 
-export const loginHandler = (dispatch, userCred) => {
-  const handleLogin = async (e) => {
+export const loginHandler = (dispatch) => {
+  const handleLogin = async (userCred) => {
     dispatch(loginStart());
     try {
       const res = await http.post("/auth/login", userCred);
@@ -34,8 +34,8 @@ export const loginHandler = (dispatch, userCred) => {
   return handleLogin;
 };
 
-export const registerHandler = (dispatch, userCred) => {
-  const handleRegister = async (e) => {
+export const registerHandler = (dispatch) => {
+  const handleRegister = async (userCred) => {
     dispatch(loginStart());
     try {
       const res = await http.post("/auth/register", userCred);
