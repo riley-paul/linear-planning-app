@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import Plot from "./Plot";
-import Error from "./Plot/Error";
 
 import { CircularProgress } from "@mui/material";
 import { useSelector } from "react-redux";
@@ -29,6 +28,8 @@ export default function ElevationProfile(props) {
   const loading = useSelector((state) => state.centerline.loading);
   const error = useSelector((state) => state.centerline.error);
 
+  console.log(centerline)
+
   // determine width of parent element
   const ref = useRef(null);
   const [rectWidth, setRectWidth] = useState(500);
@@ -49,11 +50,11 @@ export default function ElevationProfile(props) {
           <CircularProgress />
           <ErrorText>Loading Elevation Data</ErrorText>
         </>
-      ) : elevation.length === 0 ? (
+      ) : centerline.elevation.rows.length === 0 ? (
         <ErrorText>No Elevation Data for Centerline</ErrorText>
       ) : (
         <Plot
-          elevation={elevation}
+          elevation={centerline.elevation.rows}
           ranges={takeoffs.filter((i) => i.selected)}
           x={(d) => d.x * 1}
           y={(d) => d.y * 1}

@@ -17,7 +17,6 @@ export const addCenterline = async (req, res, next) => {
       { _id: newCL.projectId },
       { $push: { centerlines: { id: newCL._id, name: newCL.name } } },
     );
-
     await newCL.save();
     res.status(200).json(newCL);
   } catch (err) {
