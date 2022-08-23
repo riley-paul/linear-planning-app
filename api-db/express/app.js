@@ -1,16 +1,16 @@
-import express from "express"
+import express from "express";
 
 import helmet from "helmet";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
-
-// import authRouter from "./routes/auth.js";
-// import userRouter from "./routes/users.js";
-// import projectRouter from "./routes/projects.js";
+import authRouter from "./routes/auth.js";
+import userRouter from "./routes/users.js";
+import projectRouter from "./routes/projects.js";
 import centerlineRouter from "./routes/centerlines.js";
-// import takeoffRouter from "./routes/takeoffs.js";
+import takeoffRouter from "./routes/takeoffs.js";
+import dbRouter from "./routes/db.js";
 
 const app = express();
 
@@ -31,11 +31,12 @@ app.use(cookieParser());
 // app.use(verfiyToken)
 
 // routes
-// app.use("/api/users", userRouter);
-// app.use("/api/auth", authRouter);
-// app.use("/api/projects", projectRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/users", userRouter);
+app.use("/api/projects", projectRouter);
 app.use("/api/centerlines", centerlineRouter);
-// app.use("/api/takeoffs", takeoffRouter);
+app.use("/api/takeoffs", takeoffRouter);
+app.use("/api/db", dbRouter);
 
 app.use((err, req, res, next) => {
   const status = err.status || 500;

@@ -1,21 +1,21 @@
+import { verfiyToken } from "../helpers/verifyToken.js";
+
 import express from "express";
 import {
-  allProjects,
-  getProject,
-  addProject,
-  deleteProject,
-  updateProject,
+  getById,
+  getAll,
+  create,
+  remove,
+  update,
 } from "../controllers/project.js";
-import { verfiyToken } from "../helpers/verifyToken.js";
-const router = express.Router();
 
+const router = express.Router();
 router.use(verfiyToken);
 
-// routes
-router.get("/", allProjects);
-router.get("/:id", getProject);
-router.post("/", addProject);
-router.delete("/:id", deleteProject);
-router.patch("/:id", updateProject);
+router.get("/:id", getById);
+router.get("/", getAll);
+router.post("/", create);
+router.delete("/:id", remove);
+router.patch("/:id", update);
 
 export default router;

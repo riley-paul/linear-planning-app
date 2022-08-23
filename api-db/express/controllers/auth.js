@@ -1,55 +1,39 @@
-import { createError } from "../helpers/error.js";
-// import User from "../models/User.js";
-// import jwt from "jsonwebtoken";
+import { models } from "../../sequelize/index.js";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+const saltRounds = 10;
 
-// export const register = async (req, res, next) => {
-//   try {
-//     const { name, email, password } = req.body;
-//     const newUser = new User({ name, email });
-//     await newUser.setPassword(password);
-//     await newUser.save();
+export async function register(req, res, next) {
+  const { name, email, password } = req.body;
 
-//     const token = jwt.sign({ id: newUser._id }, process.env.JWT);
-//     const { hash, ...others } = newUser._doc;
+  const salt = await bcrypt.genSalt(saltRounds);
+  const hash = await bcrypt.hash(password, salt);
 
-//     res
-//       .cookie("access_token", token, {
-//         httpOnly: true,
-//       })
-//       .status(200)
-//       .json(others);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
+  const result = await models.user.create({ name, email, hash });
+  const token = jwt.sign({ id: result.id }, process.env.JWT);
 
-// export const login = async (req, res, next) => {
-//   try {
-//     const { email, password } = req.body;
-//     const user = await User.findOne({ email });
-//     if (!user) return next(createError(401, "User not found"));
+  res
+    .cookie("access_token", token, { httpOnly: true })
+    .status(200)
+    .json(result);
+}
 
-//     const validPassword = await user.validPassword(password);
-//     if (!validPassword) return next(createError(400, "Incorrect credentials"));
+export async function login(req, res) {
+  const { email, password } = req.body;
+  const result = await models.user.findOne({ where: { email } });
+  if (!result) return res.status(401).send("User not found");
 
-//     const token = jwt.sign({ id: user._id }, process.env.JWT);
-//     const { hash, ...others } = user._doc;
+  const validPassword = await bcrypt.compare(password, result.hash);
+  if (!validPassword) return res.status(400).send("Incorrect credentials");
 
-//     res
-//       .cookie("access_token", token, {
-//         httpOnly: true,
-//       })
-//       .status(200)
-//       .json(others);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
+  const token = jwt.sign({ id: result.id }, process.env.JWT);
 
-// export const logout = async (req, res, next) => {
-//   try {
-//     res.clearCookie("access_token").status(200).json("Logout successful");
-//   } catch (err) {
-//     next(err);
-//   }
-// };
+  res
+    .cookie("access_token", token, { httpOnly: true })
+    .status(200)
+    .json(result);
+}
+
+export const logout = async (req, res, next) => {
+  res.clearCookie("access_token").status(200).send("Logout successful");
+};

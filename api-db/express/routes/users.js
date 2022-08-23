@@ -1,15 +1,14 @@
-import express from "express";
-import { deleteUser, getUser, updateUser } from "../controllers/user.js";
 import { verfiyToken } from "../helpers/verifyToken.js";
+
+import express from "express";
+import { getById, create, remove, update } from "../controllers/takeoff.js";
+
 const router = express.Router();
+router.use(verfiyToken);
 
-// update user
-router.patch("/:id", updateUser);
-
-// delete user
-router.delete("/:id", deleteUser);
-
-// get a user
-router.get("/:id", getUser);
+router.get("/:id", getById);
+router.post("/", create);
+router.delete("/:id", remove);
+router.patch("/:id", update);
 
 export default router;

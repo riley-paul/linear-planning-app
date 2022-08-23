@@ -1,72 +1,35 @@
 import { createError } from "../helpers/error.js";
-// import Project from "../models/Project.js";
 
-// export const allProjects = async (req, res, next) => {
-//   try {
-//     const projects = await Project.find({ userId: req.user.id });
-//     res.status(200).json(projects);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
+import { models } from "../../sequelize/index.js";
 
-// export const getProject = async (req, res, next) => {
-//   try {
-//     const project = await Project.findById(req.params.id);
-//     if (project.userId !== req.user.id)
-//       return next(createError(403, "Do not have access to projects"));
+export async function getAll(req, res) {
+  const result = await models.project.findAll({
+    where: { userId: req.user.id },
+  });
+  res.status(200).json(result);
+}
 
-//     res.status(200).json(project);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
+export async function getById(req, res, next) {
+  const result = await models.project.findByPk(req.params.id);
+  if (result.userId !== req.user.id)
+    return res.status(403).send("Do not have access to project");
 
-// export const addProject = async (req, res, next) => {
-//   try {
-//     const project = new Project({ userId: req.user.id, ...req.body });
-//     await project.save();
-//     res.status(200).json(project);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
+  res.status(200).json(result);
+}
 
-// export const deleteProject = async (req, res, next) => {
-//   try {
-//     const project = await Project.findById(req.params.id);
-//     if (project.userId !== req.user.id)
-//       return next(createError(403, "Do not have access to projects"));
+export async function create(req, res) {
+  const result = await models.project.create(req.body);
+  res.status(201).json(result);
+}
 
-//     await Project.findByIdAndDelete(req.params.id);
-//     res.status(200).json("Project deleted");
-//   } catch (err) {
-//     next(err);
-//   }
-// };
+export async function remove(req, res) {
+  await models.project.destroy({ where: { id: req.params.id } });
+  res.status(200).end();
+}
 
-// export const updateProject = async (req, res, next) => {
-//   try {
-//     const project = await Project.findById(req.params.id);
-//     if (project.userId !== req.user.id)
-//       return next(createError(403, "Do not have access to projects"));
-
-//     const updatedProject = await Project.findByIdAndUpdate(
-//       req.params.id,
-//       { $set: req.body },
-//       { new: true }
-//     );
-//     res.status(200).json(updatedProject);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
-
-// export const allProjects = async (req, res, next) => {
-//   try {
-//     const projects = await Project.find({ userId: req.user.id });
-//     res.status(200).json(projects);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
+export async function update(req, res) {
+  const result = await models.project.update(req.body, {
+    where: { id: req.params.id },
+  });
+  res.status(200).json(result);
+}

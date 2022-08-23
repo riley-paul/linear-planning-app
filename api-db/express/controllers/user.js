@@ -1,41 +1,29 @@
-import { createError } from "../helpers/error.js";
-// import User from "../models/User.js";
+import { models } from "../../sequelize/index.js";
 
-// export const updateUser = async (req, res, next) => {
-//   if (req.params.id === req.user.id) {
-//     try {
-//       const updatedUser = await User.findByIdAndUpdate(
-//         req.params.id,
-//         { $set: req.body },
-//         { new: true }
-//       );
-//       res.status(200).json(updatedUser);
-//     } catch (err) {
-//       next(err);
-//     }
-//   } else {
-//     return next(createError(403, "User can only update their account"));
-//   }
-// };
+export async function getById(req, res) {
+  const result = await models.user.findByPk(req.params.id);
+  res.status(200).json(result);
+}
 
-// export const deleteUser = async (req, res, next) => {
-//   if (req.params.id === req.user.id) {
-//     try {
-//       await User.findByIdAndDelete(req.params.id);
-//       res.status(200).json("User has been deleted");
-//     } catch (err) {
-//       next(err);
-//     }
-//   } else {
-//     return next(createError(403, "User can only delete their account"));
-//   }
-// };
+export async function create(req, res) {
+  const result = await models.user.create(req.body);
+  res.status(201).json(result);
+}
 
-// export const getUser = async (req, res, next) => {
-//   try {
-//     const user = await User.findById(req.params.id);
-//     res.status(200).json(user);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
+export async function remove(req, res) {
+  if (req.params.id !== req.user.id)
+    return res.status(403).send("User can only remove their own account");
+
+  await models.user.destroy({ where: { id: req.params.id } });
+  res.status(200).end();
+}
+
+export async function update(req, res) {
+  if (req.params.id !== req.user.id)
+    return res.status(403).send("User can only update their own account");
+
+  const result = await models.user.update(req.body, {
+    where: { id: req.params.id },
+  });
+  res.status(200).json(result);
+}
