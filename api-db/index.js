@@ -6,6 +6,8 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
+import { Sequelize } from "sequelize";
+
 import expressListRoutes from "express-list-routes";
 
 import authRouter from "./routes/auth.js";
@@ -20,14 +22,15 @@ const PORT = process.env.PORT || 8000;
 
 dotenv.config();
 
-const mongooseOptions = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-};
-mongoose
-  .connect(process.env.MONGO_URL, mongooseOptions)
-  .then(console.log("connected to MongoDB"))
-  .catch((err) => console.error(err));
+
+// const mongooseOptions = {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// };
+// mongoose
+//   .connect(process.env.MONGO_URL, mongooseOptions)
+//   .then(console.log("connected to MongoDB"))
+//   .catch((err) => console.error(err));
 
 // CORS
 const corsOptions = {
