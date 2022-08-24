@@ -29,6 +29,9 @@ export const projectsSlice = createSlice({
     setProjects: (state, action) => {
       state.currentProjects = action.payload;
     },
+    addProject: (state, action) => {
+      state.currentProjects = [...state.currentProjects, action.payload];
+    },
   },
 });
 
@@ -38,6 +41,7 @@ export const {
   fetchFailure,
   deleteProject,
   setProjects,
+  addProject,
 } = projectsSlice.actions;
 
 export default projectsSlice.reducer;

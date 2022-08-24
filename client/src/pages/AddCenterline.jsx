@@ -24,6 +24,7 @@ export default function AddCenterline(props) {
       title="Add new Centerline"
       actionName="create"
       onSubmission={handleSubmission}
+      redirect={`/projects/${project.id}`}
       error={error}
       loading={loading}
     >
@@ -35,7 +36,7 @@ export default function AddCenterline(props) {
         <FileField name="line" />
         <FileField name="markers" />
         <FileField name="footprint" />
-        <FileField name="elevation" />
+        <FileField name="elevation" ftype="json" />
       </FieldContainer>
     </Form>
   );

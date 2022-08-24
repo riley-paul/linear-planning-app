@@ -12,6 +12,8 @@ const Container = styled.div`
   position: sticky;
   top: 56px;
   overflow: auto;
+  box-shadow: ${({ theme }) => theme.boxShadow};
+  z-index: 11;
 `;
 
 const Wrapper = styled.div`

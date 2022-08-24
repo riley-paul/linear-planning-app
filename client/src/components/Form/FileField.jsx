@@ -20,17 +20,17 @@ const Container = styled.div`
   align-items: center;
 `;
 
+const mimeTypes = {
+  geojson: "application/zip, application/json",
+  json: "text/csv",
+};
+
 export default function FileField(props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const {
-    setState,
-    state,
-    name,
-    selectFtype = "application/zip, application/json",
-    outputFtype = "geojson",
-  } = props;
+  const { setState, state, name, ftype = "geojson" } = props;
+  const mime = mimeTypes[ftype];
 
   const handleFileChange = async (e) => {
     e.preventDefault();
@@ -40,7 +40,7 @@ export default function FileField(props) {
       const formData = new FormData();
       formData.append("file", e.target.files[0]);
 
-      const url = `http://localhost:5000/conversion/${outputFtype}`;
+      const url = `http://localhost:5000/conversion/${ftype}`;
       const res = await axios.post(url, formData);
 
       setState((prev) => ({ ...prev, [name]: res.data }));
@@ -54,9 +54,9 @@ export default function FileField(props) {
 
   const getFileInfo = () => {
     try {
-      return outputFtype === "geojson"
-        ? `${state.features.length} feature(s)`
-        : `${state.rows?.length} rows`;
+      return ftype === "geojson"
+        ? `${state[name].features.length} feature(s)`
+        : `${state[name].rows.length} rows`;
     } catch (err) {
       console.error(err);
       return "could not determine size";
@@ -77,7 +77,7 @@ export default function FileField(props) {
           type="file"
           id={name}
           name={name}
-          accept={selectFtype}
+          accept={mime}
           onChange={handleFileChange}
           hidden
         />

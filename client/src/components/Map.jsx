@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import styled from "styled-components";
-import Helmet from "react-helmet";
+import { MapContainer, TileLayer, GeoJSON, CircleMarker } from "react-leaflet";
+import { useSelector } from "react-redux";
 
 const tilesets = [
   {
@@ -22,15 +21,45 @@ const tilesets = [
   },
 ];
 
+const lineStyle = { color: "red" };
+const markerStyle = {
+  pointToLayer: function (feature, latlng) {
+    return (
+      <CircleMarker
+        center={latlng}
+        options={{
+          radius: 8,
+          fillColor: "red",
+          color: "white",
+          opacity: 1,
+          fillOpacity: 0.8,
+          weight: 1,
+        }}
+      />
+    );
+  },
+};
+
 export default function Map(props) {
+  const centerline = useSelector((state) => state.centerline.currentCenterline);
+  const loading = useSelector((state) => state.centerline.loading);
+  const error = useSelector((state) => state.centerline.error);
+
   const [tilesetIndex, setTilesetIndex] = useState(0);
 
   return (
     <MapContainer
       center={[49.207665, -121.741593]}
       zoom={12}
-      style={{ width: "100%", height: "calc(100vh - 56px - 250px - 1px)" }}
+      style={{
+        width: "100%",
+        height: "calc(100vh - 56px - 250px - 1px)",
+        zIndex: 1,
+      }}
     >
+      {centerline && <GeoJSON data={centerline.footprint} />}
+      {centerline && <GeoJSON data={centerline.line} style={lineStyle} />}
+      {centerline && <GeoJSON data={centerline.markers} style={markerStyle} />}
       <TileLayer
         url={tilesets[tilesetIndex].url}
         attribution={tilesets[tilesetIndex].attribution}

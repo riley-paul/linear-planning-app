@@ -1,9 +1,10 @@
 import {
-  deleteProject,
   fetchStart,
   fetchSuccess,
   fetchFailure,
+  deleteProject,
   setProjects,
+  addProject,
 } from "../redux/projectsSlice";
 import http from "../utils/http";
 
@@ -33,4 +34,18 @@ export const deleteProjectHandler = (dispatch) => {
     }
   };
   return handleDeleteProject;
+};
+
+export const addProjectHandler = (dispatch) => {
+  const handleAddProject = async (data) => {
+    dispatch(fetchStart());
+    try {
+      const res = await http.post(`/projects`, data);
+      dispatch(fetchSuccess());
+      dispatch(addProject(res.data));
+    } catch (err) {
+      dispatch(fetchFailure());
+    }
+  };
+  return handleAddProject;
 };

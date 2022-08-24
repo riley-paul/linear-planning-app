@@ -22,7 +22,6 @@ const ErrorText = styled.div`
 `;
 
 export default function ElevationProfile(props) {
-  const { elevation, takeoffs } = props;
 
   const centerline = useSelector((state) => state.centerline.currentCenterline);
   const loading = useSelector((state) => state.centerline.loading);
@@ -45,7 +44,7 @@ export default function ElevationProfile(props) {
 
   return (
     <Container className="plot-container" ref={ref}>
-      {!loading ? (
+      {loading ? (
         <>
           <CircularProgress />
           <ErrorText>Loading Elevation Data</ErrorText>
@@ -55,7 +54,6 @@ export default function ElevationProfile(props) {
       ) : (
         <Plot
           elevation={centerline.elevation.rows}
-          ranges={takeoffs.filter((i) => i.selected)}
           x={(d) => d.x * 1}
           y={(d) => d.y * 1}
           width={rectWidth}

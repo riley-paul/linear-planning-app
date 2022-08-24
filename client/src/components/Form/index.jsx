@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import React, { useState } from "react";
 import FieldContainer from "./FieldContainer";
+import { useNavigate } from "react-router-dom";
 
 import LoadingButton from "@mui/lab/LoadingButton";
 
@@ -26,8 +27,16 @@ const Title = styled.h4`
 `;
 
 export default function Form(props) {
-  const { onSubmission, title, loading, error, actionName = "submit" } = props;
+  const {
+    onSubmission,
+    title,
+    loading,
+    error,
+    actionName = "submit",
+    redirect = "",
+  } = props;
   const [state, setState] = useState({});
+  const navigate = useNavigate();
 
   return (
     <Container>
@@ -49,7 +58,10 @@ export default function Form(props) {
           >
             <LoadingButton
               loading={loading}
-              onClick={(e) => onSubmission(e, state)}
+              onClick={(e) => {
+                onSubmission(e, state);
+                navigate(redirect);
+              }}
               children={actionName}
               variant="contained"
               sx={{ width: "100%" }}
