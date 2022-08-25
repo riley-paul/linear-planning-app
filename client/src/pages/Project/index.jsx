@@ -3,11 +3,11 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import { useDispatch, useSelector } from "react-redux";
-import { loadProjectHandler } from "../api/project";
+import { loadProjectHandler } from "../../api/project";
 
-import ElevationProfile from "../components/ElevationProfile";
-import Map from "../components/Map";
-import ProjectMenu from "../components/ProjectMenu";
+import ElevationProfile from "./ElevationProfile";
+import Map from "./Map";
+import ProjectMenu from "./ProjectMenu";
 
 const Container = styled.div`
   display: flex;

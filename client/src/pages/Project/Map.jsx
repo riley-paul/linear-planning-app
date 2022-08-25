@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { MapContainer, TileLayer, GeoJSON, CircleMarker } from "react-leaflet";
+import { circleMarker } from "leaflet";
 import { useSelector } from "react-redux";
 
 const tilesets = [
@@ -22,21 +23,17 @@ const tilesets = [
 ];
 
 const lineStyle = { color: "red" };
+const markerOptions = {
+  radius: 8,
+  fillColor: "red",
+  color: "white",
+  opacity: 1,
+  fillOpacity: 0.8,
+  weight: 1,
+};
 const markerStyle = {
   pointToLayer: function (feature, latlng) {
-    return (
-      <CircleMarker
-        center={latlng}
-        options={{
-          radius: 8,
-          fillColor: "red",
-          color: "white",
-          opacity: 1,
-          fillOpacity: 0.8,
-          weight: 1,
-        }}
-      />
-    );
+    return circleMarker(latlng, markerOptions);
   },
 };
 

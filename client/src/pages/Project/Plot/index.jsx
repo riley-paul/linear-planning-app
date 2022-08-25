@@ -5,11 +5,8 @@ import ToolTip from "./ToolTip";
 import PanZoom from "./PanZoom";
 import RangeBar from "./RangeBar";
 
-import formatKP from "../../helpers/formatKP";
-import formatElevation from "../../helpers/formatElevation";
-
-import { useState } from "react";
-import { useEffect } from "react";
+import { formatKP, formatElevation } from "../formatters";
+import { useState, useEffect } from "react";
 
 export default function Plot(props) {
   const {
@@ -70,6 +67,7 @@ export default function Plot(props) {
         style={{ maxWidth: "100%", height: "auto intrinsic" }}
         strokeLinecap="round"
         strokeLinejoin="round"
+        fill="currentColor"
         fontFamily="sans-serif"
         fontSize={10}
       >
