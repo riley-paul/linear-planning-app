@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loadProjectHandler } from "../../api/project";
 
 import ElevationProfile from "./ElevationProfile";
@@ -20,8 +20,6 @@ export default function Project(props) {
   const { projectId } = useParams();
 
   const dispatch = useDispatch();
-  const project = useSelector((state) => state.project.currentProject);
-
   const handleLoadProject = loadProjectHandler(dispatch);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps

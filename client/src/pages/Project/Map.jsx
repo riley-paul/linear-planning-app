@@ -3,6 +3,8 @@ import { MapContainer, TileLayer, GeoJSON, CircleMarker } from "react-leaflet";
 import { circleMarker } from "leaflet";
 import { useSelector } from "react-redux";
 
+import center from "@turf/center";
+
 const tilesets = [
   {
     name: "Topographic",
@@ -37,6 +39,12 @@ const markerStyle = {
   },
 };
 
+const mapContainerStyle = {
+  width: "100%",
+  height: "calc(100vh - 56px - 250px - 1px)",
+  zIndex: 1,
+};
+
 export default function Map(props) {
   const centerline = useSelector((state) => state.centerline.currentCenterline);
   const loading = useSelector((state) => state.centerline.loading);
@@ -45,22 +53,20 @@ export default function Map(props) {
   const [tilesetIndex, setTilesetIndex] = useState(0);
 
   return (
-    <MapContainer
-      center={[49.207665, -121.741593]}
-      zoom={12}
-      style={{
-        width: "100%",
-        height: "calc(100vh - 56px - 250px - 1px)",
-        zIndex: 1,
-      }}
-    >
-      {centerline && <GeoJSON data={centerline.footprint} />}
-      {centerline && <GeoJSON data={centerline.line} style={lineStyle} />}
-      {centerline && <GeoJSON data={centerline.markers} style={markerStyle} />}
-      <TileLayer
-        url={tilesets[tilesetIndex].url}
-        attribution={tilesets[tilesetIndex].attribution}
-      />
-    </MapContainer>
+    centerline && (
+      <MapContainer
+        center={center(centerline.markers)}
+        zoom={12}
+        style={mapContainerStyle}
+      >
+        <GeoJSON data={centerline.footprint} />
+        <GeoJSON data={centerline.line} style={lineStyle} />
+        <GeoJSON data={centerline.markers} style={markerStyle} />
+        <TileLayer
+          url={tilesets[tilesetIndex].url}
+          attribution={tilesets[tilesetIndex].attribution}
+        />
+      </MapContainer>
+    )
   );
 }
